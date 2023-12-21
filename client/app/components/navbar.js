@@ -11,14 +11,16 @@ const navigation = [{ name: "Home", href: "/home" }];
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
-  const token = localStorage.getItem("token");
+  let token = null;
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
   };
   useEffect(() => {
-    const token = localStorage.getItem("token");
-  }, [token]);
+    if (typeof window !== 'undefined') {
+      token = localStorage.getItem('token');
+    }
+  }, []);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-black">
@@ -198,7 +200,7 @@ const NavBar = () => {
                 </button>
                 <button
                   className=" flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={() => router.push("/user/login")}
+                  onClick={() => router.push("/")}
                 >
                   <Key />
                   Login

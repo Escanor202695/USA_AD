@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { MailsenderModule } from './mailsender/mailsender.module';
+import { DynamicformModule } from './dynamicform/dynamicform.module';
 @Module({
   imports: [
     MongooseModule.forRootAsync({
@@ -19,6 +20,7 @@ import { MailsenderModule } from './mailsender/mailsender.module';
     }),
     AuthModule,
     MailsenderModule,
+    DynamicformModule,
   ],
 })
 export class V1Module { }
