@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, Length, NotContains } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, Length, NotContains } from 'class-validator';
 
 export class CreateAuthDto {
   @ApiProperty({
@@ -18,7 +18,7 @@ export class CreateAuthDto {
     required: true,
     example: '0138',
   })
-  @IsNotEmpty({
+  @IsOptional({
     message: 'Phone cannot be empty or whitespace',
   })
   @Length(2, 30, {

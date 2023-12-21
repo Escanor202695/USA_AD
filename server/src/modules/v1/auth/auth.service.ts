@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Request, Response } from 'express';
 import { Model } from 'mongoose';
@@ -14,11 +20,13 @@ import { MailsenderService } from '../mailsender/mailsender.service';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(AuthUser.name) private readonly authuserModel: Model<AuthUserDocument>,
+  constructor(
+    @InjectModel(AuthUser.name)
+    private readonly authuserModel: Model<AuthUserDocument>,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     private readonly mailSenderService: MailsenderService,
-  ) { }
+  ) {}
 
   public async register(createAuthDto: CreateAuthDto, res: Response) {
     const auth = await this.authuserModel.findOne({
@@ -45,6 +53,7 @@ export class AuthService {
 
       return { user, status: 'success', accessToken: accessToken };
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException();
     }
   }
@@ -121,10 +130,12 @@ export class AuthService {
     }
   }
 
-
   public async getUserById(userId: string) {
     try {
-      const user = await this.authuserModel.findById(userId).select('-password').exec();
+      const user = await this.authuserModel
+        .findById(userId)
+        .select('-password')
+        .exec();
       return user;
     } catch (err) {
       throw new InvalidCredentials();
@@ -149,7 +160,6 @@ export class AuthService {
       throw err;
     }
   }
-
 
   private async generateTokens(user) {
     const jwtid = uuidv4();
@@ -206,9 +216,7 @@ export class AuthService {
   }
 
   async findAll() {
-    return await this.authuserModel
-      .find({}, { password: 0 })
-      .exec();
+    return await this.authuserModel.find({}, { password: 0 }).exec();
     return `This action returns all leaverequest`;
   }
 
@@ -216,5 +224,4 @@ export class AuthService {
     return await this.authuserModel.findByIdAndDelete(id);
     return `This action removes a #${id} leaverequest`;
   }
-
 }
