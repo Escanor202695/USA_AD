@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+import axios from "@/utils/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -25,15 +25,12 @@ export default function Signup() {
         return;
       }
 
-      const response = await axios.post(
-        "https://o-ras.com/api/auth/local/register",
-        {
-          name,
-          email,
-          phone,
-          password,
-        }
-      );
+      const response = await axios.post("/auth/local/register", {
+        name,
+        email,
+        phone,
+        password,
+      });
       toast.success("Signup Successful!");
       router.push("/user/login");
       setError(null);
