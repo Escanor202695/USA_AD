@@ -16,6 +16,7 @@ export default function Home() {
     if (token) {
       router.push("/user/home");
     }
+    //
   });
 
   const handleSubmit = async (e) => {
