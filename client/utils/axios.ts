@@ -4,7 +4,6 @@ export const axios = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
-
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
@@ -37,6 +36,5 @@ axios.interceptors.response.use(
     throw error;
   }
 );
-
 
 export default axios;

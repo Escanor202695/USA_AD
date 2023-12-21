@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../../utils/axios.ts";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -29,7 +29,7 @@ export default function ForgotPassword() {
       setIsCodeSending(true);
       // Make a POST request to send the code
       const response = await axios.post(
-        "https://o-ras.com/api/auth/local/forgetPassword",
+        "/auth/local/forgetPassword",
         {
           email,
         }
@@ -50,7 +50,7 @@ export default function ForgotPassword() {
       setIsResetting(true);
       // Make a POST request to reset the password
       const response = await axios.post(
-        "https://o-ras.com/api/auth/local/receiveotp",
+        "/auth/local/receiveotp",
         {
           email: email,
           otp: code,
@@ -70,7 +70,7 @@ export default function ForgotPassword() {
     try {
       setIsResetting(true);
       const response = await axios.post(
-        "https://o-ras.com/api/auth/local/newpassword",
+        "/auth/local/newpassword",
         {
           email: email,
           otp: code,
@@ -78,7 +78,7 @@ export default function ForgotPassword() {
         }
       );
       toast.success(response.data.message);
-      router.push("/user/login");
+      router.push("/");
     } catch (error) {
       console.error("Password reset failed:", error.response.data.error);
       toast.error("Failed to reset password. Please try again.");
@@ -89,14 +89,14 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex bg-black min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-10 w-auto -mb-8"
-            src="/logo1.png"
+            className="mx-auto h-16 w-auto -mb-8"
+            src="/logo.png"
             alt="Your Company"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black">
             Forgot Password
           </h2>
         </div>
@@ -110,7 +110,7 @@ export default function ForgotPassword() {
                     <div>
                       <label
                         htmlFor="code"
-                        className="block text-sm font-medium leading-6 text-gray-900"
+                        className="block text-sm font-medium leading-6 text-white"
                       >
                         Verification Code
                       </label>
@@ -122,7 +122,7 @@ export default function ForgotPassword() {
                           value={code}
                           onChange={(e) => setCode(e.target.value)}
                           required
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                     </div>
@@ -132,7 +132,7 @@ export default function ForgotPassword() {
                         type="button"
                         onClick={resetPassword}
                         disabled={isResetting}
-                        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="flex w-full justify-center rounded-md bg-[#F04D99] hover:bg-[#bd7ee5]   px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         Verify Otp
                       </button>
@@ -154,7 +154,7 @@ export default function ForgotPassword() {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-white"
                     >
                       Email address
                     </label>
@@ -167,7 +167,7 @@ export default function ForgotPassword() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                   </div>
@@ -177,7 +177,7 @@ export default function ForgotPassword() {
                       type="button"
                       onClick={sendCode}
                       disabled={isCodeSending}
-                      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="flex w-full justify-center rounded-md bg-[#F04D99] hover:bg-[#bd7ee5]  px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#bd7ee5]"
                     >
                       {isCodeSending ? "Sending Code..." : "Send Code"}
                     </button>
@@ -194,7 +194,7 @@ export default function ForgotPassword() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-white"
                 >
                   New Password
                 </label>
@@ -207,7 +207,7 @@ export default function ForgotPassword() {
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
-                    className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full px-2 rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -216,7 +216,7 @@ export default function ForgotPassword() {
                 <button
                   type="button"
                   onClick={handleNewPassword}
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-[#F04D99] hover:bg-[#bd7ee5]    px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Submit
                 </button>

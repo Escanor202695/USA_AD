@@ -9,7 +9,7 @@ const countries = [
     {
       name: "Country A",
       states: [
-        { name: "California", cities: ["City 1", "City 2", "City 3"] },
+        { name: "California", cities: ["City 1", "City 2", "City 3", "City 3", "City 3"] },
         { name: "blabama", cities: ["City 4", "City 5", "City 6"] },
         { name: "Alaska", cities: ["City 7", "City 8", "City 9"] },
         { name: "Alaska", cities: ["City 7", "City 8", "City 9"] },
@@ -23,7 +23,7 @@ const countries = [
     // Add more countries as needed
   ];
   return (
-    <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
+    <div className="pt-[100px] pb-[50px] w-[80%] md:w-[60%] mx-auto">
       <div className="flex justify-center py-10">
         <h1 className="text-[#f04d99]  text-2xl   border-2 border-[#f04d99] hover:text-[#bd7ee5]  p-2 rounded-md">
           Select Location Below
@@ -38,7 +38,7 @@ const countries = [
             </h2>
           </div>
 
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap grow-0">
             {country.states
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((state, index) => (

@@ -1,14 +1,14 @@
 "use client";
 
-import Sidebar from "@/app/components/sidebar";
+import Sidebar from "../../components/sidebar";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import RequestModal from "@/app/components/requestModal";
+import RequestModal from "../../components/requestModal";
 
-import MobileHeader from "@/app/components/mobileHeader";
+import MobileHeader from "../../components/mobileHeader";
 
 function Account(props) {
   const router = useRouter();
@@ -62,7 +62,7 @@ function Account(props) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      router.push("/user/login");
+      router.push("/");
     }
 
     getUserInfo();

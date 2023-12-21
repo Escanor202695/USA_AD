@@ -66,7 +66,7 @@ const MobileHeader = ({ role }) => {
       {/* Left Side: Logo */}
       <div className="flex items-center">
         <img
-          src="/logo1.png" // Replace with the path to your logo
+          src="/logo.png" // Replace with the path to your logo
           alt="Logo"
           className="w-[100px] h-10 mr-2 object-contain" // Adjust the size as needed
         />

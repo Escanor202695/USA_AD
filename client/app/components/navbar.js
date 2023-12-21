@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import Pen from "./svg/pen";
+import ProfileIcon from "./svg/profile";
+import Key from "./svg/key";
 
-const navigation = [
-  { name: "Home", href: "/course-details" },
-  { name: "Courses", href: "#" },
-  { name: "Blog", href: "#" },
-  { name: "Company", href: "#" },
-];
+const navigation = [{ name: "Home", href: "/home" }];
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const token = localStorage.getItem("token");
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+  }, [token]);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-black">
@@ -21,11 +29,7 @@ const NavBar = () => {
         <div className="flex lg:flex-1 items-center">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
-              className="h-16 w-auto"
-              src="logo.png" // Replace with your logo path
-              alt=""
-            />
+            <img className="h-16 w-auto" src="/logo.png" alt="" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -63,78 +67,69 @@ const NavBar = () => {
           ))}
         </div>
         <div className="hidden sm:flex items-center">
-          <button className="flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              data-slot="icon"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-              />
-            </svg>
-            Post New Add
-          </button>
-          <button className="ml-4 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              data-slot="icon"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
-            Register
-          </button>
-          <button className="ml-4 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              data-slot="icon"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"
-              />
-            </svg>
-            Login
-          </button>
+          {token ? (
+            <>
+              <button
+                className="flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
+                onClick={() => router.push("/post-add")}
+              >
+                <Pen />
+                Post New Ad
+              </button>
+              <button
+                className="flex items-center text-white bg-[#F04D99] px-4 py-2 ml-4 rounded-sm"
+                onClick={() => router.push("/profile")}
+              >
+                <ProfileIcon />
+                Profile
+              </button>
+              <button
+                className="ml-4 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
+                onClick={handleLogout}
+              >
+                <Key />
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="flex items-center text-white bg-[#F04D99] px-4 py-2 mr-4 rounded-sm"
+                onClick={() => router.push("/")}
+              >
+                <Pen />
+                Post New Ad
+              </button>
+              <button
+                className="flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
+                onClick={() => router.push("/user/signup")}
+              >
+                <ProfileIcon />
+                Register
+              </button>
+              <button
+                className="ml-4 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
+                onClick={() => router.push("/")}
+              >
+                <Key />
+                Login
+              </button>
+            </>
+          )}
         </div>
       </nav>
       <Dialog
         as="div"
         className="lg:hidden"
         open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
       >
-        <div className="fixed inset-0 z-50 " />
+        <div className="fixed inset-0 z-50" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-1/2 overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="/path/to/logo.png" // Replace with your logo path
-                alt=""
-              />
+              <img className="h-8 w-auto" src="/path/to/logo.png" alt="" />
             </a>
             <button
               type="button"
@@ -160,61 +155,56 @@ const NavBar = () => {
               </div>
             </div>
           </div>
-          <div className="sm:hidden">
-            <button className="flex text-white bg-[#F04D99] px-4 py-2 rounded-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                data-slot="icon"
-                className="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                />
-              </svg>
-              Post New Add
-            </button>
-            <button className="mt-2 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                data-slot="icon"
-                className="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                />
-              </svg>
-              Register
-            </button>
-            <button className="mt-2 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                data-slot="icon"
-                className="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z"
-                />
-              </svg>
-              Login
-            </button>
+          <div className="sm:hidden flex-col">
+            {token ? (
+              <>
+                <button
+                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
+                  onClick={() => router.push("/post-add")}
+                >
+                  <Pen />
+                  Post New Ad
+                </button>
+                <button
+                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
+                  onClick={() => router.push("/profile")}
+                >
+                  <ProfileIcon />
+                  Profile
+                </button>
+                <button
+                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
+                  onClick={handleLogout}
+                >
+                  <Key />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
+                  onClick={() => router.push("/")}
+                >
+                  <Pen />
+                  Post New Ad
+                </button>
+                <button
+                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
+                  onClick={() => router.push("/user/signup")}
+                >
+                  <ProfileIcon />
+                  Register
+                </button>
+                <button
+                  className=" flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
+                  onClick={() => router.push("/user/login")}
+                >
+                  <Key />
+                  Login
+                </button>
+              </>
+            )}
           </div>
         </Dialog.Panel>
       </Dialog>

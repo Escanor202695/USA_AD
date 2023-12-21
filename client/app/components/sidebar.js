@@ -20,13 +20,13 @@ const navigation = [
   { name: "Account", href: "/user/account", icon: UserIcon},
   {
     name: "Schedules",
-    href: "/user/schedules",
+    href: "/home",
     icon: CalendarIcon,
     current: false,
   },
   {
     name: "Make Request",
-    href: "/user/make_request",
+    href: "/home",
     icon: InboxArrowDownIcon,
     current: false,
   },
@@ -48,13 +48,13 @@ export default function Sidebar() {
   const logout = () => {
     console.log("token");
     localStorage.removeItem("token");
-    router.push("/user/login");
+    router.push("/");
   };
 
   return (
     <div className="hidden lg:flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 h-[100vh] w-[300px] max-w-[300px]">
       <div className="flex h-16 shrink-0 items-center">
-        <img className="h-8 w-auto" src="/logo1.png" alt="Your Company" />
+        <img className="h-8 w-auto" src="/logo.png" alt="Your Company" />
       </div>
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -67,7 +67,7 @@ export default function Sidebar() {
                     className={classNames(
                       item.current
                         ? "bg-gray-800 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800",
+                        : " text-white hover:bg-gray-800",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     )}
                   >

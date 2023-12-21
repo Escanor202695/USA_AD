@@ -1,10 +1,10 @@
 "use client";
 
-import Sidebar from "@/app/components/sidebar";
+import Sidebar from "../../components/sidebar";
 import React, { useEffect, useState } from "react";
 import Request from "../../components/request";
 import { useRouter } from "next/navigation";
-import MobileHeader from "@/app/components/mobileHeader";
+import MobileHeader from "../../components/mobileHeader";
 
 function MakeRequest(props) {
   const [requestType, setRequestType] = useState("");

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Sidebar from "@/app/components/sidebar";
+import Sidebar from "../../components/sidebar";
 import MobileHeader from "../../components/mobileHeader";
 
 function Home(props) {
@@ -16,7 +16,7 @@ function Home(props) {
           {/* Logo and Welcome Section */}
           <div className="flex items-center justify-center mb-8 flex-col">
             <img
-              src="/logo1.png"
+              src="/logo.png"
               alt="Logo"
               className="w-[100px] h-16 mr-4 object-contain"
             />

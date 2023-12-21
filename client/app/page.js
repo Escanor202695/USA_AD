@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import NavBar from "./components/navbar";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/user/home");
+      router.push("/home");
     }
     //
   });
@@ -26,20 +27,19 @@ export default function Home() {
 
     try {
       // Make a POST request to your login API endpoint
-      const response = await axios.post(
-        "https://o-ras.com/api/auth/local/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("/auth/local/login", {
+        email,
+        password,
+      });
 
       console.log(response.data);
 
       const token = response.data.accessToken;
       localStorage.setItem("token", token);
       toast.success("Login Successful!");
-      router.push("/user/home");
+      if (token) {
+        router.push("/home");
+      }
       setError(null);
     } catch (error) {
       // Handle login error
@@ -50,14 +50,10 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <NavBar />
+      <div className="flex min-h-full bg-[#101827] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto -mb-8"
-            src="/logo1.png"
-            alt="Your Company"
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
             Sign in to your account
           </h2>
         </div>
@@ -67,7 +63,7 @@ export default function Home() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6 text-white"
               >
                 Email address
               </label>
@@ -79,7 +75,7 @@ export default function Home() {
                   autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -88,14 +84,14 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-white"
                 >
                   Password
                 </label>
                 <div className="text-sm">
                   <a
                     href="/user/forgot-password"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-[#F04D99]  hover:text-[#bd7ee5]"
                   >
                     Forgot password?
                   </a>
@@ -109,7 +105,7 @@ export default function Home() {
                   autoComplete="current-password"
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -118,7 +114,7 @@ export default function Home() {
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-[#F04D99]  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#bd7ee5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Log in
               </button>
@@ -126,14 +122,14 @@ export default function Home() {
           </form>
 
           {error && (
-            <p className="mt-2 text-center text-sm text-red-600">{error}</p>
+            <p className="mt-2 text-center text-sm text-red-600 ">{error}</p>
           )}
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm text-white">
             Not a member?{" "}
             <a
               href="/user/signup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-[#F04D99]   hover:text-indigo-500"
             >
               Sign Up
             </a>
