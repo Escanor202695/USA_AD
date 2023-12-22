@@ -31,7 +31,7 @@ const AddLocation = () => {
   };
 
   return (
-    <div className="container mx-auto flex bg-white flex-wrap py-6">
+    <div className="container mx-auto flex flex-1 bg-white flex-wrap py-6">
       <section className="w-full md:w-1/3 flex flex-col px-3">
         <table className="table-auto">
           <thead>

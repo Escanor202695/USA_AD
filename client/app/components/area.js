@@ -26,7 +26,7 @@ const Area = () => {
   }, [needFetch]);
 
   return (
-    <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
+    <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto flex-1 overflow-y-scroll">
       <div className="flex justify-center py-10">
         <h1 className="text-[#f04d99]  text-2xl   border-2 border-[#f04d99] hover:text-[#bd7ee5]  p-2 rounded-md">
           Select Location Below
