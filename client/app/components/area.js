@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { FaChevronRight } from "react-icons/fa";
 import axios from "../../utils/axios";
 import Country from './country';
 

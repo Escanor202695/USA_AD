@@ -6,7 +6,7 @@ export const axios = Axios.create({
 
 axios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -21,14 +21,14 @@ axios.interceptors.response.use(
   (response) => {
     if (response.status === 302) {
       // Handle the redirection here
-      const redirectUrl = response.headers["location"];
+      const redirectUrl = response?.headers["location"];
       // router.push(redirectUrl); // Use the navigate function to redirect
       window.location.href = redirectUrl;
     }
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
       // router.push('/login');
       // window.location.href = "/login";

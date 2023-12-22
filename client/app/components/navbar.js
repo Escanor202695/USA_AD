@@ -11,7 +11,7 @@ const navigation = [{ name: "Home", href: "/home" }];
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
-  let token = null;
+  let token = '';
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/");
@@ -19,8 +19,9 @@ const NavBar = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       token = localStorage.getItem('token');
+      // console.log(token);
     }
-  }, []);
+  }, [token]);
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-black">
