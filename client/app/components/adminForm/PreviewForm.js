@@ -6,7 +6,7 @@ import axios from '../../../utils/axios';
 const PreviewModal = ({ open, onCancel, formValues }) => {
 
   const saveForm = async () => {
-    const res = await axios.post('dynamicform/formdata', { name: "v1", data: formValues });
+    const res = await axios.post('dynamicform/form', { name: "v1", data: formValues });
     console.log(res.data);
     onCancel();
   }

@@ -10,15 +10,31 @@ import { ApiTags } from '@nestjs/swagger';
 export class DynamicformController {
   constructor(private readonly dynamicformService: DynamicformService) { }
 
-  @Post('formdata')
-  saveFormData(@Body('name') name: string, @Body('data') data: Record<string, any>) {
-    return this.dynamicformService.saveFormData(name, data);
+  @Post('form')
+  saveForm(@Body('name') name: string, @Body('data') data: Record<string, any>) {
+    return this.dynamicformService.saveForm(name, data);
   }
 
-  @Get('formdata/:name')
-  getFormData(@Param('name') name: string) {
-    return this.dynamicformService.getFormData(name);
+  @Get('form/:name')
+  getForm(@Param('name') name: string) {
+    return this.dynamicformService.getForm(name);
   }
+
+  @Post('formdata')
+  saveFormData(@Body('data') data: Record<string, any>) {
+    return this.dynamicformService.saveFormData(data);
+  }
+
+  @Get('formdata')
+  getFormData() {
+    return this.dynamicformService.getAllFormData();
+  }
+
+  @Get('formdata/:id')
+  getFormDataById(@Param('id') id: string) {
+    return this.dynamicformService.getFormDataById(id);
+  }
+
   @Post('add-country')
   addCountry(@Body() createAreaDto: CreateAreaDto) {
     return this.dynamicformService.addCountry(createAreaDto);

@@ -29,7 +29,7 @@ const ClientForm = ({ preview, formValues }) => {
 
 
   const handleCountryChange = (value) => {
-    const selectedCountry = countries.find((country) => country._id === value);
+    const selectedCountry = countries.find((country) => country.name === value);
 
     if (selectedCountry) {
       setStates(selectedCountry.states || []);
@@ -40,7 +40,7 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   const handleStateChange = (value) => {
-    const selectedState = states.find((state) => state._id === value);
+    const selectedState = states.find((state) => state.name === value);
 
     if (selectedState) {
       setCities(selectedState.cities || []);
@@ -50,10 +50,12 @@ const ClientForm = ({ preview, formValues }) => {
     }
   };
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    const res = await axios.post('/dynamicform/formdata', { data: values })
+    console.log(res.data);
     form.resetFields();
   };
+
   return (
     <div className="pt-[50px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
       <Form form={form} onFinishFailed={() => { setAllValide(false) }} onFinish={handleFormSubmit} layout="vertical">

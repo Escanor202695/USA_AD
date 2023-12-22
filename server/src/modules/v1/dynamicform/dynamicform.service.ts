@@ -8,6 +8,7 @@ import { Model } from 'mongoose';
 import { Country, CountryDocument } from './schema/country.schema';
 import { State, StateDocument } from './schema/state.schema';
 import { Form, FormDocument } from './schema/form.schema';
+import { FormData, FormDataDocument } from './schema/formData.schema';
 
 @Injectable()
 export class DynamicformService {
@@ -15,9 +16,10 @@ export class DynamicformService {
     @InjectModel(Country.name) private readonly countryModel: Model<CountryDocument>,
     @InjectModel(State.name) private readonly stateModel: Model<StateDocument>,
     @InjectModel(Form.name) private readonly formModel: Model<FormDocument>,
+    @InjectModel(FormData.name) private readonly formDataModel: Model<FormDataDocument>,
   ) { }
 
-  async saveFormData(name: string, data: Record<string, any>): Promise<Form> {
+  async saveForm(name: string, data: Record<string, any>): Promise<Form> {
     const formData = await this.formModel.findOne({ name: name }).exec();
     if (!formData) {
       const newData = new this.formModel({ name, data });
@@ -27,8 +29,21 @@ export class DynamicformService {
     return formData.save();
   }
 
-  async getFormData(name: string) {
+  async getForm(name: string) {
     return this.formModel.findOne({ name: name }).exec();
+  }
+
+  async saveFormData(data: Record<string, any>) {
+    const newFormData = new this.formDataModel({ data });
+    return newFormData.save();
+  }
+
+  async getAllFormData() {
+    return this.formDataModel.find().exec();
+  }
+
+  async getFormDataById(id: string) {
+    return this.formDataModel.findById(id).exec();
   }
 
   async addCountry(createArea: CreateAreaDto) {

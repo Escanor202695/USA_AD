@@ -8,7 +8,7 @@ const ViewForm = () => {
   const [formValues, setFormsValuse] = useState(null);
   const fetchData = async () => {
     const response = await axios.get(
-      "/dynamicform/formdata/v1"
+      "/dynamicform/form/v1"
     );
     const data = response.data?.data;
     setFormsValuse(data);

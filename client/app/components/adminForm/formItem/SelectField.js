@@ -8,7 +8,7 @@ const SelectField = ({ name, data, onChange, rules }) => {
     <Form.Item label={name} name={name} rules={rules}>
       <Select onChange={onChange}>
         {data?.map((item) => (
-          <Option key={item._id} value={item._id}>
+          <Option key={item._id} value={item.name}>
             {item.name}
           </Option>
         ))}
