@@ -7,13 +7,24 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Country, CountryDocument } from './schema/country.schema';
 import { State, StateDocument } from './schema/state.schema';
+import { Form, FormDocument } from './schema/form.schema';
 
 @Injectable()
 export class DynamicformService {
   constructor(@InjectModel(City.name) private readonly cityModel: Model<CityDocument>,
     @InjectModel(Country.name) private readonly countryModel: Model<CountryDocument>,
-    @InjectModel(State.name) private readonly stateModel: Model<StateDocument>
+    @InjectModel(State.name) private readonly stateModel: Model<StateDocument>,
+    @InjectModel(Form.name) private readonly formModel: Model<FormDocument>,
   ) { }
+
+  async saveFormData(name: string, data: Record<string, any>): Promise<Form> {
+    const newData = new this.formModel({ name, data });
+    return newData.save();
+  }
+
+  async getFormData(name: string) {
+    return this.formModel.findOne({ name: name }).exec();
+  }
 
   async addCountry(createArea: CreateAreaDto) {
     const country = await this.countryModel.findOne({

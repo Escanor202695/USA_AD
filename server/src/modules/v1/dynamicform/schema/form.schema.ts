@@ -9,9 +9,8 @@ export class Form {
   @Prop({ required: true })
   name: string;
 
-
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'State' })
-  states: State[];
+  @Prop({ type: Object })
+  data: Record<string, any>;
 }
 
 export const FormSchema = SchemaFactory.createForClass(Form);
