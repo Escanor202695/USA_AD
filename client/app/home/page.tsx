@@ -10,7 +10,9 @@ import AddLocation from "../components/addLocation";
 function Home(props) {
   return (
     <>
-      <div className="bg-[#101827] h-auto ">
+
+      <div className="bg-[#101827] flex flex-col h-auto min-h-[100vh] overflow-scroll overflow-x-hidden">
+        <NavBar/>
         <Location />
         <Footer />
       </div>
