@@ -46,7 +46,7 @@ const AdminForm = ({ onFormSubmit }) => {
       type: "text",
       isRequired: true,
       errorMessage: "Please enter a valid email address",
-      isEditable: true,
+      isEditable: false,
     },
     {
       name: "Country",
