@@ -18,8 +18,13 @@ export class DynamicformService {
   ) { }
 
   async saveFormData(name: string, data: Record<string, any>): Promise<Form> {
-    const newData = new this.formModel({ name, data });
-    return newData.save();
+    const formData = await this.formModel.findOne({ name: name }).exec();
+    if (!formData) {
+      const newData = new this.formModel({ name, data });
+      return newData.save();
+    }
+    formData.data = data;
+    return formData.save();
   }
 
   async getFormData(name: string) {
