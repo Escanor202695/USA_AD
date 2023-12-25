@@ -8,6 +8,8 @@ export default function EditForm({
   onOk,
   name,
   initialValues,
+  sectionName,
+  sectionIndex,
 }) {
   const [form] = Form.useForm();
   const [isRequired, setIsRequired] = useState(false);
@@ -36,7 +38,7 @@ export default function EditForm({
         if (fieldType === "select" || fieldType === "radio") {
           values.data = options;
         }
-        onOk(values);
+        onOk(sectionIndex, values);
         form.resetFields();
         setIsRequired(false);
       })
@@ -48,7 +50,7 @@ export default function EditForm({
   return (
     <>
       <Modal
-        title={`${name}`}
+        title={`${name} in ${sectionName}`}
         open={open}
         onCancel={onCancel}
         onOk={onOkButtonClicked}

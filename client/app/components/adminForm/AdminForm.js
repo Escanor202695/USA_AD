@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Select, DatePicker } from "antd";
+import { Form, Modal } from "antd";
 import axios from "../../../utils/axios";
-import AddFieldModal from "./AddFieldModal";
 import SelectField from "./formItem/SelectField";
 import TextField from "./formItem/TextField";
 import DateField from "./formItem/DateField";
@@ -11,14 +10,14 @@ import RadioField from "./formItem/RadioField";
 import CustomPhoneInput from "./formItem/PhoneInput";
 import PreviewModal from "./PreviewForm";
 import EditForm from "./EditForm";
-
-const { Option } = Select;
+import EditSection from "./EditSection";
 
 const AdminForm = ({ onFormSubmit }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [editFieldModalVisible, setEditFieldModalVisible] = useState(false);
+  const [editSectionModalVisible, setEditSectionModalVisible] = useState(false);
   const [previewModalVisible, setPreviewModalVisible] = useState(false);
   const [editedField, setEditedField] = useState(null);
 
@@ -28,53 +27,74 @@ const AdminForm = ({ onFormSubmit }) => {
     // console.log(data);
     setCountries(data);
   };
+
+  const fetchFormFields = async () => {
+    const response = await axios.get("/dynamicform/form/v1");
+    const data = response.data?.data;
+    if (data) {
+      setFormFields(data);
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    fetchFormFields();
   }, []);
 
   const [form] = Form.useForm();
   const [formFields, setFormFields] = useState([
     {
-      name: "Phone",
-      type: "phone",
-      isRequired: true,
-      errorMessage: "Please enter a valid phone number",
-      isEditable: false,
-    },
-    {
-      name: "Email",
-      type: "text",
-      isRequired: true,
-      errorMessage: "Please enter a valid email address",
-      isEditable: false,
-    },
-    {
-      name: "Country",
-      type: "select",
-      isRequired: true,
-      errorMessage: "Please select a country",
-      isEditable: false,
-    },
-    {
-      name: "State",
-      type: "select",
-      isRequired: true,
-      errorMessage: "Please select a State",
-      isEditable: false,
-    },
-    {
-      name: "City",
-      type: "select",
-      isRequired: true,
-      errorMessage: "Please select a City",
-      isEditable: false,
-    },
-    {
-      name: "Location",
-      type: "text",
-      isRequired: true,
-      errorMessage: "Please enter your loaction",
-      isEditable: false,
+      section: "Contact Info",
+      fields: [
+        {
+          name: "Phone",
+          type: "phone",
+          isRequired: true,
+          errorMessage: "Please enter a valid phone number",
+          isEditable: false,
+          section: "Contact Info",
+        },
+        {
+          name: "Email",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please enter a valid email address",
+          isEditable: false,
+          section: "Contact Info",
+        },
+        {
+          name: "Country",
+          type: "select",
+          isRequired: true,
+          errorMessage: "Please select a country",
+          isEditable: false,
+          section: "Contact Info",
+        },
+        {
+          name: "State",
+          type: "select",
+          isRequired: true,
+          errorMessage: "Please select a State",
+          isEditable: false,
+          section: "Contact Info",
+        },
+        {
+          name: "City",
+          type: "select",
+          isRequired: true,
+          errorMessage: "Please select a City",
+          isEditable: false,
+          section: "Contact Info",
+        },
+        {
+          name: "Location",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please enter your loaction",
+          isEditable: false,
+          section: "Contact Info",
+        },
+      ],
     },
   ]);
 
@@ -84,7 +104,8 @@ const AdminForm = ({ onFormSubmit }) => {
     });
   };
 
-  const handleEditFieldClick = () => {
+  const handleEditFieldClick = (e) => {
+    e.preventDefault();
     setEditFieldModalVisible(true);
   };
 
@@ -93,11 +114,65 @@ const AdminForm = ({ onFormSubmit }) => {
     setEditedField(null);
   };
 
-  const handleEditFieldModalOk = (values) => {
-    console.log(values);
-    setFormFields((prevFields) => [...prevFields, values]);
+  const handleEditFieldModalOk = (sectionIdx, values) => {
+    console.log(sectionIdx, values);
+    // setFormFields((prevFields) => [...prevFields, values]);
+    const newFormFields = [...formFields];
+    newFormFields[sectionIdx].fields.push(values);
+    setFormFields(newFormFields);
+
     setEditedField(null);
     setEditFieldModalVisible(false);
+  };
+
+  const confirmDeleteField = (sectionIndex, fieldIndex) => {
+    Modal.confirm({
+      title: "Confirm Deletion",
+      content: "Are you sure you want to delete this field?",
+      okText: "Delete",
+      onOk: () => deleteField(sectionIndex, fieldIndex),
+      okButtonProps: { style: { background: 'red', borderColor: 'red' } },
+    });
+  };
+
+  const deleteField = (sectionIndex, fieldIndex) => {
+    const newFormFields = [...formFields];
+    newFormFields[sectionIndex].fields.splice(fieldIndex, 1);
+    setFormFields(newFormFields);
+  };
+
+  const handleEditSectionClick = (e) => {
+    e.preventDefault();
+    setEditSectionModalVisible(true);
+  };
+
+  const handleEditSectionModalCancel = () => {
+    setEditSectionModalVisible(false);
+    // setEditedField(null);
+  };
+
+  const handleEditSectionModalOk = (values) => {
+    console.log(values);
+    setFormFields([...formFields, { section: values.name, fields: [] }]);
+    // setFormFields((prevFields) => [...prevFields, values]);
+    // setEditedField(null);
+    setEditSectionModalVisible(false);
+  };
+
+  const confirmDeleteSection = (sectionIndex) => {
+    Modal.confirm({
+      title: "Confirm Deletion",
+      content: "Are you sure you want to delete this section?",
+      okText: "Delete",
+      onOk: () => deleteSection(sectionIndex),
+      okButtonProps: { style: { background: 'red', borderColor: 'red' } },
+    });
+  };
+
+  const deleteSection = (sectionIndex) => {
+    const newFormFields = [...formFields];
+    newFormFields.splice(sectionIndex, 1);
+    setFormFields(newFormFields);
   };
 
   const handleCountryChange = (value) => {
@@ -123,183 +198,268 @@ const AdminForm = ({ onFormSubmit }) => {
   };
 
   const onFormFieldEdit = (formField) => {
-    handleEditFieldClick();
+    setEditedField(formField);
+    setEditFieldModalVisible(true);
   };
 
   return (
     <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
       <div>
-        <EditForm
-          open={editFieldModalVisible}
-          onCancel={handleEditFieldModalCancel}
-          onOk={handleEditFieldModalOk}
-          name={"Modify Field"}
+        <EditSection
+          open={editSectionModalVisible}
+          onCancel={handleEditSectionModalCancel}
+          onOk={handleEditSectionModalOk}
+          name={"Modify Section"}
           initialValues={editedField}
         />
         <button
-          onClick={handleEditFieldClick}
+          onClick={handleEditSectionClick}
           className="flex bg-cyan-200 rounded-md py-2 px-4 mx-auto"
         >
-          Add new field
+          Add new Section
         </button>
       </div>
       <div>
         <Form form={form} onFinish={handleFormSubmit} layout="vertical">
-          {formFields?.map((field, index) => {
-            if (field?.type === "text")
-              return (
-                <div key={index} className="flex justify-around">
-                  <TextField
-                    name={field?.name}
-                    rules={[
-                      {
-                        required: field?.isRequired,
-                        message: field?.errorMessage ?? "Please enter a value",
-                      },
-                    ]}
-                  />
-                  {field?.isEditable ? (
-                    <div className="mt-8">
-                      <button
-                        className="p-2 bg-[#343434] text-white rounded-md"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onFormFieldEdit(field);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            if (field?.type === "phone")
-              return (
-                <CustomPhoneInput
-                  key={index}
-                  name={field?.name}
-                  rules={[
-                    {
-                      required: field?.isRequired,
-                      message: field?.errorMessage ?? "Please enter a value",
-                    },
-                  ]}
+          {formFields?.map((section, sectionIndex) => {
+            return (
+              <div key={sectionIndex}>
+                <div>{section?.section}</div>
+                <EditForm
+                  open={editFieldModalVisible}
+                  onCancel={handleEditFieldModalCancel}
+                  onOk={handleEditFieldModalOk}
+                  name={"Modify Field"}
+                  initialValues={editedField}
+                  sectionName={section?.section}
+                  sectionIndex={sectionIndex}
                 />
-              );
-            if (field?.type === "select")
-              return (
-                <SelectField
-                  key={index}
-                  name={field?.name}
-                  data={
-                    field?.name === "Country"
-                      ? countries
-                      : field?.name === "State"
-                        ? states
-                        : field?.name === "City"
-                          ? cities
-                          : field?.data
-                  }
-                  onChange={
-                    field?.name === "Country"
-                      ? handleCountryChange
-                      : field?.name === "State"
-                        ? handleStateChange
-                        : null
-                  }
-                  rules={[
-                    {
-                      required: field?.isRequired,
-                      message: field?.errorMessage ?? "Please select a value",
-                    },
-                  ]}
-                />
-              );
-            if (field?.type === "date")
-              return (
-                <div key={index} className="flex justify-around">
-                  <DateField
-                    name={field?.name}
-                    rules={[
-                      {
-                        required: field?.isRequired,
-                        message: field?.errorMessage ?? "Please select a value",
-                      },
-                    ]}
-                  />
-                  {field?.isEditable ? (
-                    <div className="mt-8">
-                      <button
-                        className="p-2 bg-[#343434] text-white rounded-md"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onFormFieldEdit(field);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  ) : null}
+                <div className="flex">
+                  <button
+                    onClick={handleEditFieldClick}
+                    className="flex bg-cyan-200 rounded-md py-2 px-4 m-2"
+                  >
+                    Add new field
+                  </button>
+                  {sectionIndex != 0 && (
+                    <button
+                      disabled={sectionIndex == 0}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        confirmDeleteSection(sectionIndex);
+                      }}
+                      className="flex bg-cyan-200 rounded-md py-2 px-4 m-2"
+                    >
+                      Delete the section
+                    </button>
+                  )}
                 </div>
-              );
-            if (field?.type === "radio")
-              return (
-                <div key={index} className="flex justify-around">
-                  <RadioField
-                    name={field?.name}
-                    data={field?.data}
-                    rules={[
-                      {
-                        required: field?.isRequired,
-                        message: field?.errorMessage ?? "Please select a value",
-                      },
-                    ]}
-                  />
-                  {field?.isEditable ? (
-                    <div className="mt-8">
-                      <button
-                        className="p-2 bg-[#343434] text-white rounded-md"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onFormFieldEdit(field);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            if (field?.type === "image")
-              return (
-                <div key={index} className="flex justify-around">
-                  <ImageField
-                    name={field?.name}
-                    rules={[
-                      {
-                        required: field?.isRequired,
-                        message: field?.errorMessage ?? "Please select a value",
-                      },
-                    ]}
-                  />
-                  {field?.isEditable ? (
-                    <div className="mt-8">
-                      <button
-                        className="p-2 bg-[#343434] text-white rounded-md"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setEditedField(field);
-                          onFormFieldEdit(field);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              );
+                {section?.fields?.map((field, index) => {
+                  if (field?.type === "text")
+                    return (
+                      <div key={index} className="flex justify-between">
+                        <TextField
+                          name={field?.name}
+                          rules={[
+                            {
+                              required: field?.isRequired,
+                              message:
+                                field?.errorMessage ?? "Please enter a value",
+                            },
+                          ]}
+                        />
+                        {field?.isEditable ? (
+                          <div className=" bg-red-700">
+                            <div className="mt-8 px-2 py-2 m-2">
+                              <button
+                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  onFormFieldEdit(field);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="p-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  confirmDeleteField(sectionIndex, index);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  if (field?.type === "phone")
+                    return (
+                      <CustomPhoneInput
+                        key={index}
+                        name={field?.name}
+                        rules={[
+                          {
+                            required: field?.isRequired,
+                            message:
+                              field?.errorMessage ?? "Please enter a value",
+                          },
+                        ]}
+                      />
+                    );
+                  if (field?.type === "select")
+                    return (
+                      <SelectField
+                        key={index}
+                        name={field?.name}
+                        data={
+                          field?.name === "Country"
+                            ? countries
+                            : field?.name === "State"
+                              ? states
+                              : field?.name === "City"
+                                ? cities
+                                : field?.data
+                        }
+                        onChange={
+                          field?.name === "Country"
+                            ? handleCountryChange
+                            : field?.name === "State"
+                              ? handleStateChange
+                              : null
+                        }
+                        rules={[
+                          {
+                            required: field?.isRequired,
+                            message:
+                              field?.errorMessage ?? "Please select a value",
+                          },
+                        ]}
+                      />
+                    );
+                  if (field?.type === "date")
+                    return (
+                      <div key={index} className="flex justify-around">
+                        <DateField
+                          name={field?.name}
+                          rules={[
+                            {
+                              required: field?.isRequired,
+                              message:
+                                field?.errorMessage ?? "Please select a value",
+                            },
+                          ]}
+                        />
+                        {field?.isEditable ? (
+                          <div className=" bg-red-700">
+                            <div className="mt-8 px-2 py-2 m-2">
+                              <button
+                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  onFormFieldEdit(field);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="p-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  confirmDeleteField(sectionIndex, index);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  if (field?.type === "radio")
+                    return (
+                      <div key={index} className="flex justify-around">
+                        <RadioField
+                          name={field?.name}
+                          data={field?.data}
+                          rules={[
+                            {
+                              required: field?.isRequired,
+                              message:
+                                field?.errorMessage ?? "Please select a value",
+                            },
+                          ]}
+                        />
+                        {field?.isEditable ? (
+                          <div className=" bg-red-700">
+                            <div className="mt-8 px-2 py-2 m-2">
+                              <button
+                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  onFormFieldEdit(field);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="p-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  confirmDeleteField(sectionIndex, index);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  if (field?.type === "image")
+                    return (
+                      <div key={index} className="flex justify-around">
+                        <ImageField
+                          name={field?.name}
+                          rules={[
+                            {
+                              required: field?.isRequired,
+                              message:
+                                field?.errorMessage ?? "Please select a value",
+                            },
+                          ]}
+                        />
+                        {field?.isEditable ? (
+                          <div className=" bg-red-700">
+                            <div className="mt-8 px-2 py-2 m-2">
+                              <button
+                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  onFormFieldEdit(field);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="p-2 bg-[#343434] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  confirmDeleteField(sectionIndex, index);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                })}
+              </div>
+            );
           })}
-
           <Form.Item>
             <div className="">
               <button

@@ -8,7 +8,6 @@ import DateField from "./formItem/DateField";
 import RadioField from "./formItem/RadioField";
 import ImageField from "./formItem/ImageField";
 import { toast } from "react-toastify";
-
 const ClientForm = ({ preview, formValues }) => {
   const [form] = Form.useForm();
 
@@ -29,7 +28,6 @@ const ClientForm = ({ preview, formValues }) => {
 
   const handleCountryChange = (value) => {
     const selectedCountry = countries.find((country) => country.name === value);
-
     if (selectedCountry) {
       setStates(selectedCountry.states || []);
       form.setFieldsValue({ State: undefined, City: undefined });
@@ -50,7 +48,27 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   const handleFormSubmit = async (values) => {
-    const res = await axios.post("/dynamicform/formdata", { data: values });
+    const fileKey = Object.keys(values).find(
+      (key) => values[key]?.file?.response
+    );
+    if (fileKey) {
+      values[fileKey] = values[fileKey].file.response;
+    }
+    console.log(values);
+
+    const formData = {};
+
+    formValues.forEach((section) => {
+      formData[section.section] = {};
+
+      section.fields.forEach((field) => {
+        formData[section.section][field.name] = values[field.name];
+      });
+    });
+
+    console.log(formData);
+
+    const res = await axios.post("/dynamicform/formdata", { data: formData });
     console.log(res.data);
     toast.success("Form submitted successfully");
     form.resetFields();
@@ -72,102 +90,115 @@ const ClientForm = ({ preview, formValues }) => {
           borderRadius: "10px", // camelCase for border-radius
         }}
       >
-        {formValues?.map((field, index) => {
-          if (field?.type === "text")
-            return (
-              <TextField
-                key={index}
-                name={field?.name}
-                rules={[
-                  {
-                    required: field?.isRequired,
-                    message: field?.errorMessage ?? "Please enter a value",
-                  },
-                ]}
-              />
-            );
-          if (field?.type === "phone")
-            return (
-              <CustomPhoneInput
-                key={index}
-                name={field?.name}
-                rules={[
-                  {
-                    required: field?.isRequired,
-                    message: field?.errorMessage ?? "Please enter a value",
-                  },
-                ]}
-              />
-            );
-          if (field?.type === "select")
-            return (
-              <SelectField
-                key={index}
-                name={field?.name}
-                data={
-                  field?.name === "Country"
-                    ? countries
-                    : field?.name === "State"
-                    ? states
-                    : field?.name === "City"
-                    ? cities
-                    : field?.data
-                }
-                onChange={
-                  field?.name === "Country"
-                    ? handleCountryChange
-                    : field?.name === "State"
-                    ? handleStateChange
-                    : null
-                }
-                rules={[
-                  {
-                    required: field?.isRequired,
-                    message: field?.errorMessage ?? "Please select a value",
-                  },
-                ]}
-              />
-            );
-          if (field?.type === "date")
-            return (
-              <DateField
-                key={index}
-                name={field?.name}
-                rules={[
-                  {
-                    required: field?.isRequired,
-                    message: field?.errorMessage ?? "Please select a value",
-                  },
-                ]}
-              />
-            );
-          if (field?.type === "radio")
-            return (
-              <RadioField
-                key={index}
-                name={field?.name}
-                data={field?.data}
-                rules={[
-                  {
-                    required: field?.isRequired,
-                    message: field?.errorMessage ?? "Please select a value",
-                  },
-                ]}
-              />
-            );
-          if (field?.type === "image")
-            return (
-              <ImageField
-                key={index}
-                name={field?.name}
-                rules={[
-                  {
-                    required: field?.isRequired,
-                    message: field?.errorMessage ?? "Please select a value",
-                  },
-                ]}
-              />
-            );
+        {formValues?.map((section, sectionIndex) => {
+          return (
+            <div key={sectionIndex}>
+              <div>{section?.section}</div>
+              {section?.fields?.map((field, index) => {
+                if (field?.type === "text")
+                  return (
+                    <TextField
+                      key={index}
+                      name={field?.name}
+                      rules={[
+                        {
+                          required: field?.isRequired,
+                          message:
+                            field?.errorMessage ?? "Please enter a value",
+                        },
+                      ]}
+                    />
+                  );
+                if (field?.type === "phone")
+                  return (
+                    <CustomPhoneInput
+                      key={index}
+                      name={field?.name}
+                      rules={[
+                        {
+                          required: field?.isRequired,
+                          message:
+                            field?.errorMessage ?? "Please enter a value",
+                        },
+                      ]}
+                    />
+                  );
+                if (field?.type === "select")
+                  return (
+                    <SelectField
+                      key={index}
+                      name={field?.name}
+                      data={
+                        field?.name === "Country"
+                          ? countries
+                          : field?.name === "State"
+                            ? states
+                            : field?.name === "City"
+                              ? cities
+                              : field?.data
+                      }
+                      onChange={
+                        field?.name === "Country"
+                          ? handleCountryChange
+                          : field?.name === "State"
+                            ? handleStateChange
+                            : null
+                      }
+                      rules={[
+                        {
+                          required: field?.isRequired,
+                          message:
+                            field?.errorMessage ?? "Please select a value",
+                        },
+                      ]}
+                    />
+                  );
+                if (field?.type === "date")
+                  return (
+                    <DateField
+                      key={index}
+                      name={field?.name}
+                      rules={[
+                        {
+                          required: field?.isRequired,
+                          message:
+                            field?.errorMessage ?? "Please select a value",
+                        },
+                      ]}
+                    />
+                  );
+                if (field?.type === "radio")
+                  return (
+                    <RadioField
+                      key={index}
+                      name={field?.name}
+                      data={field?.data}
+                      rules={[
+                        {
+                          required: field?.isRequired,
+                          message:
+                            field?.errorMessage ?? "Please select a value",
+                        },
+                      ]}
+                    />
+                  );
+                if (field?.type === "image")
+                  return (
+                    <ImageField
+                      key={index}
+                      name={field?.name}
+                      rules={[
+                        {
+                          required: field?.isRequired,
+                          message:
+                            field?.errorMessage ?? "Please select a value",
+                        },
+                      ]}
+                    />
+                  );
+              })}
+            </div>
+          );
         })}
 
         <Form.Item>
