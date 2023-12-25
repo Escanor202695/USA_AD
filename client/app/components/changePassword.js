@@ -22,9 +22,13 @@ export default function ChangePassword() {
         setError("Passwords do not match");
         return;
       }
-
+      await axios.patch('/api/auth/local/newpassword',
+      oldPassword,
+      password,
+      confirmPassword
+      )
       // Add logic to send a request to change the password
-      // You can use axios.post or any other method to send the request
+      // You can use axios.postlo or any other method to send the request
 
       // Simulating a successful password change
       toast.success("Password changed successfully!");
