@@ -130,6 +130,24 @@ export class AuthService {
     }
   }
 
+
+  public async changePassword(email: string, password: string, newpassword: string) {
+    let user = await this.authuserModel.findOne({ email: email });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (user.password === password) {
+      user.password = newpassword;
+      user.otp = null;
+      await user.save();
+      return true;
+    } else {
+      throw new InvalidCredentials();
+    }
+  }
+
+
   public async getUserById(userId: string) {
     try {
       const user = await this.authuserModel
@@ -144,9 +162,9 @@ export class AuthService {
 
   private async getAuthenticatedUser(email: string, password: string) {
     try {
-      let user = await this.authuserModel.findOne({ email: email });
+      let user = await this.authuserModel.findOne({ email: email }).select('-password').exec();
       if (!user) {
-        user = await this.authuserModel.findOne({ phone: email });
+        user = await this.authuserModel.findOne({ phone: email }).select('-password').exec();
       }
       if (!user) {
         throw new InvalidCredentials();
