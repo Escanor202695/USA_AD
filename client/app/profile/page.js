@@ -4,7 +4,7 @@ import Sidebar from '../components/sidebarAdmin'
 
 function Profile() {
   return (
-    <div>
+    <div className='w-full '>
     <Sidebar/>
     </div>
   )

@@ -28,12 +28,9 @@ export default function ForgotPassword() {
     try {
       setIsCodeSending(true);
       // Make a POST request to send the code
-      const response = await axios.post(
-        "/auth/local/forgetPassword",
-        {
-          email,
-        }
-      );
+      const response = await axios.post("/auth/local/forgetPassword", {
+        email,
+      });
       console.log(response.data);
       toast.success(response.data.message);
       setIsCodeSent(true);
@@ -49,13 +46,10 @@ export default function ForgotPassword() {
     try {
       setIsResetting(true);
       // Make a POST request to reset the password
-      const response = await axios.post(
-        "/auth/local/receiveotp",
-        {
-          email: email,
-          otp: code,
-        }
-      );
+      const response = await axios.post("/auth/local/receiveotp", {
+        email: email,
+        otp: code,
+      });
       toast.success(response.data.message);
       setOtpVerified(true);
     } catch (error) {
@@ -69,14 +63,11 @@ export default function ForgotPassword() {
   const handleNewPassword = async () => {
     try {
       setIsResetting(true);
-      const response = await axios.post(
-        "/auth/local/newpassword",
-        {
-          email: email,
-          otp: code,
-          newPassword: newPassword,
-        }
-      );
+      const response = await axios.post("/auth/local/newpassword", {
+        email: email,
+        otp: code,
+        newPassword: newPassword,
+      });
       toast.success(response.data.message);
       router.push("/");
     } catch (error) {
@@ -91,7 +82,6 @@ export default function ForgotPassword() {
     <>
       <div className="flex bg-black min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-       
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
             Forgot Password
           </h2>
@@ -138,7 +128,7 @@ export default function ForgotPassword() {
                       Didn&apos;t receieve?{" "}
                       <span
                         onClick={sendCode}
-                        className="text-indigo-600 font-semibold"
+                        className="flex w-full justify-center rounded-md bg-[#F04D99] hover:bg-[#bd7ee5]   px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         Resend
                       </span>

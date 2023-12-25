@@ -60,7 +60,10 @@ const City = ({ cities, stateId, stateName, refetch }) => {
   return (
     <>
       <section className="w-full md:w-1/3 flex flex-col px-3">
-        <table id="cities" className="table-auto bg-white rounded-lg overflow-hidden ">
+        <table
+          id="cities"
+          className="table-auto bg-white rounded-lg overflow-hidden "
+        >
           <thead>
             <tr>
               <th className=" px-4 py-2 items-left bg-[#F04D99]  text-white">
@@ -88,7 +91,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
             })}
           </tbody>
         </table>
-        <div className=" px-4 py-2 mt-2 items-center bg-white rounded-lg text-black">
+        <div className=" px-4 py-2 my-2 items-center bg-white rounded-lg text-black">
           <button onClick={showModal} className=" flex items-center rounded-lg">
             Add City <NormalPlus />
           </button>

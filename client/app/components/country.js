@@ -62,7 +62,7 @@ const Country = ({ countries, refetch }) => {
 
   return (
     <>
-      <div className=" px-4 py-2 mt-2 items-center text-white  flex justify-end">
+      <div className=" px-4 py-2 mt-2 items-center text-white hidden  lg:flex justify-end ">
         <button className="  flex items-center font-semibold justify-between rounded-lg">
           <input
             id="search-countries"
@@ -106,7 +106,7 @@ const Country = ({ countries, refetch }) => {
             </tbody>
           </table>
           <div
-            className=" px-4 py-2 mt-2 items-center bg-white rounded-lg text-black"
+            className=" px-4 py-2 my-2 items-center bg-white rounded-lg text-black"
             onClick={showModal}
           >
             <button className=" flex items-center rounded-lg">

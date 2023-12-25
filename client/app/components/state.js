@@ -92,8 +92,8 @@ const State = ({ states, countryId, countryName, refetch }) => {
           </tbody>
         </table>
         <div
-          className=" px-4 py-2 mt-2 items-center bg-white rounded-lg text-black"
-          onClick={showModal}
+        className=" px-4 py-2 my-2 items-center bg-white rounded-lg text-black"
+        onClick={showModal}
         >
           <button className=" flex items-center rounded-lg">
             Add State <NormalPlus />
