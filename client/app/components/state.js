@@ -1,5 +1,5 @@
 import City from "./city";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
 import NormalPlus from "./svg/NormalPlus";
@@ -16,6 +16,11 @@ const State = ({ states, countryId, countryName, refetch }) => {
   const filteredStates = states?.filter((state) =>
     state.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  useEffect(() => {
+    if (filteredStates && filteredStates.length > 0) {
+      setSelectedState(filteredStates[0]);
+    }
+  }, filteredStates);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -83,7 +88,7 @@ const State = ({ states, countryId, countryName, refetch }) => {
                     state?._id === selectedState?._id
                       ? "bg-[#bd7ee5] text-white"
                       : "text-black"
-                  }`}
+                  } border`}
                 >
                   <td className=" px-4 py-2">{state?.name}</td>
                 </tr>
@@ -92,8 +97,8 @@ const State = ({ states, countryId, countryName, refetch }) => {
           </tbody>
         </table>
         <div
-        className=" px-4 py-2 my-2 items-center bg-white rounded-lg text-black"
-        onClick={showModal}
+          className=" my-2 items-center  rounded-lg text-white"
+          onClick={showModal}
         >
           <button className=" flex items-center rounded-lg">
             Add State <NormalPlus />

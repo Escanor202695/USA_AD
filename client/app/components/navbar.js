@@ -72,7 +72,7 @@ const NavBar = () => {
             {token ? (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>
-                  router.push("/post-add")
+                  router.push("/form")
                 )}
                 {renderAuthButton("Profile", <ProfileIcon />, () =>
                   router.push("/profile")
@@ -82,7 +82,7 @@ const NavBar = () => {
             ) : (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>
-                  router.push("/")
+                  router.push("/form")
                 )}
                 {renderAuthButton("Register", <ProfileIcon />, () =>
                   router.push("/user/signup")
@@ -136,7 +136,7 @@ const NavBar = () => {
             {token ? (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>
-                  router.push("/post-add")
+                  router.push("/form")
                 )}
                 {renderAuthButton("Profile", <ProfileIcon />, () =>
                   router.push("/profile")

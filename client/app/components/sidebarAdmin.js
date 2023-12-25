@@ -8,10 +8,11 @@ import {
 } from "@heroicons/react/24/outline";
 import Edit from "./svg/edit";
 import ProfileNavBar from "./ProfileNavbar";
+import Map from "./svg/map";
 
 const components = {
   Location,
-  "Admin Form": AdminForm,
+  "Manage Form": AdminForm,
   "Change Password": ChangePassword,
 };
 
@@ -28,8 +29,9 @@ export default function Sidebar() {
   };
 
   const menuItems = [
-    { name: "Location", icon: <UserIcon className="w-4 h-4" /> },
-    { name: "Admin Form", icon: <Edit className="w-4 h-4" /> },
+    { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },
+    { name: "Location", icon: <Map className="w-4 h-4" /> },
+    { name: "Manage Form", icon: <Edit className="w-4 h-4" /> },
     { name: "Change Password", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Log out", icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" /> },
   ];
@@ -60,8 +62,8 @@ export default function Sidebar() {
                       }
                       className={
                         (item.name === selectedItem
-                          ? "bg-[#bd7ee5] "
-                          : " bg-[#F04D99]    ") +
+                          ? "bg-[#F04D99]     "
+                          : " ") +
                         " group flex gap-x-3 rounded-md text-white p-2 text-sm leading-6 font-semibold"
                       }
                     >

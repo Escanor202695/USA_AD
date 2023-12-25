@@ -31,7 +31,7 @@ export default function Signup() {
         password,
       });
       toast.success("Signup Successful!");
-      router.push("/user/login");
+      router.push("/login");
       setError(null);
     } catch (error) {
       // Handle signup error

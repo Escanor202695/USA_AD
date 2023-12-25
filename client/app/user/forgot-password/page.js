@@ -66,7 +66,7 @@ export default function ForgotPassword() {
       const response = await axios.post("/auth/local/newpassword", {
         email: email,
         otp: code,
-        newPassword: newPassword,
+        newpassword: newPassword,
       });
       toast.success(response.data.message);
       router.push("/");

@@ -76,9 +76,6 @@ const City = ({ cities, stateId, stateName, refetch }) => {
               return (
                 <tr
                   key={index}
-                  onClick={() => {
-                    setSelectedCity(city);
-                  }}
                   className={`${
                     city?._id === selectedCity?._id
                       ? "bg-[#bd7ee5] text-white"
@@ -91,7 +88,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
             })}
           </tbody>
         </table>
-        <div className=" px-4 py-2 my-2 items-center bg-white rounded-lg text-black">
+        <div className=" my-2 items-center  rounded-lg text-white">
           <button onClick={showModal} className=" flex items-center rounded-lg">
             Add City <NormalPlus />
           </button>

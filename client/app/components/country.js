@@ -1,5 +1,5 @@
 import State from "./state";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
 import Search from "./svg/search";
@@ -13,10 +13,14 @@ const Country = ({ countries, refetch }) => {
   const handleCountryClick = (country) => {
     setSelectedCountry(country);
   };
-
   const filteredCountries = countries?.filter((country) =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  useEffect(() => {
+    if (filteredCountries && filteredCountries.length > 0) {
+      setSelectedCountry(filteredCountries[0]);
+    }
+  }, [filteredCountries]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -77,10 +81,13 @@ const Country = ({ countries, refetch }) => {
 
       <div className="container mx-auto flex flex-wrap py-6 overflow-hidden ">
         <section className="w-full md:w-1/3 flex flex-col px-3">
-          <table id="countries" className="table-auto bg-[#F04D99] rounded-lg ">
+          <table
+            id="countries"
+            className="table-auto bg-white rounded-lg overflow-hidden"
+          >
             <thead>
               <tr>
-                <th className=" px-4 py-2 mb-2 border-b items-left text-white">
+                <th className=" px-4 py-2 mb-2 border-b bg-[#F04D99] items-left text-white">
                   Countries
                 </th>
               </tr>
@@ -93,20 +100,18 @@ const Country = ({ countries, refetch }) => {
                     onClick={() => handleCountryClick(country)}
                     className={` ${
                       country?._id === selectedCountry?._id
-                        ? "bg-[#bd7ee5]"
-                        : ""
+                        ? "bg-[#bd7ee5] text-white"
+                        : "text-black"
                     }`}
                   >
-                    <td className=" px-4 py-2 border-b text-white">
-                      {country?.name}
-                    </td>
+                    <td className=" px-4 py-2 border-b ">{country?.name}</td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
           <div
-            className=" px-4 py-2 my-2 items-center bg-white rounded-lg text-black"
+            className=" my-2 items-center  rounded-lg text-white"
             onClick={showModal}
           >
             <button className=" flex items-center rounded-lg">
