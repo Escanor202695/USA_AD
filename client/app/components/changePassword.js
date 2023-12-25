@@ -9,8 +9,8 @@ import ClosedEye from "./svg/closedEye.js";
 
 // ChangePassword component
 export default function ChangePassword() {
-  const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
+  const [newpassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
@@ -18,15 +18,11 @@ export default function ChangePassword() {
     e.preventDefault();
 
     try {
-      if (password !== confirmPassword) {
+      if (newpassword !== confirmPassword) {
         setError("Passwords do not match");
         return;
       }
-      await axios.patch('/api/auth/local/newpassword',
-      oldPassword,
-      password,
-      confirmPassword
-      )
+      await axios.post("/auth/local/newpassword", password, newpassword);
       // Add logic to send a request to change the password
       // You can use axios.postlo or any other method to send the request
 
@@ -50,17 +46,17 @@ export default function ChangePassword() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
             <PasswordField
-              id="oldPassword"
-              label="Old Password"
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
+              id="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <PasswordField
-              id="password"
+              id="newpassword"
               label="New Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={newpassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
 
             <PasswordField
