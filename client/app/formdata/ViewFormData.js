@@ -29,9 +29,9 @@ const ViewFormData = () => {
                     if (typeof value === "object") {
                       if (value.type === "image") {
                         return (
-                          <div>
+                          <div key={key}>
                             <span>{key}</span>
-                            <ImageDisplay key={key} imageUrl={value.url} />
+                            <ImageDisplay imageUrl={value.url} />
                           </div>
                         );
                       } else {
