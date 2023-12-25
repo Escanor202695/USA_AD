@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-
 import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
+import NormalPlus from "./svg/NormalPlus";
 
 const City = ({ cities, stateId, stateName, refetch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,8 +13,6 @@ const City = ({ cities, stateId, stateName, refetch }) => {
   const filteredStates = cities?.filter((state) =>
     state.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -62,39 +60,39 @@ const City = ({ cities, stateId, stateName, refetch }) => {
   return (
     <>
       <section className="w-full md:w-1/3 flex flex-col px-3">
-        <table id="countries" className="table-auto">
+        <table id="cities" className="table-auto bg-white rounded-lg overflow-hidden ">
           <thead>
             <tr>
-              <th className="border px-4 py-2 items-left">
+              <th className=" px-4 py-2 items-left bg-[#F04D99]  text-white">
                 Cities
-                <div className="border px-4 py-2 mt-2 items-center">
-                  <button onClick={showModal}>Add City</button>
-                </div>
-              </th>
-            </tr>
-            <tr>
-              <th className="border px-4 py-2">
-                <input
-                  id="search-countries"
-                  type="search"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Search Cities.."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
               </th>
             </tr>
           </thead>
           <tbody className="countries-tb overflow-y-scroll">
             {filteredStates?.map((city, index) => {
               return (
-                <tr key={index} onClick={() => { setSelectedCity(city) }} className={`${city?._id === selectedCity?._id ? "bg-red-700" : ''}`}>
-                  <td className="border px-4 py-2">{city?.name}</td>
+                <tr
+                  key={index}
+                  onClick={() => {
+                    setSelectedCity(city);
+                  }}
+                  className={`${
+                    city?._id === selectedCity?._id
+                      ? "bg-[#bd7ee5] text-white"
+                      : "text-black"
+                  }`}
+                >
+                  <td className="border-b px-4 py-2 ">{city?.name}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <div className=" px-4 py-2 mt-2 items-center bg-white rounded-lg text-black">
+          <button onClick={showModal} className=" flex items-center rounded-lg">
+            Add City <NormalPlus />
+          </button>
+        </div>
       </section>
       <Modal
         title={`Add State into ${stateName}`}
@@ -107,9 +105,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
           <Form.Item
             name="name"
             label="City Name"
-            rules={[
-              { required: true, message: "Please input the city name!" },
-            ]}
+            rules={[{ required: true, message: "Please input the city name!" }]}
           >
             <Input />
           </Form.Item>

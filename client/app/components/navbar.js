@@ -1,27 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import Pen from "./svg/pen";
 import ProfileIcon from "./svg/profile";
 import Key from "./svg/key";
+import Hamburger from "./svg/hamburger";
+import { toast } from "react-toastify";
+import axios from "../../utils/axios";
 
 const navigation = [{ name: "Home", href: "/home" }];
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
-  let token = '';
-  const handleLogout = () => {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : "";
+
+  const handleLogout = async () => {
+    await axios.get("/auth/local/logout");
     localStorage.removeItem("token");
+    toast.success("LogOut Successful!");
     router.push("/");
   };
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      token = localStorage.getItem('token');
-      // console.log(token);
-    }
-  }, [token]);
+
+  const renderAuthButton = (label, icon, onClick) => (
+    <button
+      className="flex items-center text-white bg-[#F04D99] mr-2 px-4 py-2 my-2 rounded-lg"
+      onClick={onClick}
+    >
+      {icon}
+      {label}
+    </button>
+  );
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-black">
@@ -42,20 +53,7 @@ const NavBar = () => {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
+            <Hamburger />
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12 items-center mr-16">
@@ -69,56 +67,32 @@ const NavBar = () => {
             </a>
           ))}
         </div>
-        <div className="hidden sm:flex items-center">
-          {token ? (
-            <>
-              <button
-                className="flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
-                onClick={() => router.push("/post-add")}
-              >
-                <Pen />
-                Post New Ad
-              </button>
-              <button
-                className="flex items-center text-white bg-[#F04D99] px-4 py-2 ml-4 rounded-sm"
-                onClick={() => router.push("/profile")}
-              >
-                <ProfileIcon />
-                Profile
-              </button>
-              <button
-                className="ml-4 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
-                onClick={handleLogout}
-              >
-                <Key />
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className="flex items-center text-white bg-[#F04D99] px-4 py-2 mr-4 rounded-sm"
-                onClick={() => router.push("/")}
-              >
-                <Pen />
-                Post New Ad
-              </button>
-              <button
-                className="flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
-                onClick={() => router.push("/user/signup")}
-              >
-                <ProfileIcon />
-                Register
-              </button>
-              <button
-                className="ml-4 flex items-center text-white bg-[#F04D99] px-4 py-2 rounded-sm"
-                onClick={() => router.push("/")}
-              >
-                <Key />
-                Login
-              </button>
-            </>
-          )}
+        <div className="hidden  lg:flex items-center">
+          <div className=" flex">
+            {token ? (
+              <>
+                {renderAuthButton("Post New Ad", <Pen />, () =>
+                  router.push("/post-add")
+                )}
+                {renderAuthButton("Profile", <ProfileIcon />, () =>
+                  router.push("/profile")
+                )}
+                {renderAuthButton("Logout", <Key />, handleLogout)}
+              </>
+            ) : (
+              <>
+                {renderAuthButton("Post New Ad", <Pen />, () =>
+                  router.push("/")
+                )}
+                {renderAuthButton("Register", <ProfileIcon />, () =>
+                  router.push("/user/signup")
+                )}
+                {renderAuthButton("Login", <Key />, () =>
+                  router.push("/login")
+                )}
+              </>
+            )}
+          </div>
         </div>
       </nav>
       <Dialog
@@ -161,51 +135,25 @@ const NavBar = () => {
           <div className="sm:hidden flex-col">
             {token ? (
               <>
-                <button
-                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={() => router.push("/post-add")}
-                >
-                  <Pen />
-                  Post New Ad
-                </button>
-                <button
-                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={() => router.push("/profile")}
-                >
-                  <ProfileIcon />
-                  Profile
-                </button>
-                <button
-                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={handleLogout}
-                >
-                  <Key />
-                  Logout
-                </button>
+                {renderAuthButton("Post New Ad", <Pen />, () =>
+                  router.push("/post-add")
+                )}
+                {renderAuthButton("Profile", <ProfileIcon />, () =>
+                  router.push("/profile")
+                )}
+                {renderAuthButton("Logout", <Key />, handleLogout)}
               </>
             ) : (
               <>
-                <button
-                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={() => router.push("/")}
-                >
-                  <Pen />
-                  Post New Ad
-                </button>
-                <button
-                  className="flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={() => router.push("/user/signup")}
-                >
-                  <ProfileIcon />
-                  Register
-                </button>
-                <button
-                  className=" flex items-center text-white bg-[#F04D99] px-4 py-2 my-2 rounded-sm"
-                  onClick={() => router.push("/")}
-                >
-                  <Key />
-                  Login
-                </button>
+                {renderAuthButton("Post New Ad", <Pen />, () =>
+                  router.push("/")
+                )}
+                {renderAuthButton("Register", <ProfileIcon />, () =>
+                  router.push("/user/signup")
+                )}
+                {renderAuthButton("Login", <Key />, () =>
+                  router.push("/login")
+                )}
               </>
             )}
           </div>

@@ -2,6 +2,7 @@ import City from "./city";
 import { useState } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
+import NormalPlus from "./svg/NormalPlus";
 
 const State = ({ states, countryId, countryName, refetch }) => {
   const [selectedState, setSelectedState] = useState(null);
@@ -61,40 +62,45 @@ const State = ({ states, countryId, countryName, refetch }) => {
   return (
     <>
       <section className="w-full md:w-1/3 flex flex-col px-3">
-        <table id="countries" className="table-auto">
+        <table
+          id="countries"
+          className="table-auto rounded-lg bg-white overflow-hidden"
+        >
           <thead>
             <tr>
-              <th className="border px-4 py-2 items-left">
+              <th className=" px-4 py-2 bg-[#F04D99] text-white items-left">
                 States
-                <div className="border px-4 py-2 mt-2 items-center">
-                  <button onClick={showModal}>Add State</button>
-                </div>
-              </th>
-            </tr>
-            <tr>
-              <th className="border px-4 py-2">
-                <input
-                  id="search-countries"
-                  type="search"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Search States.."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
               </th>
             </tr>
           </thead>
           <tbody className="countries-tb overflow-y-scroll">
             {filteredStates?.map((state, index) => {
               return (
-                <tr key={index} onClick={() => handleStateClick(state)} className={`${state?._id === selectedState?._id ? "bg-red-700" : ''}`}>
-                  <td className="border px-4 py-2">{state?.name}</td>
+                <tr
+                  key={index}
+                  onClick={() => handleStateClick(state)}
+                  className={`${
+                    state?._id === selectedState?._id
+                      ? "bg-[#bd7ee5] text-white"
+                      : "text-black"
+                  }`}
+                >
+                  <td className=" px-4 py-2">{state?.name}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+        <div
+          className=" px-4 py-2 mt-2 items-center bg-white rounded-lg text-black"
+          onClick={showModal}
+        >
+          <button className=" flex items-center rounded-lg">
+            Add State <NormalPlus />
+          </button>
+        </div>
       </section>
+
       {selectedState && (
         <City
           cities={selectedState?.cities}
