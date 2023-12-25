@@ -5,9 +5,10 @@ import moment from "moment";
 const DateField = ({ name, rules }) => {
   return (
     <Form.Item
-      label={name}
+      label={<span style={{ color: "white" }}>{name}</span>}
       name={name}
       rules={rules}
+      
     >
       <DatePicker
         format="DD/MM/YYYY"

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../utils/axios";
-import { Form } from "antd";
-
+import { Button, Form, Input, Select, Space } from "antd";
 import TextField from "./formItem/TextField";
 import CustomPhoneInput from "./formItem/PhoneInput";
 import SelectField from "./formItem/SelectField";
 import DateField from "./formItem/DateField";
 import RadioField from "./formItem/RadioField";
 import ImageField from "./formItem/ImageField";
+import { toast } from "react-toastify";
 
 const ClientForm = ({ preview, formValues }) => {
   const [form] = Form.useForm();
@@ -26,7 +26,6 @@ const ClientForm = ({ preview, formValues }) => {
   useEffect(() => {
     fetchData();
   }, []);
-
 
   const handleCountryChange = (value) => {
     const selectedCountry = countries.find((country) => country.name === value);
@@ -51,14 +50,28 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   const handleFormSubmit = async (values) => {
-    const res = await axios.post('/dynamicform/formdata', { data: values })
+    const res = await axios.post("/dynamicform/formdata", { data: values });
     console.log(res.data);
+    toast.success("Form submitted successfully");
     form.resetFields();
   };
 
   return (
-    <div className="pt-[50px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
-      <Form form={form} onFinishFailed={() => { setAllValide(false) }} onFinish={handleFormSubmit} layout="vertical">
+    <div className="border  rounded-lg border-[#F04D99] w-[100%] md:w-[75%] lg:w-[60%] mx-auto">
+      <Form
+        form={form}
+        onFinishFailed={() => {
+          setAllValide(false);
+        }}
+        onFinish={handleFormSubmit}
+        layout="vertical"
+        style={{
+          color: "red",
+          padding: "20px",
+          margin: "auto",
+          borderRadius: "10px", // camelCase for border-radius
+        }}
+      >
         {formValues?.map((field, index) => {
           if (field?.type === "text")
             return (
@@ -95,17 +108,17 @@ const ClientForm = ({ preview, formValues }) => {
                   field?.name === "Country"
                     ? countries
                     : field?.name === "State"
-                      ? states
-                      : field?.name === "City"
-                        ? cities
-                        : field?.data
+                    ? states
+                    : field?.name === "City"
+                    ? cities
+                    : field?.data
                 }
                 onChange={
                   field?.name === "Country"
                     ? handleCountryChange
                     : field?.name === "State"
-                      ? handleStateChange
-                      : null
+                    ? handleStateChange
+                    : null
                 }
                 rules={[
                   {
@@ -158,18 +171,15 @@ const ClientForm = ({ preview, formValues }) => {
         })}
 
         <Form.Item>
-          <button
-            className="flex bg-cyan-200 rounded-md py-2 px-4 mx-auto"
-          >
+          <button className="flex w-full justify-center rounded-md bg-[#F04D99]  px-3 py-2 text-md font-semibold leading-6 text-white shadow-sm hover:bg-[#bd7ee5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Submit
           </button>
-
         </Form.Item>
       </Form>
 
-      {
-        preview && !allValide ? (<div>All * fieldes have to be correct to submit a form</div>) : null
-      }
+      {preview && !allValide ? (
+        <div>All * fieldes have to be correct to submit a form</div>
+      ) : null}
     </div>
   );
 };

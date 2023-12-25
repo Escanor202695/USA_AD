@@ -18,7 +18,12 @@ function CustomPhoneInput({ onChange, name, rules }) {
   };
 
   return (
-    <Form.Item label={name} name={name} rules={rules}>
+    <Form.Item
+      label={<span style={{ color: "white" }}>{name}</span>}
+      name={name}
+      rules={rules}
+      
+    >
       <PhoneInput
         inputStyle={{ width: "100%" }}
         placeholder="Enter phone number"

@@ -1,10 +1,15 @@
-import React from 'react';
-import { Form, Input } from 'antd';
+import React from "react";
+import { Form, Input } from "antd";
 
 const TextField = ({ name, rules }) => {
   return (
-    <Form.Item label={name} name={name} rules={rules}>
-      <Input className='rounded-lg' />
+    <Form.Item
+      label={<span style={{ color: "white" }}>{name}</span>}
+      name={name}
+      rules={rules}
+      
+    >
+      <Input className="rounded-lg" />
     </Form.Item>
   );
 };

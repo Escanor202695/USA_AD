@@ -18,9 +18,14 @@ const ViewForm = () => {
     fetchData();
   }, []);
   return (
-    <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
+    <>
+    <div className='flex justify-center pt-[120px]'>
+    <h1 className='text-white text-2xl font-bold'>Add your listing</h1>
+    </div>
+    <div className=" pt-5 pb-[50px] w-[80%] md:w-[75%] mx-auto">
       <ClientForm preview={false} formValues={formValues} />
     </div>
+    </>
   );
 };
 

@@ -5,13 +5,10 @@ import { FaChevronRight } from "react-icons/fa";
 import axios from "../../utils/axios";
 
 const Location = () => {
-
   const [countries, setCountries] = useState();
 
   const fetchData = async () => {
-    const response = await axios.get(
-      "/dynamicform/country-state-city"
-    );
+    const response = await axios.get("/dynamicform/country-state-city");
     const data = response.data?.countries;
     setCountries(data);
   };
@@ -42,142 +39,22 @@ const Location = () => {
               .map((state, index) => (
                 <div
                   key={index}
-                  className={`md:w-1/4 sm:w-1/2 ${index % 4 === 3 ? "md:w-1/4" : ""
-                    } p-2`}
+                  className={`md:w-1/4 sm:w-1/2 ${
+                    index % 4 === 3 ? "md:w-1/4" : ""
+                  } p-2`}
                 >
                   <div className=" text-white py-2 rounded-md cursor-pointer">
-                    <div className="text-[#bd7ee5] font-bold">{state?.name}</div>
+                    <div className="text-[#bd7ee5] font-bold">
+                      {state?.name}
+                    </div>
                   </div>
 
                   <div>
                     {state?.cities.map((city, index) => (
-                      <Link key={index} href={`/page4e/${city?.name?.toLowerCase()}`}>
-                        <motion.div
-                          className="flex items-center text-[#f04d99] rounded-md cursor-pointer"
-                          whileHover={{ x: 50 }}
-                        >
-                          {city.name}
-                          <span>
-                            <FaChevronRight />
-                          </span>
-                        </motion.div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      ))}
-      {countries?.map((country, index) => (
-        <div key={index}>
-          <div>
-            <h2 className="text-2xl font-bold mb-2 text-[#f04d99] relative">
-              {country?.name}
-              <span className="block absolute  left-1 w-[10%] h-[2px] bg-white" />
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap grow-0">
-            {country?.states
-              .sort((a, b) => a?.name.localeCompare(b?.name))
-              .map((state, index) => (
-                <div
-                  key={index}
-                  className={`md:w-1/4 sm:w-1/2 ${index % 4 === 3 ? "md:w-1/4" : ""
-                    } p-2`}
-                >
-                  <div className=" text-white py-2 rounded-md cursor-pointer">
-                    <div className="text-[#bd7ee5] font-bold">{state?.name}</div>
-                  </div>
-
-                  <div>
-                    {state?.cities.map((city, index) => (
-                      <Link key={index} href={`/page4e/${city?.name?.toLowerCase()}`}>
-                        <motion.div
-                          className="flex items-center text-[#f04d99] rounded-md cursor-pointer"
-                          whileHover={{ x: 50 }}
-                        >
-                          {city.name}
-                          <span>
-                            <FaChevronRight />
-                          </span>
-                        </motion.div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      ))}
-      {countries?.map((country, index) => (
-        <div key={index}>
-          <div>
-            <h2 className="text-2xl font-bold mb-2 text-[#f04d99] relative">
-              {country?.name}
-              <span className="block absolute  left-1 w-[10%] h-[2px] bg-white" />
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap grow-0">
-            {country?.states
-              .sort((a, b) => a?.name.localeCompare(b?.name))
-              .map((state, index) => (
-                <div
-                  key={index}
-                  className={`md:w-1/4 sm:w-1/2 ${index % 4 === 3 ? "md:w-1/4" : ""
-                    } p-2`}
-                >
-                  <div className=" text-white py-2 rounded-md cursor-pointer">
-                    <div className="text-[#bd7ee5] font-bold">{state?.name}</div>
-                  </div>
-
-                  <div>
-                    {state?.cities.map((city, index) => (
-                      <Link key={index} href={`/page4e/${city?.name?.toLowerCase()}`}>
-                        <motion.div
-                          className="flex items-center text-[#f04d99] rounded-md cursor-pointer"
-                          whileHover={{ x: 50 }}
-                        >
-                          {city.name}
-                          <span>
-                            <FaChevronRight />
-                          </span>
-                        </motion.div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      ))}
-      {countries?.map((country, index) => (
-        <div key={index}>
-          <div>
-            <h2 className="text-2xl font-bold mb-2 text-[#f04d99] relative">
-              {country?.name}
-              <span className="block absolute  left-1 w-[10%] h-[2px] bg-white" />
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap grow-0">
-            {country?.states
-              .sort((a, b) => a?.name.localeCompare(b?.name))
-              .map((state, index) => (
-                <div
-                  key={index}
-                  className={`md:w-1/4 sm:w-1/2 ${index % 4 === 3 ? "md:w-1/4" : ""
-                    } p-2`}
-                >
-                  <div className=" text-white py-2 rounded-md cursor-pointer">
-                    <div className="text-[#bd7ee5] font-bold">{state?.name}</div>
-                  </div>
-
-                  <div>
-                    {state?.cities.map((city, index) => (
-                      <Link key={index} href={`/page4e/${city?.name?.toLowerCase()}`}>
+                      <Link
+                        key={index}
+                        href={`/page4e/${city?.name?.toLowerCase()}`}
+                      >
                         <motion.div
                           className="flex items-center text-[#f04d99] rounded-md cursor-pointer"
                           whileHover={{ x: 50 }}
