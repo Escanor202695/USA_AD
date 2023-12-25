@@ -64,6 +64,7 @@ export class AuthService {
         loginAuthDto.email,
         loginAuthDto.password,
       );
+      user.password = null;
       const [accessToken, refreshToken] = await this.generateTokens(user);
       await this.setTokens(response, { accessToken, refreshToken });
       return { user, status: 'success', accessToken: accessToken };
@@ -162,9 +163,9 @@ export class AuthService {
 
   private async getAuthenticatedUser(email: string, password: string) {
     try {
-      let user = await this.authuserModel.findOne({ email: email }).select('-password').exec();
+      let user = await this.authuserModel.findOne({ email: email });
       if (!user) {
-        user = await this.authuserModel.findOne({ phone: email }).select('-password').exec();
+        user = await this.authuserModel.findOne({ phone: email });
       }
       if (!user) {
         throw new InvalidCredentials();
