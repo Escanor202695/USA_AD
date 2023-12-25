@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "../../utils/axios";
+import ImageDisplay from "./ImageDisplay";
 
 const ViewFormData = () => {
   const [formData, setFormData] = useState(null);
   const fetchData = async () => {
     const response = await axios.get("/dynamicform/formdata");
+    console.log(response.data);
     const data = response.data;
     setFormData(data);
   };
@@ -13,17 +15,71 @@ const ViewFormData = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const renderFormDataItem = (formDataItem) => {
+    return (
+      <div key={formDataItem?._id?.$oid}>
+        {formDataItem?.data &&
+          Object.entries(formDataItem?.data).map(
+            ([sectionName, sectionData]) => {
+              return (
+                <div key={sectionName}>
+                  <h2>{sectionName}</h2>
+                  {Object.entries(sectionData).map(([key, value]) => {
+                    if (typeof value === "object") {
+                      if (value.type === "image") {
+                        return (
+                          <div>
+                            <span>{key}</span>
+                            <ImageDisplay key={key} imageUrl={value.url} />
+                          </div>
+                        );
+                      } else {
+                        return renderFormDataItem({ data: value });
+                      }
+                    } else {
+                      return (
+                        <p key={key}>
+                          {key}: {value}
+                        </p>
+                      );
+                    }
+                  })}
+                </div>
+              );
+            }
+          )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
+      {formData?.map((formDataItem) => {
+        return renderFormDataItem(formDataItem);
+      })}
+    </div>
+  );
+
   return (
     <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
       {formData?.map((form, index) => {
         return (
           <div key={index}>
             {form?.data &&
-              Object.keys(form?.data).map((key) => (
-                <p key={key}>
-                  {key}: {form.data[key]}
-                </p>
-              ))}
+              Object.entries(form?.data).map(([key, value]) => {
+                if (typeof value === "object") {
+                  if (value?.type === "image") {
+                    return <ImageDisplay key={key} imageUrl={value?.url} />;
+                  }
+                  return null;
+                } else
+                  return (
+                    <p key={key}>
+                      {key}: {form.data[key]}
+                    </p>
+                  );
+              })}
           </div>
         );
       })}

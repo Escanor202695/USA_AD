@@ -7,6 +7,7 @@ import { State, StateSchema } from './schema/state.schema';
 import { City, CitySchema } from './schema/city.schema';
 import { Form, FormSchema } from './schema/form.schema';
 import { FormDataSchema } from './schema/formData.schema';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -16,7 +17,10 @@ import { FormDataSchema } from './schema/formData.schema';
       { name: City.name, schema: CitySchema },
       { name: Form.name, schema: FormSchema },
       { name: FormData.name, schema: FormDataSchema }
-    ])
+    ]),
+    MulterModule.register({
+      dest: './uploads',
+    }),
   ],
   controllers: [DynamicformController],
   providers: [DynamicformService],

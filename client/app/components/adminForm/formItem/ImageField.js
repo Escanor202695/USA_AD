@@ -5,8 +5,11 @@ const ImageField = ({ name, rules }) => {
 
   const [fileList, setFileList] = useState([
   ]);
-  const onChange = ({ fileList: newFileList }) => {
+  const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
+    if (newFileList.length > 0 && newFileList[0].response) {
+      console.log('Image upload response:', newFileList[0]?.response?.url);
+    }
   };
   const onPreview = async (file) => {
     let src = file.url;
@@ -26,13 +29,13 @@ const ImageField = ({ name, rules }) => {
   return (
     <Form.Item label={name} name={name} rules={rules}>
       <Upload
-        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+        action="http://localhost:4000/api/dynamicform/upload"
         listType="picture-card"
         fileList={fileList}
         onChange={onChange}
         onPreview={onPreview}
       >
-        {fileList.length < 5 && '+ Upload'}
+        {fileList.length < 1 && '+ Upload'}
       </Upload>
     </Form.Item>
   );

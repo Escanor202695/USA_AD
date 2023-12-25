@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { DynamicformService } from './dynamicform.service';
 import { CreateDynamicformDto } from './dto/create-dynamicform.dto';
 import { UpdateDynamicformDto } from './dto/update-dynamicform.dto';
 import { CreateAreaDto } from './dto/create-area.dto';
-import { ApiTags } from '@nestjs/swagger';
-
+import { ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Request, Response } from 'express';
 @ApiTags('v1/dynamicform')
 @Controller('dynamicform')
 export class DynamicformController {
@@ -93,5 +94,42 @@ export class DynamicformController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.dynamicformService.remove(+id);
+  }
+
+  @Post('/upload')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({ summary: 'Upload a single file' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Single File uploaded successfully',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'string', example: 'success' },
+      },
+    },
+  })
+  async uploadImageFile(
+    @UploadedFile() file,
+  ) {
+    return this.dynamicformService.uploadImage(file);
+  }
+
+  @Get('/download/:imageurl')
+  async downloadSchedule(@Res() response: Response, @Param('imageurl') imageurl: string) {
+    // const filePath = await this.leavescheduleService.downloadSchedule(scheduleId);
+    response.sendFile(imageurl, { root: 'uploads' });
   }
 }

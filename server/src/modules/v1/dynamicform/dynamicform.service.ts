@@ -179,4 +179,12 @@ export class DynamicformService {
   remove(id: number) {
     return `This action removes a #${id} dynamicform`;
   }
+
+  async uploadImage(file) {
+    if (!file) {
+      throw new NotFoundException('No file uploaded');
+    }
+    const filePath = `${file.filename}`;
+    return { message: "File uploaded successfully", url: filePath, type: "image" };
+  }
 }
