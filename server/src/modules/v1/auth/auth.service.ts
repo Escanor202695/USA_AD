@@ -26,7 +26,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     private readonly mailSenderService: MailsenderService,
-  ) {}
+  ) { }
 
   public async register(createAuthDto: CreateAuthDto, res: Response) {
     const auth = await this.authuserModel.findOne({
@@ -155,6 +155,9 @@ export class AuthService {
       // if (!isMatch) {
       //   throw new InvalidCredentials();
       // }
+      if (user.password != password) {
+        throw new InvalidCredentials();
+      }
       return user;
     } catch (err) {
       throw err;

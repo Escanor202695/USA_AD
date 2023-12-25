@@ -23,7 +23,7 @@ export class AuthUser {
   @Prop()
   isverified: boolean;
 
-  @Prop({ default: 'resident' })
+  @Prop({ default: 'user' })
   role: string;
 }
 
