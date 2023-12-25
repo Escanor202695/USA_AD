@@ -85,6 +85,14 @@ export class AuthController {
     return { email, status: 'success', message: `Password updated successfuly` };
   }
 
+  @HttpCode(200)
+  @Post('local/changepassword')
+  async changePassword(@Body('email') email: string, @Body('password') password: string, @Body('newpassword') newpassword: string) {
+    const ret = await this.authService.changePassword(email, password, newpassword);
+    return { email, status: 'success', message: `Password updated successfuly` };
+  }
+
+
   @ApiOkResponse({
     description: 'Logs out user',
   })
