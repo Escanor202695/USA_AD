@@ -224,7 +224,7 @@ const AdminForm = ({ onFormSubmit }) => {
           {formFields?.map((section, sectionIndex) => {
             return (
               <div key={sectionIndex}>
-                <div>{section?.section}</div>
+                <div className="text-white">Section: {section?.section}</div>
                 <EditForm
                   open={editFieldModalVisible}
                   onCancel={handleEditFieldModalCancel}
@@ -269,10 +269,10 @@ const AdminForm = ({ onFormSubmit }) => {
                           ]}
                         />
                         {field?.isEditable ? (
-                          <div className=" bg-red-700">
-                            <div className="mt-8 px-2 py-2 m-2">
+                          <div className="">
+                            <div className="mt-7 px-2 py-2 m-2">
                               <button
-                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -281,7 +281,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 bg-red-600 text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -340,7 +340,7 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "date")
                     return (
-                      <div key={index} className="flex justify-around">
+                      <div key={index} className="flex justify-between">
                         <DateField
                           name={field?.name}
                           rules={[
@@ -352,10 +352,10 @@ const AdminForm = ({ onFormSubmit }) => {
                           ]}
                         />
                         {field?.isEditable ? (
-                          <div className=" bg-red-700">
+                          <div className="">
                             <div className="mt-8 px-2 py-2 m-2">
                               <button
-                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -364,7 +364,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 bg-red-600 text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -379,7 +379,7 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "radio")
                     return (
-                      <div key={index} className="flex justify-around">
+                      <div key={index} className="flex justify-between">
                         <RadioField
                           name={field?.name}
                           data={field?.data}
@@ -392,10 +392,10 @@ const AdminForm = ({ onFormSubmit }) => {
                           ]}
                         />
                         {field?.isEditable ? (
-                          <div className=" bg-red-700">
+                          <div className="">
                             <div className="mt-8 px-2 py-2 m-2">
                               <button
-                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -404,7 +404,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 bg-red-600 text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -419,7 +419,7 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "image")
                     return (
-                      <div key={index} className="flex justify-around">
+                      <div key={index} className="flex justify-between">
                         <ImageField
                           name={field?.name}
                           rules={[
@@ -431,10 +431,10 @@ const AdminForm = ({ onFormSubmit }) => {
                           ]}
                         />
                         {field?.isEditable ? (
-                          <div className=" bg-red-700">
+                          <div className="">
                             <div className="mt-8 px-2 py-2 m-2">
                               <button
-                                className="p-2 mr-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -443,7 +443,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-[#343434] text-white rounded-md"
+                                className="p-2 bg-red-600 text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);

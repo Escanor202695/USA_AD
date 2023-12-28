@@ -68,7 +68,7 @@ export default function Sidebar() {
                         (item.name === selectedItem
                           ? "bg-[#F04D99]     "
                           : " ") +
-                        " group flex gap-x-3 rounded-md text-white p-2 text-sm leading-6 font-semibold"
+                        " group flex gap-x-3 cursor-pointer rounded-md text-white p-2 text-sm leading-6 font-semibold"
                       }
                     >
                       {item.icon}

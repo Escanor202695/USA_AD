@@ -79,9 +79,9 @@ const City = ({ cities, stateId, stateName, refetch }) => {
                 <tr
                   key={index}
                   className={`${city?._id === selectedCity?._id
-                      ? "bg-[#bd7ee5] text-white"
-                      : "text-black"
-                    }`}
+                    ? "bg-[#bd7ee5] text-white"
+                    : "text-black"
+                    } cursor-pointer`}
                 >
                   <td className="border-b px-4 py-2 ">{city?.name}</td>
                 </tr>

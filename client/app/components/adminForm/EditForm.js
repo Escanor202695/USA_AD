@@ -55,7 +55,7 @@ export default function EditForm({
         onCancel={onCancel}
         onOk={onOkButtonClicked}
         okText="Save"
-        okButtonProps={{ style: { backgroundColor: "#334455" } }}
+        okButtonProps={{ style: { backgroundColor: "#F04D99" } }}
       >
         <span>Field Type</span>
         <Radio.Group

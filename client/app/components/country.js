@@ -104,7 +104,7 @@ const Country = ({ countries, refetch }) => {
                     className={` ${country?._id === selectedCountry?._id
                       ? "bg-[#bd7ee5] text-white"
                       : "text-black"
-                      }`}
+                      } cursor-pointer`}
                   >
                     <td className=" px-4 py-2 border-b ">{country?.name}</td>
                   </tr>

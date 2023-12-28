@@ -22,12 +22,13 @@ function CustomPhoneInput({ onChange, name, rules }) {
       label={<span style={{ color: "white" }}>{name}</span>}
       name={name}
       rules={rules}
-      
+
     >
       <PhoneInput
-        inputStyle={{ width: "100%" }}
+        inputStyle={{ width: "100%", height: "45px" }}
         placeholder="Enter phone number"
         enableSearch={true}
+
         country={"us"}
         autoFormat
         countryCodeEditable={false}

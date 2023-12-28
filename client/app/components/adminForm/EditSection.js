@@ -33,7 +33,7 @@ export default function EditSection({
         onCancel={onCancel}
         onOk={onOkButtonClicked}
         okText="Save"
-        okButtonProps={{ style: { backgroundColor: "#334455" } }}
+        okButtonProps={{ style: { backgroundColor: "#F04D99" } }}
       >
         <div className="mt-2">
           <Form form={form} layout="vertical" initialValues={initialValues}>

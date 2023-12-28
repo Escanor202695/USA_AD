@@ -9,9 +9,9 @@ const SelectField = ({ name, data, onChange, rules }) => {
       label={<span style={{ color: "white" }}>{name}</span>}
       name={name}
       rules={rules}
-      
+
     >
-      <Select onChange={onChange}>
+      <Select size="large" onChange={onChange}>
         {data?.map((item) => (
           <Option key={item._id} value={item.name}>
             {item.name}

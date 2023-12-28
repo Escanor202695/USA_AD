@@ -48,6 +48,7 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   const handleFormSubmit = async (values) => {
+    console.log(values);
     const fileKey = Object.keys(values).find(
       (key) => values[key]?.file?.response
     );
@@ -75,7 +76,7 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   return (
-    <div className="border  rounded-lg border-[#F04D99] w-[100%] md:w-[75%] lg:w-[60%] mx-auto">
+    <div className="border bg-[#101827] rounded-lg border-[#F04D99] w-[100%] md:w-[75%] lg:w-[60%] mx-auto">
       <Form
         form={form}
         onFinishFailed={() => {
