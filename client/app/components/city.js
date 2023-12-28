@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
 import NormalPlus from "./svg/NormalPlus";
+import { toast } from "react-toastify";
 
 const City = ({ cities, stateId, stateName, refetch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,6 +50,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
       console.log("Response:", response.data);
       // Handle the response as needed
     } catch (error) {
+      toast.error(error?.response?.data?.message)
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
@@ -76,11 +78,10 @@ const City = ({ cities, stateId, stateName, refetch }) => {
               return (
                 <tr
                   key={index}
-                  className={`${
-                    city?._id === selectedCity?._id
+                  className={`${city?._id === selectedCity?._id
                       ? "bg-[#bd7ee5] text-white"
                       : "text-black"
-                  }`}
+                    }`}
                 >
                   <td className="border-b px-4 py-2 ">{city?.name}</td>
                 </tr>

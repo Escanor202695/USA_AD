@@ -5,6 +5,7 @@ import axios from "../../utils/axios";
 import Search from "./svg/search";
 import NormalPlus from "./svg/NormalPlus";
 import "./style.css";
+import { toast } from "react-toastify";
 const Country = ({ countries, refetch }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +18,8 @@ const Country = ({ countries, refetch }) => {
     country.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   useEffect(() => {
-    if (filteredCountries && filteredCountries.length > 0) {
+    if (selectedCountry) { }
+    else if (filteredCountries && filteredCountries.length > 0) {
       setSelectedCountry(filteredCountries[0]);
     }
   }, [filteredCountries]);
@@ -56,6 +58,7 @@ const Country = ({ countries, refetch }) => {
       console.log("Response:", response.data);
       // Handle the response as needed
     } catch (error) {
+      toast.error(error?.response?.data?.message)
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
@@ -98,11 +101,10 @@ const Country = ({ countries, refetch }) => {
                   <tr
                     key={index}
                     onClick={() => handleCountryClick(country)}
-                    className={` ${
-                      country?._id === selectedCountry?._id
-                        ? "bg-[#bd7ee5] text-white"
-                        : "text-black"
-                    }`}
+                    className={` ${country?._id === selectedCountry?._id
+                      ? "bg-[#bd7ee5] text-white"
+                      : "text-black"
+                      }`}
                   >
                     <td className=" px-4 py-2 border-b ">{country?.name}</td>
                   </tr>

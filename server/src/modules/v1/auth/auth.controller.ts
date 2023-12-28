@@ -87,9 +87,10 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('local/changepassword')
-  async changePassword(@Body('email') email: string, @Body('password') password: string, @Body('newpassword') newpassword: string) {
-    const ret = await this.authService.changePassword(email, password, newpassword);
-    return { email, status: 'success', message: `Password updated successfuly` };
+  @UseGuards(AccessTokenGuard)
+  async changePassword(@User() user: AuthUser, @Body('password') password: string, @Body('newpassword') newpassword: string) {
+    const ret = await this.authService.changePassword(user.email, password, newpassword);
+    return { "email": user.email, status: 'success', message: `Password updated successfuly` };
   }
 
 

@@ -137,7 +137,6 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-
     if (user.password === password) {
       user.password = newpassword;
       user.otp = null;

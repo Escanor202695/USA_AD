@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
 import NormalPlus from "./svg/NormalPlus";
+import { toast } from "react-toastify";
 
 const State = ({ states, countryId, countryName, refetch }) => {
   const [selectedState, setSelectedState] = useState(null);
@@ -17,10 +18,11 @@ const State = ({ states, countryId, countryName, refetch }) => {
     state.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   useEffect(() => {
-    if (filteredStates && filteredStates.length > 0) {
+    if (selectedState) { }
+    else if (filteredStates && filteredStates.length > 0) {
       setSelectedState(filteredStates[0]);
     }
-  }, filteredStates);
+  }, [filteredStates]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -30,7 +32,7 @@ const State = ({ states, countryId, countryName, refetch }) => {
       .validateFields()
       .then(async (values) => {
         form.resetFields();
-        console.log(values);
+
         await addState(values);
         await refetch();
         setIsModalOpen(false);
@@ -56,6 +58,7 @@ const State = ({ states, countryId, countryName, refetch }) => {
       console.log("Response:", response.data);
       // Handle the response as needed
     } catch (error) {
+      toast.error(error?.response?.data?.message)
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
@@ -84,11 +87,10 @@ const State = ({ states, countryId, countryName, refetch }) => {
                 <tr
                   key={index}
                   onClick={() => handleStateClick(state)}
-                  className={`${
-                    state?._id === selectedState?._id
-                      ? "bg-[#bd7ee5] text-white"
-                      : "text-black"
-                  } border`}
+                  className={`${state?._id === selectedState?._id
+                    ? "bg-[#bd7ee5] text-white"
+                    : "text-black"
+                    } border`}
                 >
                   <td className=" px-4 py-2">{state?.name}</td>
                 </tr>

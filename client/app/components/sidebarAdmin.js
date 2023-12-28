@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Location from "../components/area";
 import AdminForm from "../admin/manageform/page";
 import ChangePassword from "../components/changePassword";
+
 import {
   ArrowLeftOnRectangleIcon,
   UserIcon,
@@ -18,6 +20,7 @@ const components = {
 
 export default function Sidebar() {
   const [selectedItem, setSelectedItem] = useState("Location");
+  const router = useRouter();
 
   const handleMenuItemClick = (itemName) => {
     setSelectedItem(itemName);
@@ -26,6 +29,7 @@ export default function Sidebar() {
   const logout = () => {
     localStorage.removeItem("token");
     setSelectedItem(null);
+    router.push("/login");
   };
 
   const menuItems = [

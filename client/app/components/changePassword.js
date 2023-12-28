@@ -22,7 +22,7 @@ export default function ChangePassword() {
         setError("Passwords do not match");
         return;
       }
-      await axios.post("/auth/local/newpassword", password, newpassword);
+      await axios.post("/auth/local/changepassword", { password, newpassword });
       // Add logic to send a request to change the password
       // You can use axios.postlo or any other method to send the request
 

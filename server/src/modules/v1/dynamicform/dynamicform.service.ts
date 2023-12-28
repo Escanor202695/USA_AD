@@ -138,12 +138,12 @@ export class DynamicformService {
       _id: stateId,
     })
     if (!state) {
-      throw new NotFoundException('Country not found');
+      throw new NotFoundException('State not found');
     }
     const city = await this.cityModel.findOne({ name: createArea.name, state: state });
 
     if (city) {
-      throw new HttpException('State already exist', HttpStatus.CONFLICT);
+      throw new HttpException('City already exist', HttpStatus.CONFLICT);
     }
 
     const newCity = new this.cityModel({ name: createArea.name, state: state._id });
