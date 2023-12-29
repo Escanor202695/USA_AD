@@ -23,7 +23,7 @@ const PreviewModal = ({ open, onCancel, formValues }) => {
         <ClientForm preview={true} formValues={formValues} />
         <button
           onClick={saveForm}
-          className="flex bg-cyan-200 rounded-md mt-10 py-2 px-4 mx-auto mb-10"
+          className="flex bg-[#F04D99] text-white rounded-md mt-10 py-2 px-4 mx-auto mb-10"
         >
           Save Form
         </button>

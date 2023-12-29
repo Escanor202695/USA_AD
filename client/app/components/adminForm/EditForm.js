@@ -23,7 +23,10 @@ export default function EditForm({
 
   const handleAddOption = () => {
     if (newOption?.trim() !== "") {
-      setOptions([...options, { _id: newOption?.trim(), name: newOption?.trim() }]);
+      setOptions([
+        ...options,
+        { _id: newOption?.trim(), name: newOption?.trim() },
+      ]);
       setNewOption(null);
     }
   };
@@ -57,29 +60,45 @@ export default function EditForm({
         okText="Save"
         okButtonProps={{ style: { backgroundColor: "#F04D99" } }}
       >
-        <span>Field Type</span>
+        <span className="text-lg font-semibold">Field Type</span>
         <Radio.Group
           onChange={(e) => setFieldType(e.target.value)}
           value={fieldType}
         >
-          <Radio value="text">Text Field</Radio>
-          <Radio value="radio">Radio Field</Radio>
-          <Radio value="date">Date Picker</Radio>
-          <Radio value="select">Select Field</Radio>
-          <Radio value="image">Uplaod Image Field</Radio>
+          <Radio className="py-2" value="text">
+            Text Field
+          </Radio>
+          <Radio className="py-2" value="radio">
+            Radio Field
+          </Radio>
+          <Radio className="py-2" value="date">
+            Date Picker
+          </Radio>
+          <Radio className="py-2" value="select">
+            Select Field
+          </Radio>
+          <Radio className="py-2" value="image">
+            Uplaod Image Field
+          </Radio>
         </Radio.Group>
         <div className="mt-2">
           <Form form={form} layout="vertical" initialValues={initialValues}>
             <Form.Item
               name="name"
-              label={<span>Name of the field (label)</span>}
+              label={
+                <span className="text-md font-semibold">
+                  Name of the field (label)
+                </span>
+              }
               rules={[{ required: true, message: "Field name is required!" }]}
             >
               <Input className="rounded-md" />
             </Form.Item>
             <Form.Item
               name="isRequired"
-              label={<span>Is it required</span>}
+              label={
+                <span className="text-lg font-semibold">Is it required?</span>
+              }
               valuePropName="checked"
             >
               <Checkbox onChange={handleCheckboxChange} defaultChecked={false}>
@@ -88,7 +107,9 @@ export default function EditForm({
             </Form.Item>
             <Form.Item
               name="errorMessage"
-              label={<span>Error Message</span>}
+              label={
+                <span className="text-lg font-semibold">Error Message</span>
+              }
               rules={[
                 {
                   required: isRequired,
@@ -109,7 +130,7 @@ export default function EditForm({
                   />
                   <div>
                     <Button
-                      className="flex bg-cyan-200 rounded-md mt-2 px-4 mx-auto"
+                      className="flex bg-[#F04D99] text-white rounded-md mt-2 px-4 mx-auto"
                       onClick={handleAddOption}
                     >
                       Add Option

@@ -11,9 +11,11 @@ import {
 import Edit from "./svg/edit";
 import ProfileNavBar from "./ProfileNavbar";
 import Map from "./svg/map";
+import UserInfo from "./userInfo";
 
 const components = {
   Location,
+  "User Info": UserInfo,
   "Manage Form": AdminForm,
   "Change Password": ChangePassword,
 };

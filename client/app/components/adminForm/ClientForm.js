@@ -85,7 +85,7 @@ const ClientForm = ({ preview, formValues }) => {
         onFinish={handleFormSubmit}
         layout="vertical"
         style={{
-          color: "red",
+          color: "white",
           padding: "20px",
           margin: "auto",
           borderRadius: "10px", // camelCase for border-radius

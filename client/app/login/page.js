@@ -31,7 +31,17 @@ export default function Home() {
       });
       console.log(response.data);
       const token = response.data.accessToken;
+      const useremail = response.data.user.email;
+      const username = response.data.user.name;
+      const role = response.data.user.role;
+      
+      // Save to local storage
       localStorage.setItem("token", token);
+      localStorage.setItem("useremail", useremail);
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", role);
+      
+
       toast.success("Login Successful!");
       if (token) {
         router.push("/home");

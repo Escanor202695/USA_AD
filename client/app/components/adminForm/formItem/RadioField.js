@@ -11,14 +11,14 @@ const RadioField = ({ name, data, rules }) => {
       label={<span style={{ color: "white" }}>{name}</span>}
       name={name}
       rules={rules}
-      
     >
       <Radio.Group
         onChange={(e) => setFieldType(e.target.value)}
         value={fieldType}
+        className="bg-white py-2 px-4 w-full rounded-lg"
       >
         {data?.map((item) => (
-          <Radio key={item._id} value={item._id}>
+          <Radio key={item._id} value={item._id} >
             {item.name}
           </Radio>
         ))}

@@ -22,7 +22,7 @@ const DateField = ({ name, rules }) => {
         onChange={onChange}
         className="rounded-lg"
         style={{
-          width: '100%',
+          width: "100%",
         }}
       />
     </Form.Item>

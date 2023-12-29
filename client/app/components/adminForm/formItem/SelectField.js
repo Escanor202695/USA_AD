@@ -9,7 +9,6 @@ const SelectField = ({ name, data, onChange, rules }) => {
       label={<span style={{ color: "white" }}>{name}</span>}
       name={name}
       rules={rules}
-
     >
       <Select size="large" onChange={onChange}>
         {data?.map((item) => (

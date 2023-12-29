@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Form, Input, Upload } from 'antd';
+import React, { useState } from "react";
+import { Form, Input, Upload } from "antd";
 
 const ImageField = ({ name, rules }) => {
-
-  const [fileList, setFileList] = useState([
-  ]);
+  const [fileList, setFileList] = useState([]);
   const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
     if (newFileList.length > 0 && newFileList[0].response) {
-      console.log('Image upload response:', newFileList[0]?.response?.url);
+      console.log("Image upload response:", newFileList[0]?.response?.url);
     }
   };
   const onPreview = async (file) => {
@@ -27,15 +25,20 @@ const ImageField = ({ name, rules }) => {
   };
 
   return (
-    <Form.Item label={name} name={name} rules={rules}>
+    <Form.Item
+    label={<span style={{ color: "white" }}>{name}</span>}
+    name={name}
+      rules={rules}
+    >
       <Upload
         action="http://localhost:4000/api/dynamicform/upload"
         listType="picture-card"
         fileList={fileList}
         onChange={onChange}
         onPreview={onPreview}
+        className="bg-white flex flex-1 p-6 justify-center rounded-lg"
       >
-        {fileList.length < 1 && '+ Upload'}
+        {fileList.length < 1 && "+ Upload"}
       </Upload>
     </Form.Item>
   );

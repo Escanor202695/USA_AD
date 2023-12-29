@@ -14,7 +14,7 @@ export default function ManageFormPage() {
 
   return (
     <>
-      <div className="pt-[40px] pb-[50px] w-[80%] md:w-[75%] mx-auto">
+      <div className="pt-[40px] pb-[50px] w-[80%] md:w-[75%] mx-auto ">
         <AdminForm onFormSubmit={handleFormSubmit} />
         {/* <Area /> */}
       </div>

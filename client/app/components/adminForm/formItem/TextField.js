@@ -7,7 +7,6 @@ const TextField = ({ name, rules }) => {
       label={<span style={{ color: "white" }}>{name}</span>}
       name={name}
       rules={rules}
-      
     >
       <Input className="rounded-lg" />
     </Form.Item>

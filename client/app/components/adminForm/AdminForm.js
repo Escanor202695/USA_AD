@@ -11,6 +11,8 @@ import CustomPhoneInput from "./formItem/PhoneInput";
 import PreviewModal from "./PreviewForm";
 import EditForm from "./EditForm";
 import EditSection from "./EditSection";
+import NormalPlus from "../svg/NormalPlus";
+import DeleteIcon from "../svg/delete";
 
 const AdminForm = ({ onFormSubmit }) => {
   const [countries, setCountries] = useState([]);
@@ -131,7 +133,7 @@ const AdminForm = ({ onFormSubmit }) => {
       content: "Are you sure you want to delete this field?",
       okText: "Delete",
       onOk: () => deleteField(sectionIndex, fieldIndex),
-      okButtonProps: { style: { background: 'red', borderColor: 'red' } },
+      okButtonProps: { style: { background: "red", borderColor: "red" } },
     });
   };
 
@@ -165,7 +167,7 @@ const AdminForm = ({ onFormSubmit }) => {
       content: "Are you sure you want to delete this section?",
       okText: "Delete",
       onOk: () => deleteSection(sectionIndex),
-      okButtonProps: { style: { background: 'red', borderColor: 'red' } },
+      okButtonProps: { style: { background: "red", borderColor: "red" } },
     });
   };
 
@@ -214,17 +216,45 @@ const AdminForm = ({ onFormSubmit }) => {
         />
         <button
           onClick={handleEditSectionClick}
-          className="flex bg-cyan-200 rounded-md py-2 px-4 mx-auto"
+          className="flex bg-[#F04D99] items-center text-white rounded-md py-2 px-4 mx-auto"
         >
           Add new Section
+          <NormalPlus />
         </button>
       </div>
       <div>
         <Form form={form} onFinish={handleFormSubmit} layout="vertical">
           {formFields?.map((section, sectionIndex) => {
             return (
-              <div key={sectionIndex}>
-                <div className="text-white">Section: {section?.section}</div>
+              <div key={sectionIndex} className="border-2 p-3 my-2">
+                <div className="flex justify-between items-center">
+                  <div className="text-white text-lg font-semibold">
+                    Section: {section?.section}
+                  </div>
+                  <div className="flex">
+                    <button
+                      onClick={handleEditFieldClick}
+                      className="flex bg-[#F04D99] items-center text-white rounded-md py-2 px-4 my-2"
+                    >
+                      Add new field
+                      <NormalPlus />
+                    </button>
+                    {sectionIndex != 0 && (
+                      <button
+                        disabled={sectionIndex == 0}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          confirmDeleteSection(sectionIndex);
+                        }}
+                        className="flex bg-[#F04D99] items-center text-white rounded-md py-2 px-4 m-2"
+                      >
+                        Delete the section
+                        <DeleteIcon />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
                 <EditForm
                   open={editFieldModalVisible}
                   onCancel={handleEditFieldModalCancel}
@@ -234,43 +264,29 @@ const AdminForm = ({ onFormSubmit }) => {
                   sectionName={section?.section}
                   sectionIndex={sectionIndex}
                 />
-                <div className="flex">
-                  <button
-                    onClick={handleEditFieldClick}
-                    className="flex bg-cyan-200 rounded-md py-2 px-4 m-2"
-                  >
-                    Add new field
-                  </button>
-                  {sectionIndex != 0 && (
-                    <button
-                      disabled={sectionIndex == 0}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        confirmDeleteSection(sectionIndex);
-                      }}
-                      className="flex bg-cyan-200 rounded-md py-2 px-4 m-2"
-                    >
-                      Delete the section
-                    </button>
-                  )}
-                </div>
+
                 {section?.fields?.map((field, index) => {
                   if (field?.type === "text")
                     return (
-                      <div key={index} className="flex justify-between">
-                        <TextField
-                          name={field?.name}
-                          rules={[
-                            {
-                              required: field?.isRequired,
-                              message:
-                                field?.errorMessage ?? "Please enter a value",
-                            },
-                          ]}
-                        />
+                      <div
+                        key={index}
+                        className="flex justify-between items-center "
+                      >
+                        <div className=" flex-1">
+                          <TextField
+                            name={field?.name}
+                            rules={[
+                              {
+                                required: field?.isRequired,
+                                message:
+                                  field?.errorMessage ?? "Please enter a value",
+                              },
+                            ]}
+                          />
+                        </div>
                         {field?.isEditable ? (
                           <div className="">
-                            <div className="mt-7 px-2 py-2 m-2">
+                            <div className=" pt-2 ml-2">
                               <button
                                 className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
@@ -281,7 +297,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-red-600 text-white rounded-md"
+                                className="p-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -296,17 +312,19 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "phone")
                     return (
-                      <CustomPhoneInput
-                        key={index}
-                        name={field?.name}
-                        rules={[
-                          {
-                            required: field?.isRequired,
-                            message:
-                              field?.errorMessage ?? "Please enter a value",
-                          },
-                        ]}
-                      />
+                      <div className=" flex-1">
+                        <CustomPhoneInput
+                          key={index}
+                          name={field?.name}
+                          rules={[
+                            {
+                              required: field?.isRequired,
+                              message:
+                                field?.errorMessage ?? "Please enter a value",
+                            },
+                          ]}
+                        />
+                      </div>
                     );
                   if (field?.type === "select")
                     return (
@@ -317,17 +335,17 @@ const AdminForm = ({ onFormSubmit }) => {
                           field?.name === "Country"
                             ? countries
                             : field?.name === "State"
-                              ? states
-                              : field?.name === "City"
-                                ? cities
-                                : field?.data
+                            ? states
+                            : field?.name === "City"
+                            ? cities
+                            : field?.data
                         }
                         onChange={
                           field?.name === "Country"
                             ? handleCountryChange
                             : field?.name === "State"
-                              ? handleStateChange
-                              : null
+                            ? handleStateChange
+                            : null
                         }
                         rules={[
                           {
@@ -340,20 +358,26 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "date")
                     return (
-                      <div key={index} className="flex justify-between">
-                        <DateField
-                          name={field?.name}
-                          rules={[
-                            {
-                              required: field?.isRequired,
-                              message:
-                                field?.errorMessage ?? "Please select a value",
-                            },
-                          ]}
-                        />
+                      <div
+                        key={index}
+                        className="flex justify-between items-center  "
+                      >
+                        <div className=" flex-1">
+                          <DateField
+                            name={field?.name}
+                            rules={[
+                              {
+                                required: field?.isRequired,
+                                message:
+                                  field?.errorMessage ??
+                                  "Please select a value",
+                              },
+                            ]}
+                          />
+                        </div>
                         {field?.isEditable ? (
                           <div className="">
-                            <div className="mt-8 px-2 py-2 m-2">
+                            <div className=" pt-2 ml-2">
                               <button
                                 className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
@@ -364,7 +388,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-red-600 text-white rounded-md"
+                                className="p-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -379,7 +403,7 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "radio")
                     return (
-                      <div key={index} className="flex justify-between">
+                      <div key={index} className="flex justify-between items-center ">
                         <RadioField
                           name={field?.name}
                           data={field?.data}
@@ -393,7 +417,7 @@ const AdminForm = ({ onFormSubmit }) => {
                         />
                         {field?.isEditable ? (
                           <div className="">
-                            <div className="mt-8 px-2 py-2 m-2">
+                            <div className=" pt-2 ml-2">
                               <button
                                 className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
@@ -404,7 +428,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-red-600 text-white rounded-md"
+                                className="p-2 bg-[#F04D99]  text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -419,20 +443,26 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "image")
                     return (
-                      <div key={index} className="flex justify-between">
-                        <ImageField
-                          name={field?.name}
-                          rules={[
-                            {
-                              required: field?.isRequired,
-                              message:
-                                field?.errorMessage ?? "Please select a value",
-                            },
-                          ]}
-                        />
+                      <div
+                        key={index}
+                        className="flex justify-between items-center"
+                      >
+                        <div className="flex-1">
+                          <ImageField
+                            name={field?.name}
+                            rules={[
+                              {
+                                required: field?.isRequired,
+                                message:
+                                  field?.errorMessage ??
+                                  "Please select a value",
+                              },
+                            ]}
+                          />
+                        </div>
                         {field?.isEditable ? (
                           <div className="">
-                            <div className="mt-8 px-2 py-2 m-2">
+                            <div className=" pt-2 ml-2">
                               <button
                                 className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
@@ -443,7 +473,7 @@ const AdminForm = ({ onFormSubmit }) => {
                                 Edit
                               </button>
                               <button
-                                className="p-2 bg-red-600 text-white rounded-md"
+                                className="p-2 bg-[#F04D99]  text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   confirmDeleteField(sectionIndex, index);
@@ -463,7 +493,7 @@ const AdminForm = ({ onFormSubmit }) => {
           <Form.Item>
             <div className="">
               <button
-                className="flex bg-cyan-200 rounded-md py-2 px-4 mx-auto"
+                className="flex bg-[#F04D99] text-white rounded-md py-2 px-4 mx-auto"
                 onClick={(e) => {
                   e.preventDefault();
                   setPreviewModalVisible(true);
