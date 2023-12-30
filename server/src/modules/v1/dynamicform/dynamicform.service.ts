@@ -73,6 +73,24 @@ export class DynamicformService {
     return countries;
   }
 
+  async updateCountry(id: string, updateAreaDto: CreateAreaDto) {
+    const country = await this.countryModel.findById(id);
+    if (!country) {
+      throw new NotFoundException('Country not found');
+    }
+    country.name = updateAreaDto.name;
+    await country.save();
+    return { status: 'success', data: country };
+  }
+  async deleteCountry(id: string) {
+    const country = await this.countryModel.findById(id);
+    if (!country) {
+      throw new NotFoundException('Country not found');
+    }
+    await this.countryModel.findByIdAndDelete(id);
+    return { status: 'success' };
+  }
+
   async getCountryStateCity() {
     const countries = await this.countryModel.find().exec();
 
@@ -133,6 +151,24 @@ export class DynamicformService {
     return states;
   }
 
+  async updateState(id: string, updateAreaDto: CreateAreaDto) {
+    const state = await this.stateModel.findById(id);
+    if (!state) {
+      throw new NotFoundException('Country not found');
+    }
+    state.name = updateAreaDto.name;
+    await state.save();
+    return { status: 'success', data: state };
+  }
+  async deleteState(id: string) {
+    const state = await this.stateModel.findById(id);
+    if (!state) {
+      throw new NotFoundException('Country not found');
+    }
+    await this.stateModel.findByIdAndDelete(id);
+    return { status: 'success' };
+  }
+
   async addCity(stateId: string, createArea: CreateAreaDto) {
     const state = await this.stateModel.findOne({
       _id: stateId,
@@ -158,6 +194,24 @@ export class DynamicformService {
     }
     const cities = await this.cityModel.find({ state: state._id });
     return cities;
+  }
+
+  async updateCity(id: string, updateAreaDto: CreateAreaDto) {
+    const city = await this.cityModel.findById(id);
+    if (!city) {
+      throw new NotFoundException('Country not found');
+    }
+    city.name = updateAreaDto.name;
+    await city.save();
+    return { status: 'success', data: city };
+  }
+  async deleteCity(id: string) {
+    const city = await this.cityModel.findById(id);
+    if (!city) {
+      throw new NotFoundException('Country not found');
+    }
+    await this.cityModel.findByIdAndDelete(id);
+    return { status: 'success' };
   }
 
   create(createDynamicformDto: CreateDynamicformDto) {

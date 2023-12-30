@@ -46,6 +46,16 @@ export class DynamicformController {
     return this.dynamicformService.getAllCountry();
   }
 
+  @Patch('country/:id')
+  updateCountry(@Param('id') id: string, @Body() updateAreaDto: CreateAreaDto) {
+    return this.dynamicformService.updateCountry(id, updateAreaDto);
+  }
+
+  @Delete('country/:id')
+  removeCountry(@Param('id') id: string) {
+    return this.dynamicformService.deleteCountry(id);
+  }
+
   @Get('country-state-city')
   getCountryStateCity() {
     return this.dynamicformService.getCountryStateCity();
@@ -61,6 +71,17 @@ export class DynamicformController {
     return this.dynamicformService.getAllStateByCountry(countryId);
   }
 
+
+  @Patch('states/:id')
+  updateState(@Param('id') id: string, @Body() updateDynamicformDto: CreateAreaDto) {
+    return this.dynamicformService.updateState(id, updateDynamicformDto);
+  }
+
+  @Delete('states/:id')
+  removeState(@Param('id') id: string) {
+    return this.dynamicformService.deleteState(id);
+  }
+
   @Post('add-city/:stateID')
   addCity(@Param('stateID') stateID: string, @Body() createAreaDto: CreateAreaDto) {
     return this.dynamicformService.addCity(stateID, createAreaDto);
@@ -69,6 +90,16 @@ export class DynamicformController {
   @Get('cities/:stateID')
   getAllCityByStateId(@Param('stateID') stateID: string,) {
     return this.dynamicformService.getAllCityByState(stateID);
+  }
+
+  @Patch('cities/:id')
+  updateCity(@Param('id') id: string, @Body() updateDynamicformDto: CreateAreaDto) {
+    return this.dynamicformService.updateCity(id, updateDynamicformDto);
+  }
+
+  @Delete('cities/:id')
+  removeCity(@Param('id') id: string) {
+    return this.dynamicformService.deleteCity(id);
   }
 
   @Post()
