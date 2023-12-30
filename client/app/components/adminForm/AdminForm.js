@@ -328,33 +328,53 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "select")
                     return (
-                      <SelectField
+                      <div
                         key={index}
-                        name={field?.name}
-                        data={
-                          field?.name === "Country"
-                            ? countries
-                            : field?.name === "State"
-                            ? states
-                            : field?.name === "City"
-                            ? cities
-                            : field?.data
-                        }
-                        onChange={
-                          field?.name === "Country"
-                            ? handleCountryChange
-                            : field?.name === "State"
-                            ? handleStateChange
-                            : null
-                        }
-                        rules={[
-                          {
-                            required: field?.isRequired,
-                            message:
-                              field?.errorMessage ?? "Please select a value",
-                          },
-                        ]}
-                      />
+                        className="flex justify-between items-center  "
+                      >
+                        <SelectField
+                          key={index}
+                          name={field?.name}
+                          data={
+                            field?.name === "Country"
+                              ? countries
+                              : field?.name === "State"
+                                ? states
+                                : field?.name === "City"
+                                  ? cities
+                                  : field?.data
+                          }
+                          onChange={
+                            field?.name === "Country"
+                              ? handleCountryChange
+                              : field?.name === "State"
+                                ? handleStateChange
+                                : null
+                          }
+                          rules={[
+                            {
+                              required: field?.isRequired,
+                              message:
+                                field?.errorMessage ?? "Please select a value",
+                            },
+                          ]}
+                        />
+                        {field?.isEditable ? (
+                          <div className="">
+                            <div className=" pt-2 ml-2">
+                              <button
+                                className="p-2 bg-[#F04D99] text-white rounded-md"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  confirmDeleteField(sectionIndex, index);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
                     );
                   if (field?.type === "date")
                     return (
@@ -403,7 +423,10 @@ const AdminForm = ({ onFormSubmit }) => {
                     );
                   if (field?.type === "radio")
                     return (
-                      <div key={index} className="flex justify-between items-center ">
+                      <div
+                        key={index}
+                        className="flex justify-between items-center "
+                      >
                         <RadioField
                           name={field?.name}
                           data={field?.data}
