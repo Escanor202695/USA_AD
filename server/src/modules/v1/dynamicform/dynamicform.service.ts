@@ -46,6 +46,18 @@ export class DynamicformService {
     return this.formDataModel.findById(id).exec();
   }
 
+  async getFormDataByCountry(country: string) {
+    return await this.formDataModel.find({ 'data.Contact Info.Country': country }).exec();
+  }
+
+  async getFormDataByState(state: string) {
+    return await this.formDataModel.find({ 'data.Contact Info.State': state }).exec();
+  }
+
+  async getFormDataByCity(city: string) {
+    return await this.formDataModel.find({ 'data.Contact Info.City': city }).exec();
+  }
+
   async addCountry(createArea: CreateAreaDto) {
     const country = await this.countryModel.findOne({
       name: createArea.name,

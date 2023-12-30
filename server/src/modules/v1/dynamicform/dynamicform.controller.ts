@@ -36,6 +36,21 @@ export class DynamicformController {
     return this.dynamicformService.getFormDataById(id);
   }
 
+  @Get('formdata/country/:country')
+  getFormDataByCountry(@Param('country') country: string) {
+    return this.dynamicformService.getFormDataByCountry(country);
+  }
+
+  @Get('formdata/state/:state')
+  getFormDataByState(@Param('state') state: string) {
+    return this.dynamicformService.getFormDataByState(state);
+  }
+
+  @Get('formdata/city/:city')
+  getFormDataByCity(@Param('city') city: string) {
+    return this.dynamicformService.getFormDataByCity(city);
+  }
+
   @Post('add-country')
   addCountry(@Body() createAreaDto: CreateAreaDto) {
     return this.dynamicformService.addCountry(createAreaDto);
