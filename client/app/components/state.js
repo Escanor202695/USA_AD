@@ -4,11 +4,15 @@ import { Button, Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
 import NormalPlus from "./svg/NormalPlus";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const State = ({ states, countryId, countryName, refetch }) => {
   const [selectedState, setSelectedState] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editSelectedCountry, setEditSelectedCountry] = useState(null);
 
   const handleStateClick = (state) => {
     setSelectedState(state);
@@ -18,8 +22,8 @@ const State = ({ states, countryId, countryName, refetch }) => {
     state.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   useEffect(() => {
-    if (selectedState) { }
-    else if (filteredStates && filteredStates.length > 0) {
+    if (selectedState) {
+    } else if (filteredStates && filteredStates.length > 0) {
       setSelectedState(filteredStates[0]);
     }
   }, [filteredStates]);
@@ -48,6 +52,68 @@ const State = ({ states, countryId, countryName, refetch }) => {
 
   const [form] = Form.useForm();
 
+  const showEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+  const handleEditOk = () => {
+    form
+      .validateFields()
+      .then(async (values) => {
+        form.resetFields();
+        await handleEdit(values);
+        await refetch();
+        setIsEditModalOpen(false);
+      })
+      .catch((info) => {
+        console.log("Validate Failed:", info);
+      });
+  };
+  const handleEditCancel = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleEdit = async (country) => {
+    try {
+      const response = await axios.patch(
+        `/dynamicform/states/${editSelectedCountry?._id}`,
+        {
+          name: country.name,
+        }
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  const handleDelete = async (country) => {
+    Modal.confirm({
+      title: "Confirm Deletion",
+      content: "Are you sure you want to delete this state?",
+      okText: "Delete",
+      okButtonProps: { style: { background: "red", borderColor: "red" } },
+      onOk: async () => {
+        try {
+          const response = await axios.delete(
+            `/dynamicform/states/${country?._id}`
+          );
+          console.log("Response:", response.data);
+          refetch();
+        } catch (error) {
+          toast.error(error?.response?.data?.message);
+          console.error(
+            "Error:",
+            error.response ? error.response.data : error.message
+          );
+        }
+      },
+    });
+  };
+
   const addState = async (values) => {
     try {
       const response = await axios.post(`/dynamicform/add-state/${countryId}`, {
@@ -58,7 +124,7 @@ const State = ({ states, countryId, countryName, refetch }) => {
       console.log("Response:", response.data);
       // Handle the response as needed
     } catch (error) {
-      toast.error(error?.response?.data?.message)
+      toast.error(error?.response?.data?.message);
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
@@ -79,6 +145,7 @@ const State = ({ states, countryId, countryName, refetch }) => {
               <th className=" px-4 py-2 bg-[#F04D99] text-white items-left">
                 States
               </th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody className="countries-tb overflow-y-scroll">
@@ -86,13 +153,36 @@ const State = ({ states, countryId, countryName, refetch }) => {
               return (
                 <tr
                   key={index}
-                  onClick={() => handleStateClick(state)}
                   className={`${state?._id === selectedState?._id
-                    ? "bg-[#bd7ee5] text-white"
-                    : "text-black"
-                    } cursor-pointer`}
+                      ? "bg-[#bd7ee5] text-white"
+                      : "text-black"
+                    } `}
                 >
-                  <td className=" px-4 py-2">{state?.name}</td>
+                  <td
+                    onClick={() => handleStateClick(state)}
+                    className=" px-4 py-2 border-b cursor-pointer"
+                  >
+                    {state?.name}
+                  </td>
+                  <td className="flex mt-2 ml-4">
+                    <div
+                      onClick={() => {
+                        setEditSelectedCountry(state);
+                        showEditModal();
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        className="text-blue-500 cursor-pointer mr-2"
+                      />
+                    </div>
+                    <div onClick={() => handleDelete(state)}>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="text-red-500 cursor-pointer"
+                      />
+                    </div>
+                  </td>
                 </tr>
               );
             })}
@@ -124,6 +214,29 @@ const State = ({ states, countryId, countryName, refetch }) => {
         onOk={handleOk}
       >
         <Form form={form} layout="vertical">
+          <Form.Item
+            name="name"
+            label="State Name"
+            rules={[
+              { required: true, message: "Please input the state name!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="Edit State"
+        open={isEditModalOpen}
+        onCancel={handleEditCancel}
+        okButtonProps={{ style: { backgroundColor: "#334455" } }}
+        onOk={handleEditOk}
+      >
+        <Form
+          form={form}
+          initialValues={{ name: editSelectedCountry?.name }}
+          layout="vertical"
+        >
           <Form.Item
             name="name"
             label="State Name"
