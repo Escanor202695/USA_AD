@@ -36,7 +36,7 @@ const ImageDetails = () => {
     "Disclaimer: This information is for demonstration purposes only.";
 
   return (
-    <div className="flex p-4 min-h-[100vh]">
+    <div className="flex pt-[100px] p-4 min-h-[100vh]">
       <div className="w-2/3 pr-4">
         <ImageGallery items={images} />
         <p className="text-pink-500 mt-4">{disclaimerText}</p>

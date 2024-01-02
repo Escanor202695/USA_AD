@@ -1,11 +1,14 @@
-"use client"
-import React, { useEffect } from 'react'
-import Sidebar from '../components/sidebarAdmin'
-import { useRouter } from 'next/navigation';
+// Profile.js
+"use client";
+import React, { useEffect } from "react";
+import Sidebar from "../components/sidebarAdmin";
+import { useRouter } from "next/navigation";
+import UserSidebar from "../components/userSideBar";
 
 function Profile() {
-
   const router = useRouter();
+  const role = localStorage.getItem("role");
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -13,11 +16,12 @@ function Profile() {
     }
     //
   }, []);
+
   return (
-    <div className='w-full '>
-      <Sidebar />
+    <div className="w-full">
+      {role === "admin" ? <Sidebar /> : <UserSidebar />}
     </div>
-  )
+  );
 }
 
-export default Profile
+export default Profile;
