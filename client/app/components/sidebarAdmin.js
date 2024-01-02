@@ -6,6 +6,7 @@ import ChangePassword from "../components/changePassword";
 
 import {
   ArrowLeftOnRectangleIcon,
+  PlusIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import Edit from "./svg/edit";
@@ -13,7 +14,8 @@ import ProfileNavBar from "./ProfileNavbar";
 import Map from "./svg/map";
 import UserInfo from "./userInfo";
 import Users from "../admin/users/page";
-import ManageListings from "../admin/manageListing/page"; 
+import ManageListings from "../admin/manageListing/page";
+import AddUser from "../components/addUser";
 const components = {
   Location,
   "User Info": UserInfo,
@@ -21,6 +23,7 @@ const components = {
   "Change Password": ChangePassword,
   "All Users": Users,
   "Manage Listings": ManageListings,
+  "Add User": AddUser,
 };
 
 export default function Sidebar() {
@@ -44,6 +47,7 @@ export default function Sidebar() {
   const menuItems = [
     { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },
     { name: "All Users", icon: <UserIcon className="w-4 h-4" /> },
+    { name: "Add User", icon: <PlusIcon className="w-4 h-4" /> },
     { name: "Location", icon: <Map className="w-4 h-4" /> },
     { name: "Manage Form", icon: <Edit className="w-4 h-4" /> },
     { name: "Manage Listings", icon: <Edit className="w-4 h-4" /> },

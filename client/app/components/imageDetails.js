@@ -25,8 +25,7 @@ function SampleNextArrow(props) {
         zIndex: 1,
       }}
       onClick={onClick}
-    >
-    </div>
+    ></div>
   );
 }
 
@@ -45,15 +44,11 @@ function SamplePrevArrow(props) {
         zIndex: 1,
       }}
       onClick={onClick}
-    >
-    </div>
+    ></div>
   );
 }
 
-
-
 const ImageDetails = ({ images, contactInfo, adInfo }) => {
-
   const [activeIndex, setActiveIndex] = useState(0);
   const sliderRef = useRef(null);
   const settings = {
@@ -80,7 +75,7 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
   };
 
   return (
-    <div className="flex pt-[100px] p-4 min-h-[100vh]">
+    <div className="flex  p-4 min-h-[100vh]">
       <div className="w-2/3 pr-4">
         <Slider {...settings}>
           {images?.map((image, index) => (
@@ -91,42 +86,64 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
         </Slider>
         <div className="flex m-2">
           {images?.map((image, index) => (
-            <div key={index} onClick={() => { setActiveIndex(index); goToSlide(index) }} >
-              <div className={`cursor-pointer ${index === activeIndex ? 'border-2 border-white' : ''}`}>
+            <div
+              key={index}
+              onClick={() => {
+                setActiveIndex(index);
+                goToSlide(index);
+              }}
+            >
+              <div
+                className={`cursor-pointer ${
+                  index === activeIndex ? "border-2 border-white" : ""
+                }`}
+              >
                 <ImageDisplay imageUrl={image?.url} />
               </div>
             </div>
           ))}
         </div>
-        <p className="text-pink-500 mt-4">Disclaimer: {adInfo?.Disclaimer}</p>
+        <p className="text-pink-500 mt-4">
+          <span className="text-lg text-white  underline">Disclaimer:</span>{" "}
+          <br />
+          {adInfo?.Disclaimer}
+        </p>
+        <p className="text-pink-500 mt-4">
+          <span className="text-lg text-white underline">Details:</span> <br />
+          {adInfo?.Details}
+        </p>
       </div>
       <div className="w-1/3">
         <div className="text-pink-500 mb-4">
           <h2>Contact Info</h2>
-          {contactInfo && <ul>
-            {Object.entries(contactInfo).map(([field, value]) => (
-              <li key={field}>
-                <span className="text-white">{field}:</span>{" "}
-                <span className="text-pink-500">{value}</span>
-              </li>
-            ))}
-          </ul>}
-        </div>
-        <div className="text-pink-500">
-          <h2>Basic Info</h2>
-          {adInfo && <ul>
-            {Object.entries(adInfo).map(([field, value]) => {
-              if (typeof value === "object") {
-                return null;
-              }
-              return (
+          {contactInfo && (
+            <ul>
+              {Object.entries(contactInfo).map(([field, value]) => (
                 <li key={field}>
                   <span className="text-white">{field}:</span>{" "}
                   <span className="text-pink-500">{value}</span>
                 </li>
-              )
-            })}
-          </ul>}
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="text-pink-500">
+          <h2>Basic Info</h2>
+          {adInfo && (
+            <ul>
+              {Object.entries(adInfo).map(([field, value]) => {
+                if (typeof value === "object") {
+                  return null;
+                }
+                return (
+                  <li key={field}>
+                    <span className="text-white">{field}:</span>{" "}
+                    <span className="text-pink-500">{value}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </div>
     </div>

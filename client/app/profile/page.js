@@ -1,21 +1,24 @@
 // Profile.js
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/sidebarAdmin";
 import { useRouter } from "next/navigation";
 import UserSidebar from "../components/userSideBar";
 
 function Profile() {
   const router = useRouter();
-  const role = localStorage.getItem("role");
+  const [role, setRole] = useState(null); // Use state to track the role
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("role");
+    
     if (!token) {
       router.push("/login");
+    } else {
+      setRole(userRole); // Set the role state
     }
-    //
-  }, []);
+  }, [router]);
 
   return (
     <div className="w-full">
