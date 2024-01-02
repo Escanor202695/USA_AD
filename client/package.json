@@ -26,8 +26,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
+    "react-image-gallery": "^1.3.0",
     "react-modal": "^3.16.1",
     "react-phone-input-2": "^2.15.1",
+    "react-photo-gallery": "^8.0.0",
     "react-toastify": "^9.1.3"
   },
   "devDependencies": {
@@ -36,6 +38,7 @@
     "@babel/preset-react": "^7.23.3",
     "@types/node": "20.10.5",
     "@types/react": "18.2.45",
+    "@types/react-image-gallery": "^1.2.4",
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
