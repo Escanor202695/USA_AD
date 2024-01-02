@@ -49,9 +49,8 @@ const Location = () => {
             {country?.states.map((state, index) => (
               <div
                 key={index}
-                className={`md:w-1/4 sm:w-1/2 ${
-                  index % 4 === 3 ? "md:w-1/4" : ""
-                } pt-1 !capitalize `}
+                className={`md:w-1/4 sm:w-1/2 ${index % 4 === 3 ? "md:w-1/4" : ""
+                  } pt-1 !capitalize `}
               >
                 <div className=" text-white  rounded-md cursor-pointer">
                   <div className="text-[#bd7ee5] text-[20px]">
@@ -63,7 +62,7 @@ const Location = () => {
                   {state?.cities.map((city, index) => (
                     <Link
                       key={index}
-                      href={`/page4e/${city?.name?.toLowerCase()}`}
+                      href={`/showListing/${city?.name}`}
                       className="flex py-0 group items-center gap-0 hover:gap-2 hover:transform hover:transition-all hover:duration-150 hover:ease-in-out text-[#f04d99] hover:text-[#bd7ee5] rounded-md cursor-pointer text-[16px] "
                     >
                       <div>{city.name}</div>
