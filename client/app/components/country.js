@@ -89,7 +89,6 @@ const Country = ({ countries, refetch }) => {
     }
   };
 
-
   const handleDelete = async (country) => {
     Modal.confirm({
       title: "Confirm Deletion",
@@ -160,7 +159,6 @@ const Country = ({ countries, refetch }) => {
                 <th className=" px-4 py-2 bg-[#F04D99] items-left text-white">
                   Countries
                 </th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody className="countries-tb overflow-y-scroll ">
@@ -168,34 +166,35 @@ const Country = ({ countries, refetch }) => {
                 return (
                   <tr
                     key={index}
-                    className={` ${country?._id === selectedCountry?._id
-                      ? "bg-[#bd7ee5] text-white"
-                      : "text-black"
-                      }`}
+                    className={` ${
+                      country?._id === selectedCountry?._id
+                        ? "bg-[#bd7ee5] text-white"
+                        : "text-black"
+                    }`}
                   >
                     <td
                       onClick={() => handleCountryClick(country)}
-                      className=" px-4 py-2 border-b cursor-pointer"
+                      className=" flex justify-between px-4 py-2 border-b cursor-pointer"
                     >
                       {country?.name}
-                    </td>
-                    <td className="flex mt-2 ml-4">
-                      <div
-                        onClick={() => {
-                          setEditSelectedCountry(country);
-                          showEditModal();
-                        }}
-                      >
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          className="text-blue-500 cursor-pointer mr-2"
-                        />
-                      </div>
-                      <div onClick={() => handleDelete(country)}>
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="text-red-500 cursor-pointer"
-                        />
+                      <div className="flex">
+                        <div
+                          onClick={() => {
+                            setEditSelectedCountry(country);
+                            showEditModal();
+                          }}
+                        >
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            className=" text-gray-600 w-3 h-3 cursor-pointer mr-2"
+                          />
+                        </div>
+                        <div onClick={() => handleDelete(country)}>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            className="text-gray-600 w-3 h-3 cursor-pointer"
+                          />
+                        </div>
                       </div>
                     </td>
                   </tr>

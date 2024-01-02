@@ -15,7 +15,7 @@ const RadioField = ({ name, data, rules }) => {
       <Radio.Group
         onChange={(e) => setFieldType(e.target.value)}
         value={fieldType}
-        className="bg-white py-2 px-4 w-full rounded-lg"
+        className="bg-white  p-2 w-full rounded-lg flex-1 flex"
       >
         {data?.map((item) => (
           <Radio key={item._id} value={item._id} >

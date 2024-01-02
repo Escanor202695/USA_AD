@@ -145,7 +145,6 @@ const State = ({ states, countryId, countryName, refetch }) => {
               <th className=" px-4 py-2 bg-[#F04D99] text-white items-left">
                 States
               </th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody className="countries-tb overflow-y-scroll">
@@ -153,34 +152,35 @@ const State = ({ states, countryId, countryName, refetch }) => {
               return (
                 <tr
                   key={index}
-                  className={`${state?._id === selectedState?._id
+                  className={`${
+                    state?._id === selectedState?._id
                       ? "bg-[#bd7ee5] text-white"
                       : "text-black"
-                    } `}
+                  } `}
                 >
                   <td
                     onClick={() => handleStateClick(state)}
-                    className=" px-4 py-2 border-b cursor-pointer"
+                    className=" flex justify-between px-4 py-2 border-b cursor-pointer"
                   >
                     {state?.name}
-                  </td>
-                  <td className="flex mt-2 ml-4">
-                    <div
-                      onClick={() => {
-                        setEditSelectedCountry(state);
-                        showEditModal();
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="text-blue-500 cursor-pointer mr-2"
-                      />
-                    </div>
-                    <div onClick={() => handleDelete(state)}>
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="text-red-500 cursor-pointer"
-                      />
+                    <div className="flex">
+                      <div
+                        onClick={() => {
+                          setEditSelectedCountry(state);
+                          showEditModal();
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="text-gray-600 w-3 h-3 cursor-pointer mr-2"
+                        />
+                      </div>
+                      <div onClick={() => handleDelete(state)}>
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="text-gray-600 w-3 h-3 cursor-pointer"
+                        />
+                      </div>
                     </div>
                   </td>
                 </tr>

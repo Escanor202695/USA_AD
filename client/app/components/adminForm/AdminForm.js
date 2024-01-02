@@ -54,7 +54,6 @@ const AdminForm = ({ onFormSubmit }) => {
           isRequired: true,
           errorMessage: "Please enter a valid phone number",
           isEditable: false,
-          section: "Contact Info",
         },
         {
           name: "Email",
@@ -62,7 +61,6 @@ const AdminForm = ({ onFormSubmit }) => {
           isRequired: true,
           errorMessage: "Please enter a valid email address",
           isEditable: false,
-          section: "Contact Info",
         },
         {
           name: "Country",
@@ -70,7 +68,6 @@ const AdminForm = ({ onFormSubmit }) => {
           isRequired: true,
           errorMessage: "Please select a country",
           isEditable: false,
-          section: "Contact Info",
         },
         {
           name: "State",
@@ -78,7 +75,6 @@ const AdminForm = ({ onFormSubmit }) => {
           isRequired: true,
           errorMessage: "Please select a State",
           isEditable: false,
-          section: "Contact Info",
         },
         {
           name: "City",
@@ -86,7 +82,6 @@ const AdminForm = ({ onFormSubmit }) => {
           isRequired: true,
           errorMessage: "Please select a City",
           isEditable: false,
-          section: "Contact Info",
         },
         {
           name: "Location",
@@ -94,7 +89,50 @@ const AdminForm = ({ onFormSubmit }) => {
           isRequired: true,
           errorMessage: "Please enter your loaction",
           isEditable: false,
-          section: "Contact Info",
+        },
+      ],
+    },
+    {
+      section: "Ad info",
+      fields: [
+        {
+          name: "Title",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+        },
+        {
+          name: "Details",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+        },
+        {
+          name: "Disclaimer",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+        },
+        {
+          name: "Listing Category",
+          type: "select",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+          data: [
+            { _id: "1", name: "Premium" },
+            { _id: "2", name: "Standard" },
+          ],
+        },
+        {
+          name: "Upload images",
+          type: "image",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
         },
       ],
     },
@@ -272,7 +310,7 @@ const AdminForm = ({ onFormSubmit }) => {
                         key={index}
                         className="flex justify-between items-center "
                       >
-                        <div className=" flex-1">
+                        <div className=" flex-1 ">
                           <TextField
                             name={field?.name}
                             rules={[
@@ -330,35 +368,38 @@ const AdminForm = ({ onFormSubmit }) => {
                     return (
                       <div
                         key={index}
-                        className="flex justify-between items-center  "
+                        className=" flex justify-between items-center  "
                       >
-                        <SelectField
-                          key={index}
-                          name={field?.name}
-                          data={
-                            field?.name === "Country"
-                              ? countries
-                              : field?.name === "State"
+                        <div className="flex-1">
+                          <SelectField
+                            key={index}
+                            name={field?.name}
+                            data={
+                              field?.name === "Country"
+                                ? countries
+                                : field?.name === "State"
                                 ? states
                                 : field?.name === "City"
-                                  ? cities
-                                  : field?.data
-                          }
-                          onChange={
-                            field?.name === "Country"
-                              ? handleCountryChange
-                              : field?.name === "State"
+                                ? cities
+                                : field?.data
+                            }
+                            onChange={
+                              field?.name === "Country"
+                                ? handleCountryChange
+                                : field?.name === "State"
                                 ? handleStateChange
                                 : null
-                          }
-                          rules={[
-                            {
-                              required: field?.isRequired,
-                              message:
-                                field?.errorMessage ?? "Please select a value",
-                            },
-                          ]}
-                        />
+                            }
+                            rules={[
+                              {
+                                required: field?.isRequired,
+                                message:
+                                  field?.errorMessage ??
+                                  "Please select a value",
+                              },
+                            ]}
+                          />
+                        </div>
                         {field?.isEditable ? (
                           <div className="">
                             <div className=" pt-2 ml-2">
@@ -427,17 +468,20 @@ const AdminForm = ({ onFormSubmit }) => {
                         key={index}
                         className="flex justify-between items-center "
                       >
-                        <RadioField
-                          name={field?.name}
-                          data={field?.data}
-                          rules={[
-                            {
-                              required: field?.isRequired,
-                              message:
-                                field?.errorMessage ?? "Please select a value",
-                            },
-                          ]}
-                        />
+                        <div className="flex-1">
+                          <RadioField
+                            name={field?.name}
+                            data={field?.data}
+                            rules={[
+                              {
+                                required: field?.isRequired,
+                                message:
+                                  field?.errorMessage ??
+                                  "Please select a value",
+                              },
+                            ]}
+                          />
+                        </div>
                         {field?.isEditable ? (
                           <div className="">
                             <div className=" pt-2 ml-2">

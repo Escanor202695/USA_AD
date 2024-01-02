@@ -24,7 +24,7 @@ const Area = () => {
   return (
     <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto flex-1 ">
       <div className="flex justify-center py-10">
-        <h1 className="bg-[#f04d99]  text-xl  text-white  border-2 border-[#f04d99] hover:bg-[#bd7ee5]   p-2 rounded-md">
+        <h1 className="bg-[#f04d99]  text-xl  text-white  border-2 border-[#f04d99] p-2 rounded-md">
           Manage Location
         </h1>
       </div>

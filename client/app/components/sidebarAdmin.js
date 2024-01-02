@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Location from "../components/area";
 import AdminForm from "../admin/manageform/page";
@@ -12,12 +12,15 @@ import Edit from "./svg/edit";
 import ProfileNavBar from "./ProfileNavbar";
 import Map from "./svg/map";
 import UserInfo from "./userInfo";
-
+import Users from "../admin/users/page";
+import ManageListings from "../admin/manageListing/page"; 
 const components = {
   Location,
   "User Info": UserInfo,
   "Manage Form": AdminForm,
   "Change Password": ChangePassword,
+  "All Users": Users,
+  "Manage Listings": ManageListings,
 };
 
 export default function Sidebar() {
@@ -33,11 +36,17 @@ export default function Sidebar() {
     setSelectedItem(null);
     router.push("/login");
   };
-
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      router.push("/login");
+    }
+  });
   const menuItems = [
     { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },
+    { name: "All Users", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Location", icon: <Map className="w-4 h-4" /> },
     { name: "Manage Form", icon: <Edit className="w-4 h-4" /> },
+    { name: "Manage Listings", icon: <Edit className="w-4 h-4" /> },
     { name: "Change Password", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Log out", icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" /> },
   ];

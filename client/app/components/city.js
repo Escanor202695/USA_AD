@@ -19,11 +19,9 @@ const City = ({ cities, stateId, stateName, refetch }) => {
     state.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
   const handleCityClick = (city) => {
     setSelectedCity(city);
   };
-
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -87,7 +85,6 @@ const City = ({ cities, stateId, stateName, refetch }) => {
     }
   };
 
-
   const handleDelete = async (country) => {
     Modal.confirm({
       title: "Confirm Deletion",
@@ -123,7 +120,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
       console.log("Response:", response.data);
       // Handle the response as needed
     } catch (error) {
-      toast.error(error?.response?.data?.message)
+      toast.error(error?.response?.data?.message);
       console.error(
         "Error:",
         error.response ? error.response.data : error.message
@@ -144,7 +141,6 @@ const City = ({ cities, stateId, stateName, refetch }) => {
               <th className=" px-4 py-2 items-left bg-[#F04D99]  text-white">
                 Cities
               </th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody className="countries-tb overflow-y-scroll">
@@ -152,29 +148,35 @@ const City = ({ cities, stateId, stateName, refetch }) => {
               return (
                 <tr
                   key={index}
-                  className={`${city?._id === selectedCity?._id
-                    ? "bg-[#bd7ee5] text-white"
-                    : "text-black"
-                    }`}
+                  className={`${
+                    city?._id === selectedCity?._id
+                      ? "bg-[#bd7ee5] text-white"
+                      : "text-black"
+                  }`}
                 >
-                  <td onClick={() => handleCityClick(city)} className="border-b px-4 py-2  cursor-pointer">{city?.name}</td>
-                  <td className="flex mt-2 ml-4">
-                    <div
-                      onClick={() => {
-                        setEditSelectedCountry(city);
-                        showEditModal();
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="text-blue-500 cursor-pointer mr-2"
-                      />
-                    </div>
-                    <div onClick={() => handleDelete(city)}>
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="text-red-500 cursor-pointer"
-                      />
+                  <td
+                    onClick={() => handleCityClick(city)}
+                    className="flex justify-between border-b px-4 py-2  cursor-pointer"
+                  >
+                    {city?.name}
+                    <div className="flex">
+                      <div
+                        onClick={() => {
+                          setEditSelectedCountry(city);
+                          showEditModal();
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="text-gray-600 w-3 h-3 cursor-pointer mr-2"
+                        />
+                      </div>
+                      <div onClick={() => handleDelete(city)}>
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="text-gray-600 w-3 h-3 cursor-pointer"
+                        />
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -220,9 +222,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
           <Form.Item
             name="name"
             label="City Name"
-            rules={[
-              { required: true, message: "Please input the city name!" },
-            ]}
+            rules={[{ required: true, message: "Please input the city name!" }]}
           >
             <Input />
           </Form.Item>

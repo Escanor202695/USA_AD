@@ -50,29 +50,42 @@ const ClientForm = ({ preview, formValues }) => {
   const handleFormSubmit = async (values) => {
     console.log(values);
     const fileKey = Object.keys(values).find(
-      (key) => values[key]?.file?.response
+      (key) =>
+        values[key]?.file?.response ||
+        (Array.isArray(values[key]?.fileList) &&
+          values[key]?.fileList[0]?.response)
     );
+
     if (fileKey) {
-      values[fileKey] = values[fileKey].file.response;
+      // Check if it's a single file or a fileList
+      if (values[fileKey]?.file?.response) {
+        values[fileKey] = values[fileKey].file.response;
+      } else if (
+        Array.isArray(values[fileKey]?.fileList) &&
+        values[fileKey]?.fileList[0]?.response
+      ) {
+        values[fileKey] = values[fileKey].fileList.map((file) => file.response);
+      }
     }
+
     console.log(values);
 
-    const formData = {};
+    // const formData = {};
 
-    formValues.forEach((section) => {
-      formData[section.section] = {};
+    // formValues.forEach((section) => {
+    //   formData[section.section] = {};
 
-      section.fields.forEach((field) => {
-        formData[section.section][field.name] = values[field.name];
-      });
-    });
+    //   section.fields.forEach((field) => {
+    //     formData[section.section][field.name] = values[field.name];
+    //   });
+    // });
 
-    console.log(formData);
+    // console.log(formData);
 
-    const res = await axios.post("/dynamicform/formdata", { data: formData });
-    console.log(res.data);
-    toast.success("Form submitted successfully");
-    form.resetFields();
+    // const res = await axios.post("/dynamicform/formdata", { data: formData });
+    // console.log(res.data);
+    // toast.success("Form submitted successfully");
+    // form.resetFields();
   };
 
   return (
@@ -133,17 +146,17 @@ const ClientForm = ({ preview, formValues }) => {
                         field?.name === "Country"
                           ? countries
                           : field?.name === "State"
-                            ? states
-                            : field?.name === "City"
-                              ? cities
-                              : field?.data
+                          ? states
+                          : field?.name === "City"
+                          ? cities
+                          : field?.data
                       }
                       onChange={
                         field?.name === "Country"
                           ? handleCountryChange
                           : field?.name === "State"
-                            ? handleStateChange
-                            : null
+                          ? handleStateChange
+                          : null
                       }
                       rules={[
                         {

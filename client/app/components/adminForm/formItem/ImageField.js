@@ -1,44 +1,40 @@
 import React, { useState } from "react";
-import { Form, Input, Upload } from "antd";
+import { Form, Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
 const ImageField = ({ name, rules }) => {
   const [fileList, setFileList] = useState([]);
+  const [fileItem, setFileItem] = useState(null);
   const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    if (newFileList.length > 0 && newFileList[0].response) {
-      console.log("Image upload response:", newFileList[0]?.response?.url);
-    }
+    const uploadedImages = newFileList
+      .filter((file) => file.response)
+      .map((file) => file.response.url);
+    setFileItem(uploadedImages);
+    console.log("Image upload response:", fileItem);
   };
+
   const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
+    // Your existing onPreview logic
   };
 
   return (
     <Form.Item
-    label={<span style={{ color: "white" }}>{name}</span>}
-    name={name}
+      label={<span style={{ color: "white" }}>{name}</span>}
+      name={name}
       rules={rules}
+      value={fileItem}
     >
       <Upload
         action="http://localhost:4000/api/dynamicform/upload"
-        listType="picture-card"
         fileList={fileList}
         onChange={onChange}
-        onPreview={onPreview}
-        className="bg-white flex flex-1 p-6 justify-center rounded-lg"
+        className="flex-1 bg-white flex rounded-lg p-2"
+        multiple // Enable multiple file selection
       >
-        {fileList.length < 1 && "+ Upload"}
+        <Button icon={<UploadOutlined />} className="bg-white">
+          Click to Upload
+        </Button>
       </Upload>
     </Form.Item>
   );
