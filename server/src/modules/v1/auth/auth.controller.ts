@@ -33,15 +33,15 @@ export class AuthController {
   @ApiCreatedResponse({
     description: 'Create an account with provided data if correct',
   })
-  @UseGuards(AccessTokenGuard)
+  // @UseGuards(AccessTokenGuard)
   @Post('local/addnewuser')
   async addNewUser(
     @Body() createAuthDto: AdduserAuthDto,
-    @User() user: AuthUser
+    // @User() user: AuthUser
   ) {
-    if (user.role !== 'admin') {
-      return { status: 'error', message: 'You are not authorized to add new user' }
-    }
+    // if (user.role !== 'admin') {
+    //   return { status: 'error', message: 'You are not authorized to add new user' }
+    // }
     return await this.authService.addNewUser(createAuthDto);
 
   }
