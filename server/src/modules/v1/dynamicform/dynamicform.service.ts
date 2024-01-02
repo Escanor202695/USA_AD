@@ -33,8 +33,8 @@ export class DynamicformService {
     return this.formModel.findOne({ name: name }).exec();
   }
 
-  async saveFormData(data: Record<string, any>) {
-    const newFormData = new this.formDataModel({ data });
+  async saveFormData(email: string, data: Record<string, any>) {
+    const newFormData = new this.formDataModel({ email: email, data });
     return newFormData.save();
   }
 
@@ -44,6 +44,10 @@ export class DynamicformService {
 
   async getFormDataById(id: string) {
     return this.formDataModel.findById(id).exec();
+  }
+
+  async getFormDataByEmail(email: string) {
+    return await this.formDataModel.find({ email: email }).exec();
   }
 
   async getFormDataByCountry(country: string) {

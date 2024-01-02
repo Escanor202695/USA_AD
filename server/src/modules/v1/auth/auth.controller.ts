@@ -7,6 +7,7 @@ import { CreateAuthDto, LoginAuthDto } from './dtos';
 import { AccessTokenGuard } from './guards';
 import { User } from 'src/common/decorator/user.decorator';
 import { AuthUser } from './schema/auth.schema';
+import { AdduserAuthDto } from './dtos/adduser.auth.dto';
 
 
 @ApiTags('v1/auth')
@@ -29,6 +30,21 @@ export class AuthController {
     return response.send(ret);
   }
 
+  @ApiCreatedResponse({
+    description: 'Create an account with provided data if correct',
+  })
+  @UseGuards(AccessTokenGuard)
+  @Post('local/addnewuser')
+  async addNewUser(
+    @Body() createAuthDto: AdduserAuthDto,
+    @User() user: AuthUser
+  ) {
+    if (user.role !== 'admin') {
+      return { status: 'error', message: 'You are not authorized to add new user' }
+    }
+    return await this.authService.addNewUser(createAuthDto);
+
+  }
 
   @ApiOkResponse({
     description: 'Logs in user',

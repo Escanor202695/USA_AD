@@ -17,6 +17,7 @@ import * as argon2 from 'argon2';
 import { InvalidCredentials } from 'src/common/exceptions';
 import { generate } from 'otp-generator';
 import { MailsenderService } from '../mailsender/mailsender.service';
+import { AdduserAuthDto } from './dtos/adduser.auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -52,6 +53,26 @@ export class AuthService {
       // });
 
       return { user, status: 'success', accessToken: accessToken };
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  public async addNewUser(createAuthDto: AdduserAuthDto) {
+    const auth = await this.authuserModel.findOne({
+      email: createAuthDto.email,
+    });
+    if (auth) {
+      throw new HttpException('User already registered', HttpStatus.CONFLICT);
+    }
+    try {
+      const user = new this.authuserModel({
+        ...createAuthDto,
+      });
+      await user.save();
+
+      return { user, status: 'success' };
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException();
