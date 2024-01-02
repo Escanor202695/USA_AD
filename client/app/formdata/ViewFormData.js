@@ -26,7 +26,18 @@ const ViewFormData = () => {
                 <div key={sectionName}>
                   <h2>{sectionName}</h2>
                   {Object.entries(sectionData).map(([key, value]) => {
-                    if (typeof value === "object") {
+                    if (Array.isArray(value)) {
+                      return (
+                        <div key={key}>
+                          <span>{key}</span>
+                          {value.map((item, index) => (
+                            <div key={index}>
+                              <ImageDisplay imageUrl={item.url} />
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    } else if (typeof value === "object") {
                       if (value.type === "image") {
                         return (
                           <div key={key}>

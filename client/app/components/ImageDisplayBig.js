@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 
-const ImageDisplay = ({ imageUrl }) => {
+const ImageDisplayBig = ({ imageUrl }) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
     const fetchImage = async () => {
@@ -26,7 +26,7 @@ const ImageDisplay = ({ imageUrl }) => {
     };
   }, [imageUrl]);
 
-  return <img src={image} alt="Uploaded" className={`w-full h-40 object-cover`} />;
+  return <img src={image} alt="Uploaded" className={`w-full h-[500px] object-cover`} />;
 };
 
-export default ImageDisplay;
+export default ImageDisplayBig;
