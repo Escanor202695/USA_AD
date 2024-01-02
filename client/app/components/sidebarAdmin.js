@@ -17,7 +17,7 @@ import Users from "../admin/users/page";
 import ManageListings from "../admin/manageListing/page";
 import AddUser from "../components/addUser";
 const components = {
-  Location,
+  "Manage Location":Location,
   "User Info": UserInfo,
   "Manage Form": AdminForm,
   "Change Password": ChangePassword,
@@ -27,7 +27,11 @@ const components = {
 };
 
 export default function Sidebar() {
-  const [selectedItem, setSelectedItem] = useState("User Info");
+  const [selectedItem, setSelectedItem] = useState(() => {
+    // Retrieve the last selected item from local storage
+    const storedItem = localStorage.getItem("selectedItem");
+    return storedItem || "User Info"; // Default to "User Info" if not found
+  });
   const router = useRouter();
 
   const handleMenuItemClick = (itemName) => {
@@ -44,11 +48,15 @@ export default function Sidebar() {
       router.push("/login");
     }
   });
+  useEffect(() => {
+    // Save the selected item to local storage whenever it changes
+    localStorage.setItem("selectedItem", selectedItem);
+  }, [selectedItem]);
   const menuItems = [
     { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },
     { name: "All Users", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Add User", icon: <PlusIcon className="w-4 h-4" /> },
-    { name: "Location", icon: <Map className="w-4 h-4" /> },
+    { name: "Manage Location", icon: <Map className="w-4 h-4" /> },
     { name: "Manage Form", icon: <Edit className="w-4 h-4" /> },
     { name: "Manage Listings", icon: <Edit className="w-4 h-4" /> },
     { name: "Change Password", icon: <UserIcon className="w-4 h-4" /> },
@@ -83,7 +91,7 @@ export default function Sidebar() {
                         (item.name === selectedItem
                           ? "bg-[#F04D99]     "
                           : " ") +
-                        " group flex gap-x-3 cursor-pointer rounded-md text-white p-2 text-sm leading-6 font-semibold"
+                        " group flex items-center gap-x-3 cursor-pointer rounded-md text-white p-2 text-sm leading-6 font-semibold"
                       }
                     >
                       {item.icon}

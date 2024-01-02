@@ -24,11 +24,12 @@ export default function AddUser() {
         setError("Passwords do not match");
         return;
       }
-
+      console.log(role)
       const response = await axios.post("/auth/local/addnewuser", {
         name,
         email,
         password,
+        role
       });
       toast.success("Signup Successful!");
       router.push("/login");
@@ -45,7 +46,7 @@ export default function AddUser() {
       <div className="flex min-h-full bg-[#101827] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-            Create Your Account
+           Add New User
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

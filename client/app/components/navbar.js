@@ -132,7 +132,7 @@ const NavBar = () => {
               </div>
             </div>
           </div>
-          <div className="sm:hidden flex-col">
+          <div className="lg:hidden flex-col">
             {token ? (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>

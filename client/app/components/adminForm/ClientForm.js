@@ -8,6 +8,9 @@ import DateField from "./formItem/DateField";
 import RadioField from "./formItem/RadioField";
 import ImageField from "./formItem/ImageField";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { Modal } from "antd"; // Import Ant Design Modal
+
 const ClientForm = ({ preview, formValues }) => {
   const [form] = Form.useForm();
 
@@ -15,10 +18,11 @@ const ClientForm = ({ preview, formValues }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-
+  const router = useRouter();
   const fetchData = async () => {
     const response = await axios.get("/dynamicform/country-state-city");
     const data = response.data?.countries;
+
     // console.log(data);
     setCountries(data);
   };
@@ -48,7 +52,16 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    if (!localStorage.getItem("token")) {
+      Modal.confirm({
+        title: "You need to login first",
+        content: "Are you a valid user?",
+        okText: "Login",
+        okButtonProps: { style: { background: "red", borderColor: "red" } },
+        onOk: () => router.push("/login"), // Navigate to "/login" on OK
+      });
+      return;
+    }
     const fileKey = Object.keys(values).find(
       (key) =>
         (Array.isArray(values[key]?.fileList) &&
@@ -82,7 +95,10 @@ const ClientForm = ({ preview, formValues }) => {
 
     console.log(formData);
 
-    const res = await axios.post("/dynamicform/formdata", { data: formData, email: localStorage.getItem('useremail') });
+    const res = await axios.post("/dynamicform/formdata", {
+      data: formData,
+      email: localStorage.getItem("useremail"),
+    });
     console.log(res.data);
     toast.success("Form submitted successfully");
     form.resetFields();
@@ -146,17 +162,17 @@ const ClientForm = ({ preview, formValues }) => {
                         field?.name === "Country"
                           ? countries
                           : field?.name === "State"
-                            ? states
-                            : field?.name === "City"
-                              ? cities
-                              : field?.data
+                          ? states
+                          : field?.name === "City"
+                          ? cities
+                          : field?.data
                       }
                       onChange={
                         field?.name === "Country"
                           ? handleCountryChange
                           : field?.name === "State"
-                            ? handleStateChange
-                            : null
+                          ? handleStateChange
+                          : null
                       }
                       rules={[
                         {

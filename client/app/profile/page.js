@@ -10,9 +10,13 @@ function Profile() {
   const [role, setRole] = useState(null); // Use state to track the role
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userRole = localStorage.getItem("role");
-    
+    let token;
+    let userRole;
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("token");
+      userRole = localStorage.getItem("role");
+    }
+
     if (!token) {
       router.push("/login");
     } else {

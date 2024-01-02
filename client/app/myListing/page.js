@@ -5,7 +5,11 @@ import CardImage from "../components/CardImage";
 import Link from "next/link";
 
 const YourPage = () => {
-  const email = localStorage.getItem("useremail");
+  let email;
+  if (typeof window !== "undefined") {
+    // Access localStorage here
+    email = localStorage.getItem("useremail");
+  }
 
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(true);
