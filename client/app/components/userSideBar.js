@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ChangePassword from "./changePassword";
-import { ArrowLeftOnRectangleIcon, UserIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftOnRectangleIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import ProfileNavBar from "./ProfileNavbar";
 import UserInfo from "./userInfo";
-
+import Form from "../form/ViewForm";
+import MyListing from "../myListing/page";
+import Pen from "./svg/pen";
 const components = {
   "User Info": UserInfo,
   "Change Password": ChangePassword,
+  "Post New Listing": Form,
+  "My Listing": MyListing,
 };
 
 export default function UserSidebar() {
@@ -42,6 +49,8 @@ export default function UserSidebar() {
   const menuItems = [
     { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Change Password", icon: <UserIcon className="w-4 h-4" /> },
+    { name: "Post New Listing", icon: <Pen className="w-4 h-4" /> },
+    { name: "My Listing", icon: <Pen className="w-4 h-4" /> },
     { name: "Log out", icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" /> },
   ];
 
