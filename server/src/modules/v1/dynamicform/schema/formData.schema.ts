@@ -8,6 +8,8 @@ export type FormDataDocument = FormData & Document;
 export class FormData {
   @Prop({ type: Object })
   data: Record<string, any>;
+  @Prop({ type: String })
+  email: string
 }
 
 export const FormDataSchema = SchemaFactory.createForClass(FormData);

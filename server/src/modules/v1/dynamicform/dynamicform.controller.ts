@@ -22,8 +22,8 @@ export class DynamicformController {
   }
 
   @Post('formdata')
-  saveFormData(@Body('data') data: Record<string, any>) {
-    return this.dynamicformService.saveFormData(data);
+  saveFormData(@Body('email') email: string, @Body('data') data: Record<string, any>) {
+    return this.dynamicformService.saveFormData(email, data);
   }
 
   @Get('formdata')
@@ -34,6 +34,11 @@ export class DynamicformController {
   @Get('formdata/:id')
   getFormDataById(@Param('id') id: string) {
     return this.dynamicformService.getFormDataById(id);
+  }
+
+  @Get('formdata/email/:email')
+  getFormDataByEmail(@Param('email') email: string) {
+    return this.dynamicformService.getFormDataByEmail(email);
   }
 
   @Get('formdata/country/:country')

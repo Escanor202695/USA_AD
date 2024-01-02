@@ -82,7 +82,7 @@ const ClientForm = ({ preview, formValues }) => {
 
     console.log(formData);
 
-    const res = await axios.post("/dynamicform/formdata", { data: formData });
+    const res = await axios.post("/dynamicform/formdata", { data: formData, email: localStorage.getItem('useremail') });
     console.log(res.data);
     toast.success("Form submitted successfully");
     form.resetFields();
