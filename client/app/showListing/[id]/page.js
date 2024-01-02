@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import ImageGrid from "../../components/imageGrid";
 import NavBar from "../../components/navbar";
-import CardImage from "../../components/CardImage";
+import CardImage from "../../components/cardImage";
 import Link from "next/link";
 
 const YourPage = ({ params }) => {

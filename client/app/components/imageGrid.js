@@ -1,6 +1,6 @@
 // ImageGrid.js
 import React from 'react';
-import CardImage from './CardImage';
+import CardImage from './cardImage';
 
 const ImageGrid = ({ images }) => {
   return (
