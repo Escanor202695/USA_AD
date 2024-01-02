@@ -17,7 +17,7 @@ import Users from "../admin/users/page";
 import ManageListings from "../admin/manageListing/page";
 import AddUser from "../components/addUser";
 const components = {
-  "Manage Location":Location,
+  "Manage Location": Location,
   "User Info": UserInfo,
   "Manage Form": AdminForm,
   "Change Password": ChangePassword,
@@ -28,9 +28,14 @@ const components = {
 
 export default function Sidebar() {
   const [selectedItem, setSelectedItem] = useState(() => {
-    // Retrieve the last selected item from local storage
-    const storedItem = localStorage.getItem("selectedItem");
-    return storedItem || "User Info"; // Default to "User Info" if not found
+    // Check if window is defined (client-side)
+    if (typeof window !== 'undefined') {
+      // Retrieve the last selected item from local storage
+      const storedItem = localStorage.getItem("selectedItem");
+      return storedItem || "User Info"; // Default to "User Info" if not found
+    }
+
+    return "User Info"; // Default value for SSR
   });
   const router = useRouter();
 
@@ -44,13 +49,17 @@ export default function Sidebar() {
     router.push("/login");
   };
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      router.push("/login");
+    if (typeof window !== 'undefined') {
+      if (!localStorage.getItem("token")) {
+        router.push("/login");
+      }
     }
   });
   useEffect(() => {
     // Save the selected item to local storage whenever it changes
-    localStorage.setItem("selectedItem", selectedItem);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("selectedItem", selectedItem);
+    }
   }, [selectedItem]);
   const menuItems = [
     { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },

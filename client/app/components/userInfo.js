@@ -3,10 +3,12 @@ import UserIcon from "./svg/userCircle"; // Replace with the actual path to your
 
 const UserInfo = () => {
   // Retrieve user information from localStorage
-  const email = localStorage.getItem("useremail");
-  const username = localStorage.getItem("username");
-  const role = localStorage.getItem("role");
-
+  let email, username, role;
+  if (typeof window !== 'undefined') {
+    email = localStorage.getItem("useremail");
+    username = localStorage.getItem("username");
+    role = localStorage.getItem("role");
+  }
   return (
     <div className="flex min-h-full bg-[#101827] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

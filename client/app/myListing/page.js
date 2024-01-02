@@ -6,9 +6,11 @@ import Link from "next/link";
 
 const YourPage = () => {
   let email;
-  if (typeof window !== "undefined") {
-    // Access localStorage here
+  let username;
+  if (typeof window == "undefined") {
+  } else {
     email = localStorage.getItem("useremail");
+    username = localStorage.getItem("username");
   }
 
   const [formData, setFormData] = useState(null);
@@ -35,7 +37,7 @@ const YourPage = () => {
 
   return (
     <div className="bg-[#101827] p-4 pt-[100px] min-h-[100vh] h-auto">
-      <h1 className="text-white">{localStorage.getItem("username")}</h1>
+      <h1 className="text-white">{username}</h1>
 
       {loading && <p>Loading...</p>}
 

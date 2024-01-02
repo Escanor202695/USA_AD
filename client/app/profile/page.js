@@ -12,7 +12,8 @@ function Profile() {
   useEffect(() => {
     let token;
     let userRole;
-    if (typeof window !== "undefined") {
+    if (typeof window == "undefined") {
+    } else {
       token = localStorage.getItem("token");
       userRole = localStorage.getItem("role");
     }

@@ -20,9 +20,14 @@ const components = {
 export default function UserSidebar() {
   const router = useRouter();
   const [selectedItem, setSelectedItem] = useState(() => {
-    // Retrieve the last selected item from local storage
-    const storedItem = localStorage.getItem("selectedItem");
-    return storedItem || "User Info"; // Default to "User Info" if not found
+    // Check if window is defined (client-side)
+    if (typeof window !== 'undefined') {
+      // Retrieve the last selected item from local storage
+      const storedItem = localStorage.getItem("selectedItem");
+      return storedItem || "User Info"; // Default to "User Info" if not found
+    }
+
+    return "User Info"; // Default value for SSR
   });
 
   const handleMenuItemClick = (itemName) => {
@@ -37,12 +42,16 @@ export default function UserSidebar() {
 
   useEffect(() => {
     // Save the selected item to local storage whenever it changes
-    localStorage.setItem("selectedItem", selectedItem);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("selectedItem", selectedItem);
+    }
   }, [selectedItem]);
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      router.push("/login");
+    if (typeof window !== 'undefined') {
+      if (!localStorage.getItem("token")) {
+        router.push("/login");
+      }
     }
   }, [router]);
 
