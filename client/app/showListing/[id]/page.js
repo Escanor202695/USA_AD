@@ -30,7 +30,7 @@ const YourPage = ({ params }) => {
 
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBar />
       <div className="bg-black p-4 pt-[100px]  min-h-[100vh] h-auto">
         <h1 className="text-white">{cityName}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
