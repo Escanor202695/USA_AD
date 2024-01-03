@@ -26,7 +26,7 @@ const ImageField = ({ name, rules }) => {
       value={fileItem}
     >
       <Upload
-        action="http://localhost:4000/api/dynamicform/upload"
+        action={`${process.env.NEXT_PUBLIC_BACKEND_URL}/dynamicform/upload`}
         fileList={fileList}
         onChange={onChange}
         className="flex-1 bg-white flex rounded-lg p-2"
