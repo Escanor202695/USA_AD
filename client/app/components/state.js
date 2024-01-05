@@ -7,20 +7,36 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const State = ({ states, countryId, countryName, refetch }) => {
+const State = ({
+  states,
+  countryId,
+  countryName,
+  countryUpdateFlag,
+  setCountryUpdateFlag,
+}) => {
   const [selectedState, setSelectedState] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editSelectedCountry, setEditSelectedCountry] = useState(null);
+  const [filteredStates, setFilteredStates] = useState(states);
+
+  useEffect(() => {
+    if (countryUpdateFlag) setCountryUpdateFlag(false);
+    setSelectedState(null);
+  }, [countryUpdateFlag]);
 
   const handleStateClick = (state) => {
     setSelectedState(state);
   };
 
-  const filteredStates = states?.filter((state) =>
-    state.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    const filtered = states?.filter((state) =>
+      state.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredStates(filtered);
+  }, [states]);
+
   useEffect(() => {
     if (selectedState) {
     } else if (filteredStates && filteredStates.length > 0) {
@@ -31,6 +47,7 @@ const State = ({ states, countryId, countryName, refetch }) => {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     form
       .validateFields()
@@ -38,7 +55,6 @@ const State = ({ states, countryId, countryName, refetch }) => {
         form.resetFields();
 
         await addState(values);
-        await refetch();
         setIsModalOpen(false);
       })
       .catch((info) => {
@@ -61,7 +77,6 @@ const State = ({ states, countryId, countryName, refetch }) => {
       .then(async (values) => {
         form.resetFields();
         await handleEdit(values);
-        await refetch();
         setIsEditModalOpen(false);
       })
       .catch((info) => {
@@ -80,6 +95,17 @@ const State = ({ states, countryId, countryName, refetch }) => {
           name: country.name,
         }
       );
+      const index = filteredStates.findIndex(
+        (state) => state._id === editSelectedCountry?._id
+      );
+
+      if (index !== -1) {
+        setFilteredStates((prevStates) => {
+          const newStates = [...prevStates];
+          newStates[index] = response.data?.data;
+          return newStates;
+        });
+      }
       console.log("Response:", response.data);
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -101,8 +127,11 @@ const State = ({ states, countryId, countryName, refetch }) => {
           const response = await axios.delete(
             `/dynamicform/states/${country?._id}`
           );
+          setFilteredStates((prevStates) =>
+            prevStates.filter((c) => c._id !== country._id)
+          );
+          setSelectedState(null);
           console.log("Response:", response.data);
-          refetch();
         } catch (error) {
           toast.error(error?.response?.data?.message);
           console.error(
@@ -120,8 +149,8 @@ const State = ({ states, countryId, countryName, refetch }) => {
         name: values.name,
       });
 
-      filteredStates.push(response.data?.data);
-      console.log("Response:", response.data);
+      setFilteredStates([...filteredStates, response.data?.data]);
+
       // Handle the response as needed
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -203,7 +232,8 @@ const State = ({ states, countryId, countryName, refetch }) => {
           cities={selectedState?.cities}
           stateId={selectedState?._id}
           stateName={selectedState?.name}
-          refetch={refetch}
+          setCountryUpdateFlag={setCountryUpdateFlag}
+          countryUpdateFlag={countryUpdateFlag}
         />
       )}
       <Modal

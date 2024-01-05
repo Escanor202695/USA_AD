@@ -9,20 +9,31 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Country = ({ countries, refetch }) => {
+const Country = ({ countries }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editSelectedCountry, setEditSelectedCountry] = useState(null);
   const [form] = Form.useForm();
+  const [filteredCountries, setFilteredCountries] = useState(countries);
+  const [countryUpdateFlag, setCountryUpdateFlag] = useState(false);
 
   const handleCountryClick = (country) => {
+    if (selectedCountry && selectedCountry._id === country._id) {
+      return;
+    }
     setSelectedCountry(country);
+    setCountryUpdateFlag(true);
   };
-  const filteredCountries = countries?.filter((country) =>
-    country.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+  useEffect(() => {
+    const filtered = countries?.filter((country) =>
+      country.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredCountries(filtered);
+  }, [countries]);
+
   useEffect(() => {
     if (selectedCountry) {
     } else if (filteredCountries && filteredCountries.length > 0) {
@@ -33,13 +44,13 @@ const Country = ({ countries, refetch }) => {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     form
       .validateFields()
       .then(async (values) => {
         form.resetFields();
         await addCountry(values);
-        await refetch();
         setIsModalOpen(false);
       })
       .catch((info) => {
@@ -54,13 +65,13 @@ const Country = ({ countries, refetch }) => {
   const showEditModal = () => {
     setIsEditModalOpen(true);
   };
+
   const handleEditOk = () => {
     form
       .validateFields()
       .then(async (values) => {
         form.resetFields();
         await handleEdit(values);
-        await refetch();
         setIsEditModalOpen(false);
       })
       .catch((info) => {
@@ -79,6 +90,19 @@ const Country = ({ countries, refetch }) => {
           name: country.name,
         }
       );
+      const index = filteredCountries.findIndex(
+        (country) => country._id === editSelectedCountry?._id
+      );
+
+      if (index !== -1) {
+        // Replace the country at the found index with the edited country
+        setFilteredCountries((prevCountries) => {
+          const newCountries = [...prevCountries];
+          newCountries[index] = response.data?.data;
+          return newCountries;
+        });
+      }
+
       console.log("Response:", response.data);
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -100,8 +124,11 @@ const Country = ({ countries, refetch }) => {
           const response = await axios.delete(
             `/dynamicform/country/${country?._id}`
           );
+          setFilteredCountries((prevCountries) =>
+            prevCountries.filter((c) => c._id !== country._id)
+          );
+          setSelectedCountry(null);
           console.log("Response:", response.data);
-          refetch();
         } catch (error) {
           toast.error(error?.response?.data?.message);
           console.error(
@@ -119,7 +146,7 @@ const Country = ({ countries, refetch }) => {
         name: values.name,
       });
 
-      filteredCountries.push(response.data?.data);
+      setFilteredCountries([...filteredCountries, response.data?.data]);
 
       console.log("Response:", response.data);
       // Handle the response as needed
@@ -217,7 +244,8 @@ const Country = ({ countries, refetch }) => {
             states={selectedCountry.states}
             countryId={selectedCountry?._id}
             countryName={selectedCountry?.name}
-            refetch={refetch}
+            setCountryUpdateFlag={setCountryUpdateFlag}
+            countryUpdateFlag={countryUpdateFlag}
           />
         )}
 

@@ -13,13 +13,9 @@ const Area = () => {
     setCountries(data);
   };
 
-  const toggleNeedFetch = () => {
-    setNeedFetch(!needFetch);
-  };
-
   useEffect(() => {
     fetchData();
-  }, [needFetch]);
+  }, []);
 
   return (
     <div className="pt-[100px] pb-[50px] w-[80%] md:w-[75%] mx-auto flex-1 ">
@@ -28,7 +24,7 @@ const Area = () => {
           Manage Location
         </h1>
       </div>
-      <Country countries={countries} refetch={toggleNeedFetch} />
+      <Country countries={countries} />
     </div>
   );
 };

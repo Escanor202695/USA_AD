@@ -1,23 +1,32 @@
-import { useState } from "react";
-
-import { Button, Modal, Form, Input } from "antd";
+import { useState, useEffect } from "react";
+import { Modal, Form, Input } from "antd";
 import axios from "../../utils/axios";
 import NormalPlus from "./svg/NormalPlus";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const City = ({ cities, stateId, stateName, refetch }) => {
+const City = ({
+  cities,
+  stateId,
+  stateName,
+  countryUpdateFlag,
+  setCountryUpdateFlag
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editSelectedCountry, setEditSelectedCountry] = useState(null);
+  const [filteredCities, setFilteredCities] = useState(cities);
 
-  const filteredStates = cities?.filter((state) =>
-    state.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+  useEffect(() => {
+    const filtered = cities?.filter((state) =>
+      state.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredCities(filtered);
+  }, [cities]);
 
   const handleCityClick = (city) => {
     setSelectedCity(city);
@@ -33,7 +42,6 @@ const City = ({ cities, stateId, stateName, refetch }) => {
         form.resetFields();
         console.log(values);
         await addCity(values);
-        await refetch();
         setIsModalOpen(false);
       })
       .catch((info) => {
@@ -56,7 +64,6 @@ const City = ({ cities, stateId, stateName, refetch }) => {
       .then(async (values) => {
         form.resetFields();
         await handleEdit(values);
-        await refetch();
         setIsEditModalOpen(false);
       })
       .catch((info) => {
@@ -75,7 +82,18 @@ const City = ({ cities, stateId, stateName, refetch }) => {
           name: country.name,
         }
       );
-      console.log("Response:", response.data);
+
+      const index = filteredCities.findIndex(
+        (state) => state._id === editSelectedCountry?._id
+      );
+
+      if (index !== -1) {
+        setFilteredCities((prevStates) => {
+          const newCities = [...prevCities];
+          newCities[index] = response.data?.data;
+          return newCities;
+        });
+      }
     } catch (error) {
       toast.error(error?.response?.data?.message);
       console.error(
@@ -96,8 +114,10 @@ const City = ({ cities, stateId, stateName, refetch }) => {
           const response = await axios.delete(
             `/dynamicform/cities/${country?._id}`
           );
+          setFilteredCities((prevCities) =>
+            prevCities.filter((c) => c._id !== country._id)
+          );
           console.log("Response:", response.data);
-          refetch();
         } catch (error) {
           toast.error(error?.response?.data?.message);
           console.error(
@@ -115,7 +135,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
         name: values.name,
       });
 
-      filteredStates.push(response.data?.data);
+      filteredCities.push(response.data?.data);
 
       console.log("Response:", response.data);
       // Handle the response as needed
@@ -144,7 +164,7 @@ const City = ({ cities, stateId, stateName, refetch }) => {
             </tr>
           </thead>
           <tbody className="countries-tb overflow-y-scroll">
-            {filteredStates?.map((city, index) => {
+            {filteredCities?.map((city, index) => {
               return (
                 <tr
                   key={index}
