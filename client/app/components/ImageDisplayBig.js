@@ -26,7 +26,7 @@ const ImageDisplayBig = ({ imageUrl }) => {
     };
   }, [imageUrl]);
 
-  return <img src={image} alt="Uploaded" className={`w-full h-[500px] object-cover`} />;
+  return <img src={image} alt="Uploaded" className={`w-full h-[500px] object-contain`} />;
 };
 
 export default ImageDisplayBig;

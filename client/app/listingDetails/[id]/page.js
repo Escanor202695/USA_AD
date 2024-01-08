@@ -79,7 +79,7 @@ const YourPage = ({ params }) => {
             )}
           </div>
         )}
-        {!loading && cityData?.length > 0 && (
+        {!loading && cityData?.length > 1 && (
           <div className=" p-4 mt-[50px] mb-10 h-auto">
             <h1 className="text-white text-3xl mb-8 text-center capitalize">
               Related Listings

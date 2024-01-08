@@ -37,7 +37,7 @@ const YourPage = () => {
 
   return (
     <div className="bg-gray-900 p-10 pt-[120px] min-h-[100vh] h-auto">
-      <h1 className="text-white text-3xl font-semibold ">Your Listing</h1>
+      <h1 className="text-white text-3xl font-semibold py-6 ">Your Listing</h1>
 
       {loading && <p>Loading...</p>}
 
@@ -46,13 +46,13 @@ const YourPage = () => {
       )}
 
       {!loading && formData && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {formData.map((item, index) => (
             <div key={index} className="cursor-pointer">
               <Link href={`/listingDetails/${item._id}`}>
                 <CardImage
+                  item={item}
                   imageSrc={item.data["Ad info"]["Upload images"][0].url}
-                  cityName={item.data["Contact Info"]["City"]}
                   status={item.data["Ad info"]["Listing Category"]}
                 />
               </Link>

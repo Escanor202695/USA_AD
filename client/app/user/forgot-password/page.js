@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "../../../utils/axios.ts";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import NavBar from "../../components/navbar.js";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -80,6 +81,7 @@ export default function ForgotPassword() {
 
   return (
     <>
+    <NavBar/>
       <div className="flex bg-black min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">

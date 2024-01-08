@@ -79,7 +79,7 @@ const ImageDetails = ({ images, contactInfo, adInfo, formData }) => {
       <div className="w-2/3 pr-4">
         <Slider {...settings}>
           {images?.map((image, index) => (
-            <div key={index}>
+            <div key={index} className="">
               <ImageDisplayBig imageUrl={image?.url} />
             </div>
           ))}
@@ -92,6 +92,7 @@ const ImageDetails = ({ images, contactInfo, adInfo, formData }) => {
                 setActiveIndex(index);
                 goToSlide(index);
               }}
+              className="max-w-[150px]"
             >
               <div
                 className={`cursor-pointer border-2 border-transparent   ${
@@ -118,7 +119,7 @@ const ImageDetails = ({ images, contactInfo, adInfo, formData }) => {
                   return null;
                 }
                 return (
-                  <li key={field}>
+                  <li key={field} className="py-1">
                     <span className="text-white">{field}:</span>{" "}
                     <span className="text-pink-500">{value}</span>
                   </li>
@@ -130,13 +131,13 @@ const ImageDetails = ({ images, contactInfo, adInfo, formData }) => {
         {Object.entries(formData?.data || {})
           .filter(([key, value]) => key !== "Ad info") // Exclude Ad info
           .map(([sectionName, sectionData], index) => (
-            <div key={index} className="mt-4 max-h-[200px] overflow-y-auto">
+            <div key={index} className="mt-4  overflow-y-auto">
               <span className="text-2xl underline font-bold mb-2 text-pink-500">
                 {sectionName}:
               </span>
               <ul>
                 {Object.entries(sectionData).map(([field, value]) => (
-                  <li key={field}>
+                  <li key={field} className="py-1">
                     <span className="text-white">{field}:</span>{" "}
                     <span className="text-pink-500">{value}</span>
                   </li>
