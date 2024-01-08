@@ -107,7 +107,6 @@ function PasswordField({ id, label, value, onChange }) {
           id={id}
           name={id}
           type={showPassword ? "text" : "password"}
-          autoComplete="new-password"
           required
           value={value}
           onChange={onChange}

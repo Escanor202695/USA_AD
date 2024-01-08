@@ -105,7 +105,6 @@ export default function Signup() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -126,7 +125,6 @@ export default function Signup() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  autoComplete="new-password"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
