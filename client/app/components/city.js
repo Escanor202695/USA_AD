@@ -11,7 +11,8 @@ const City = ({
   stateId,
   stateName,
   countryUpdateFlag,
-  setCountryUpdateFlag
+  setCountryUpdateFlag,
+  fetch
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState(null);
@@ -20,11 +21,11 @@ const City = ({
   const [editSelectedCountry, setEditSelectedCountry] = useState(null);
   const [filteredCities, setFilteredCities] = useState(cities);
 
-
   useEffect(() => {
-    const filtered = cities?.filter((state) =>
-      state.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered =
+      cities?.filter((state) =>
+        state.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) || [];
     setFilteredCities(filtered);
   }, [cities]);
 
@@ -135,7 +136,8 @@ const City = ({
         name: values.name,
       });
 
-      filteredCities.push(response.data?.data);
+      setFilteredCities([...filteredCities, response.data?.data]);
+      fetch();
 
       console.log("Response:", response.data);
       // Handle the response as needed
