@@ -55,7 +55,7 @@ export default function Signup() {
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-white"
               >
-                Full Name
+                FName
               </label>
               <div className="mt-2">
                 <input

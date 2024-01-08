@@ -106,7 +106,7 @@ const ClientForm = ({ preview, formValues }) => {
   };
 
   return (
-    <div className="border bg-[#101827] rounded-lg border-[#F04D99] w-[100%] md:w-[75%] lg:[70%]  mx-auto">
+    <div className="border bg-black rounded-lg border-[#983061] w-[100%] md:w-[75%] lg:[70%]  mx-auto">
       <Form
         form={form}
         onFinishFailed={() => {

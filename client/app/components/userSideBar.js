@@ -64,7 +64,7 @@ export default function UserSidebar() {
         onSelect={handleMenuItemClick}
         logout={logout}
       />
-      <div className="flex min-h-screen bg-[#2A2A2B] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+      <div className="flex min-h-screen bg-gray-900 overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
         <div className="hidden sm:flex-1 pt-[100px] lg:flex grow flex-col gap-y-5 overflow-y-auto  px-6 min-h-[100vh] w-1/5 min-w-[150px] bg-black">
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -94,7 +94,7 @@ export default function UserSidebar() {
             </ul>
           </nav>
         </div>
-        <div className="w-full sm:w-4/5 min-h-screen bg-[#2a2a2b] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+        <div className="w-full sm:w-4/5 min-h-screen bg-gray-900 overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
           <SelectedComponent />
         </div>
       </div>

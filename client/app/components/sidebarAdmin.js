@@ -104,7 +104,7 @@ export default function Sidebar() {
             </ul>
           </nav>
         </div>
-        <div className="w-full sm:w-4/5 min-h-screen bg-[#2a2a2b] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+        <div className="w-full sm:w-4/5 min-h-screen bg-gray-900 overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
           <SelectedComponent />
         </div>
       </div>
