@@ -35,41 +35,77 @@ const YourPage = ({ params }) => {
   }, [cityName]);
 
   return (
-    <>
+    <div className="bg-black">
       <NavBar />
       {loading && (
         <div className="bg-black h-full">
           <Loader />
         </div>
       )}
-      {!loading && formData.length > 0 && (
-        <div className="bg-black p-4 pt-[100px] min-h-[100vh] h-auto">
-          <h1 className="text-white capitalize">{cityName}</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {formData?.map((item, index) => {
-              return (
-                <div key={index} className="cursor-pointer">
-                  <Link href={`/listingDetails/${item._id}`}>
-                    <CardImage
-                      imageSrc={item.data["Ad info"]["Upload images"][0].url}
-                      cityName={cityName}
-                      status={item.data["Ad info"]["Listing Category"]}
-                    />
-                  </Link>
-                </div>
-              );
-            })}
+      <div>
+        {!loading && formData.length > 0 && (
+          <div className="bg-black p-4 pt-[100px] h-auto max-w-[1140px] m-auto">
+            <div className="mb-4">
+              <h1 className="text-3xl font-bold mb-6 text-white capitalize">
+                Premium Listings
+              </h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {formData
+                  .filter(
+                    (item) =>
+                      item.data["Ad info"]["Listing Category"] === "Premium"
+                  )
+                  .map((item, index) => (
+                    <div key={index} className="cursor-pointer">
+                      <Link href={`/listingDetails/${item._id}`}>
+                        <CardImage
+                          imageSrc={
+                            item.data["Ad info"]["Upload images"][0].url
+                          }
+                          cityName={cityName}
+                          status={item.data["Ad info"]["Listing Category"]}
+                        />
+                      </Link>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="mt-[80px]">
+              <h1 className="text-3xl font-bold mb-6 text-white capitalize">
+                Standard Listings
+              </h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {formData
+                  .filter(
+                    (item) =>
+                      item.data["Ad info"]["Listing Category"] === "Standard"
+                  )
+                  .map((item, index) => (
+                    <div key={index} className="cursor-pointer">
+                      <Link href={`/listingDetails/${item._id}`}>
+                        <CardImage
+                          imageSrc={
+                            item.data["Ad info"]["Upload images"][0].url
+                          }
+                          cityName={cityName}
+                          status={item.data["Ad info"]["Listing Category"]}
+                        />
+                      </Link>
+                    </div>
+                  ))}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-      {formData?.length === 0 && 
-        
-        (
+        )}
+
+        {formData?.length === 0 && (
           <div className="bg-black h-full">
-          <Empty title="No listing Available"/>
+            <Empty title="No listing Available" />
           </div>
-          )}
-    </>
+        )}
+      </div>
+    </div>
   );
 };
 

@@ -26,7 +26,7 @@ const ImageDisplay = ({ imageUrl }) => {
     };
   }, [imageUrl]);
 
-  return <img src={image} alt="Uploaded" className={`w-full h-40 object-cover`} />;
+  return <img src={image} alt="Uploaded" className={`w-full h-80 object-cover`} />;
 };
 
 export default ImageDisplay;
