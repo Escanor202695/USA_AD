@@ -36,7 +36,7 @@ const YourPage = () => {
   }, [email]);
 
   return (
-    <div className="bg-[#2a2a2b] p-10 pt-[120px] min-h-[100vh] h-auto">
+    <div className="bg-gray-900 p-10 pt-[120px] min-h-[100vh] h-auto">
       <h1 className="text-white text-3xl font-semibold ">Your Listing</h1>
 
       {loading && <p>Loading...</p>}

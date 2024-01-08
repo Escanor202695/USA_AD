@@ -58,46 +58,89 @@ const Location = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="pt-[100px] flex-1 pb-[50px] w-[90%] md:w-[90%] mx-auto">
-          <div className="flex justify-center py-10">
-            <h1 className="text-[#f04d99]  text-2xl   border-2 border-[#f04d99] hover:text-[#bd7ee5]  p-2 rounded-md">
+        <div className="pt-[100px] flex-1 pb-[50px] w-[90%] md:w-[90%] min-h-[90vh] lg:w-[1140px] mx-auto p-[20px] md:p-[40px] lg:p-[60px]">
+          <div className="flex justify-center py-10 md:mt-[40px]">
+            <h1 className="text-[#f04d99] text-2xl border-2 border-[#f04d99] hover:text-[#bd7ee5] p-2 rounded-md">
               Select Location Below
             </h1>
           </div>
-          {countries?.map((country, index) => (
-            <div key={index}>
-              <h2 className="text-2xl  mb-1 text-[#f04d99]  relative after:block after:absolute after:left-0 after:w-[10%] after:h-[2px] after:bg-white">
+          {countries?.map((country, countryIndex) => (
+            <div key={countryIndex} className="mb-4 hidden lg:block">
+              <h2 className="inline-block capitalize text-2xl mb-1 text-[#f04d99] relative after:block after:absolute after:left-0 after:w-[70%] after:h-[1.5px] after:bg-[#f8bfdb] ">
                 {country?.name}
               </h2>
 
               <div className="flex flex-wrap grow-0">
-                {country?.states.map((state, index) => (
+                {[0, 1, 2, 3].map((columnIndex) => (
                   <div
-                    key={index}
-                    className={`md:w-1/4 sm:w-1/2 ${
-                      index % 4 === 3 ? "md:w-1/4" : ""
-                    } pt-1 !capitalize `}
+                    key={columnIndex}
+                    className={`md:w-1/4 sm:w-1/2 pt-1 !capitalize `}
                   >
-                    <div className=" text-white  rounded-md ">
-                      <div className="text-[#bd7ee5] text-[20px]">
-                        {state?.name}
-                      </div>
-                    </div>
-
-                    <div>
-                      {state?.cities.map((city, index) => (
-                        <Link
-                          key={index}
-                          href={`/showListing/${city?.name}`}
-                          className="flex py-0 group items-center gap-0 hover:gap-2 hover:transform hover:transition-all hover:duration-150 hover:ease-in-out text-[#f04d99] hover:text-[#bd7ee5] rounded-md cursor-pointer text-[16px] "
+                    {country?.states
+                      .filter((_, index) => index % 4 === columnIndex)
+                      .map((state, stateIndex) => (
+                        <div
+                          key={stateIndex}
+                          className="text-white rounded-md mb-2"
                         >
-                          <div>{formatCityName(city.name)}</div>
-                          <div className="hidden group-hover:block">
-                            <Right />
+                          <div className="text-[#bd7ee5] text-[20px]">
+                            {state?.name}
                           </div>
-                        </Link>
+                          {state?.cities.map((city, cityIndex) => (
+                            <Link
+                              key={cityIndex}
+                              href={`/showListing/${city?.name}`}
+                              className="flex py-0 group items-center gap-0 hover:gap-2 hover:transform hover:transition-all hover:duration-150 hover:ease-in-out text-[#f04d99] hover:text-[#bd7ee5] rounded-md cursor-pointer text-[16px] "
+                            >
+                              <div>{formatCityName(city.name)}</div>
+                              <div className="hidden group-hover:block">
+                                <Right />
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
                       ))}
-                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          {countries?.map((country, countryIndex) => (
+            <div key={countryIndex} className="mb-4 lg:hidden">
+              <h2 className="inline-block text-2xl mb-1 text-[#f04d99] relative after:block after:absolute after:left-0 after:w-[70%] after:h-[1.5px] after:bg-[#f8bfdb] ">
+                {country?.name}
+              </h2>
+
+              <div className="flex flex-wrap grow-0">
+                {[0,1,3].map((columnIndex) => (
+                  <div
+                    key={columnIndex}
+                    className={`w-1/2 md:1/3 pt-1 !capitalize `}
+                  >
+                    {country?.states
+                      .filter((_, index) => index % 4 === columnIndex)
+                      .map((state, stateIndex) => (
+                        <div
+                          key={stateIndex}
+                          className="text-white rounded-md mb-2"
+                        >
+                          <div className="text-[#bd7ee5] text-[20px]">
+                            {state?.name}
+                          </div>
+                          {state?.cities.map((city, cityIndex) => (
+                            <Link
+                              key={cityIndex}
+                              href={`/showListing/${city?.name}`}
+                              className="flex py-0 group items-center gap-0 hover:gap-2 hover:transform hover:transition-all hover:duration-150 hover:ease-in-out text-[#f04d99] hover:text-[#bd7ee5] rounded-md cursor-pointer text-[16px] "
+                            >
+                              <div>{formatCityName(city.name)}</div>
+                              <div className="hidden group-hover:block">
+                                <Right />
+                              </div>
+                            </Link>
+                          ))}
+                        </div>
+                      ))}
                   </div>
                 ))}
               </div>

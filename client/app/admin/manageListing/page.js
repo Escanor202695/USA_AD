@@ -70,7 +70,7 @@ export default function ManageListing() {
       <NavBar />
       <div className="flex pt-[100px] ">
         <div className="flex flex-col items-center w-full ">
-          <h1 className="text-3xl font-bold mb-4 text-white">
+          <h1 className="text-3xl mt-[40px] font-bold mb-4 text-white">
             All Ad Listings
           </h1>
           {loading ? (

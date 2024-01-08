@@ -31,14 +31,14 @@ const ViewForm = () => {
         <Loader />
       ) : (
         // Render the content when data has been fetched
-        <>
+        <div className="md:p-[40px]">
           <div className="flex justify-center pt-[100px]">
-            <h1 className="text-white text-2xl font-bold">Add your listing</h1>
+            <h1 className="text-white text-3xl font-bold">Add your listing</h1>
           </div>
           <div className="pt-5 pb-[50px] w-[80%] md:w-[75%] mx-auto">
             <ClientForm preview={false} formValues={formValues} />
           </div>
-        </>
+        </div>
       )}
     </>
   );

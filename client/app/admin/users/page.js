@@ -59,7 +59,7 @@ export default function Users() {
       <NavBar />
       <div className="flex pt-[100px] ">
         <div className="flex flex-col items-center w-full ">
-          <h1 className="text-3xl font-bold mb-4 text-white">All Users</h1>
+          <h1 className="text-3xl font-bold mb-4 text-white mt-[20px]">All Users</h1>
           {loading ? (
             <p className="text-gray-500">Loading...</p>
           ) : (
