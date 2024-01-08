@@ -9,7 +9,6 @@ import Hamburger from "./svg/hamburger";
 import { toast } from "react-toastify";
 import axios from "../../utils/axios";
 
-
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
@@ -23,18 +22,18 @@ const NavBar = () => {
     router.push("/");
   };
   const navigation = token
-  ? [
-      { name: "Home", href: "/home" },
-      { name: "Post New Ad", href: "/form" },
-      { name: "Profile", href: "/profile" },
-      { name: "Logout", onClick: handleLogout },
-    ]
-  : [
-      { name: "Home", href: "/home" },
-      { name: "Post New Ad", href: "/form" },
-      { name: "Register", href: "/user/signup" },
-      { name: "Login", href: "/login" },
-    ];
+    ? [
+        { name: "Home", href: "/home" },
+        { name: "Post New Ad", href: "/form" },
+        { name: "Profile", href: "/profile" },
+        { name: "Logout", onClick: () => handleLogout() }, // Wrap handleLogout in an arrow function
+      ]
+    : [
+        { name: "Home", href: "/home" },
+        { name: "Post New Ad", href: "/form" },
+        { name: "Register", href: "/user/signup" },
+        { name: "Login", href: "/login" },
+      ];
 
   const renderAuthButton = (label, icon, onClick) => (
     <button
@@ -70,13 +69,23 @@ const NavBar = () => {
         </div>
         <div className="hidden lg:flex lg:gap-x-12 items-center mr-16">
           {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-md font-semibold leading-6 text-white hover:text-[#F04D99]"
-            >
-              {item.name}
-            </a>
+            <React.Fragment key={item.name}>
+              {item.onClick ? (
+                <button
+                  onClick={item.onClick}
+                  className="text-md font-semibold leading-6 text-white hover:text-[#F04D99]"
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <a
+                  href={item.href}
+                  className="text-md font-semibold leading-6 text-white hover:text-[#F04D99]"
+                >
+                  {item.name}
+                </a>
+              )}
+            </React.Fragment>
           ))}
         </div>
         <div className="hidden  lg:flex items-center">
@@ -133,13 +142,23 @@ const NavBar = () => {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#F04D99]"
-                  >
-                    {item.name}
-                  </a>
+                  <React.Fragment key={item.name}>
+                    {item.onClick ? (
+                      <button
+                        onClick={item.onClick}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#F04D99]"
+                      >
+                        {item.name}
+                      </button>
+                    ) : (
+                      <a
+                        href={item.href}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#F04D99]"
+                      >
+                        {item.name}
+                      </a>
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
             </div>
