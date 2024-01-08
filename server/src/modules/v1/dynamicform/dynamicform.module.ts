@@ -8,6 +8,7 @@ import { City, CitySchema } from './schema/city.schema';
 import { Form, FormSchema } from './schema/form.schema';
 import { FormDataSchema } from './schema/formData.schema';
 import { MulterModule } from '@nestjs/platform-express';
+import { FormData } from './schema/formData.schema';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { MulterModule } from '@nestjs/platform-express';
       { name: State.name, schema: StateSchema },
       { name: City.name, schema: CitySchema },
       { name: Form.name, schema: FormSchema },
-      { name: FormData.name, schema: FormDataSchema }
+      { name: FormData.name, schema: FormDataSchema },
     ]),
     MulterModule.register({
       dest: './uploads',

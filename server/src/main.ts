@@ -16,11 +16,11 @@ async function bootstrap() {
 
   app.enableCors({
     credentials: true,
-    origin: [configService.get('ORIGIN'), '*', 'all'],
+    origin: [configService.get('ORIGIN'), '*', 'http://localhost:3000' , 'http://localhost:3001' , 'all'],
     // optionsSuccessStatus: 200,
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   });
-
+ 
   app.setGlobalPrefix('api');
   // app.use(express.json());
   app.use(express.urlencoded({ extended: false }));

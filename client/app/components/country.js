@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-const Country = ({ countries }) => {
+const Country = ({ countries, fetch }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,19 +18,20 @@ const Country = ({ countries }) => {
   const [form] = Form.useForm();
   const [filteredCountries, setFilteredCountries] = useState(countries);
   const [countryUpdateFlag, setCountryUpdateFlag] = useState(false);
+  const [updatedCountries, setUpdatedCountries] = useState(countries);
+  const [newSelectedCountry,setNewSelectedCountry] = useState(null);
 
-  const handleCountryClick = (country) => {
-    if (selectedCountry && selectedCountry._id === country._id) {
-      return;
-    }
+  const handleCountryClick = async (country) => {
     setSelectedCountry(country);
     setCountryUpdateFlag(true);
+
   };
 
   useEffect(() => {
-    const filtered = countries?.filter((country) =>
-      country.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filtered =
+      countries?.filter((country) =>
+        country.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) || [];
     setFilteredCountries(filtered);
   }, [countries]);
 
@@ -38,6 +39,7 @@ const Country = ({ countries }) => {
     if (selectedCountry) {
     } else if (filteredCountries && filteredCountries.length > 0) {
       setSelectedCountry(filteredCountries[0]);
+      setNewSelectedCountry(filteredCountries[0]);
     }
   }, [filteredCountries]);
 
@@ -148,8 +150,6 @@ const Country = ({ countries }) => {
 
       setFilteredCountries([...filteredCountries, response.data?.data]);
 
-      console.log("Response:", response.data);
-      // Handle the response as needed
     } catch (error) {
       toast.error(error?.response?.data?.message);
       console.error(
@@ -246,6 +246,7 @@ const Country = ({ countries }) => {
             countryName={selectedCountry?.name}
             setCountryUpdateFlag={setCountryUpdateFlag}
             countryUpdateFlag={countryUpdateFlag}
+            fetch={fetch}
           />
         )}
 

@@ -4,13 +4,13 @@ import Country from "./country";
 
 const Area = () => {
   const [countries, setCountries] = useState();
-  const [needFetch, setNeedFetch] = useState(false);
 
   const fetchData = async () => {
     const response = await axios.get("/dynamicform/country-state-city");
     const data = response.data?.countries;
-    // console.log(data);
     setCountries(data);
+    console.log('fetch called');
+    return data;
   };
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Area = () => {
           Manage Location
         </h1>
       </div>
-      <Country countries={countries} />
+      <Country countries={countries} fetch={fetchData}/>
     </div>
   );
 };

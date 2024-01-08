@@ -13,6 +13,8 @@ const State = ({
   countryName,
   countryUpdateFlag,
   setCountryUpdateFlag,
+  countries,
+  fetch
 }) => {
   const [selectedState, setSelectedState] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,12 +30,12 @@ const State = ({
 
   const handleStateClick = (state) => {
     setSelectedState(state);
-  };
+  }
 
   useEffect(() => {
     const filtered = states?.filter((state) =>
       state.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    )||[];
     setFilteredStates(filtered);
   }, [states]);
 
@@ -106,6 +108,8 @@ const State = ({
           return newStates;
         });
       }
+
+      fetch();
       console.log("Response:", response.data);
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -115,6 +119,10 @@ const State = ({
       );
     }
   };
+
+  const updateContent = async ()=>{
+    
+  }
 
   const handleDelete = async (country) => {
     Modal.confirm({
@@ -150,6 +158,7 @@ const State = ({
       });
 
       setFilteredStates([...filteredStates, response.data?.data]);
+      fetch();
 
       // Handle the response as needed
     } catch (error) {
@@ -234,6 +243,7 @@ const State = ({
           stateName={selectedState?.name}
           setCountryUpdateFlag={setCountryUpdateFlag}
           countryUpdateFlag={countryUpdateFlag}
+          fetch={fetch}
         />
       )}
       <Modal
