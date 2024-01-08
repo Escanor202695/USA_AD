@@ -82,7 +82,7 @@ const ProfileNavBar = ({ items, selectedItem, onSelect, logout }) => {
                   ))}
                 </div>
               </div>
-              <div className=" hidden space-y-2 py-6">
+              <div className=" lg:hidden space-y-2 py-6">
                 {items.map((item) => (
                   <button
                     key={item.name}
