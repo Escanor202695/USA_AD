@@ -60,7 +60,7 @@ const YourPage = ({ params }) => {
   }, [cityName]);
   return (
     <>
-      <div className="bg-[#101827] px-10">
+      <div className="bg-[#101827] px-5">
         <NavBar />
         {loading && (
           <div className="bg-black h-full">
@@ -74,24 +74,25 @@ const YourPage = ({ params }) => {
                 images={formData?.data["Ad info"]["Upload images"]}
                 contactInfo={formData?.data["Contact Info"]}
                 adInfo={formData?.data["Ad info"]}
+                formData={formData} 
               />
             )}
           </div>
         )}
         {!loading && cityData?.length > 0 && (
-          <div className=" p-4 h-auto">
-            <h1 className="text-white text-2xl pb-3 text-center capitalize">
+          <div className=" p-4 mt-[50px] mb-10 h-auto">
+            <h1 className="text-white text-3xl mb-8 text-center capitalize">
               Related Listings
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {cityData
                 ?.filter((item) => item._id !== formdataId) // Filter out the current listing
                 .map((item, index) => (
                   <div key={index} className="cursor-pointer">
                     <Link href={`/listingDetails/${item._id}`}>
                       <CardImage
+                        item={item}
                         imageSrc={item.data["Ad info"]["Upload images"][0].url}
-                        cityName={cityName}
                         status={item.data["Ad info"]["Listing Category"]}
                       />
                     </Link>

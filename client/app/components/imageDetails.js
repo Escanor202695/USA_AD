@@ -48,7 +48,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-const ImageDetails = ({ images, contactInfo, adInfo }) => {
+const ImageDetails = ({ images, contactInfo, adInfo, formData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const sliderRef = useRef(null);
   const settings = {
@@ -109,19 +109,6 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
         </p>
       </div>
       <div className="w-1/3">
-        <div className="text-pink-500 mb-4">
-          <h2 className="text-2xl underline font-bold mb-2">Contact Info</h2>
-          {contactInfo && (
-            <ul>
-              {Object.entries(contactInfo).map(([field, value]) => (
-                <li key={field}>
-                  <span className="text-white">{field}:</span>{" "}
-                  <span className="text-pink-500">{value}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
         <div className="text-pink-500">
           <h2 className="text-2xl underline font-bold mb-2">Basic Info</h2>
           {adInfo && (
@@ -140,6 +127,23 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
             </ul>
           )}
         </div>
+        {Object.entries(formData?.data || {})
+          .filter(([key, value]) => key !== "Ad info") // Exclude Ad info
+          .map(([sectionName, sectionData], index) => (
+            <div key={index} className="mt-4 max-h-[200px] overflow-y-auto">
+              <span className="text-2xl underline font-bold mb-2 text-pink-500">
+                {sectionName}:
+              </span>
+              <ul>
+                {Object.entries(sectionData).map(([field, value]) => (
+                  <li key={field}>
+                    <span className="text-white">{field}:</span>{" "}
+                    <span className="text-pink-500">{value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
       </div>
     </div>
   );

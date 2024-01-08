@@ -1,28 +1,28 @@
 // CardImage.js
 import React from "react";
 import ImageDisplay from "../formdata/ImageDisplay";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
-const CardImage = ({ imageSrc, cityName, status, item }) => {
-  console.log("big");
-  console.log(item);
-  console.log("fish");
-
+const CardImage = ({ imageSrc, status, item }) => {
   return (
-    <div className="relative bg-black border border-pink-500 text-pink-500 group">
-      <ImageDisplay imageUrl={imageSrc} height={80} />
-      {/* <img src={imageSrc} alt={cityName} className="w-full h-40 object-cover" /> */}
-      <div className="absolute top-0 right-0 p-2">
-        <span className="text-sm font-semibold text-white p-2  bg-pink-500 ">
-          {status}
-        </span>
-      </div>
-      <div className="p-2 absolute bottom-2  transform  hidden group-hover:block group-hover:font-bold">
-        <span className="text-md group-hover:text-md text-center ">
-          {cityName}
-        </span>
-        <div className="!font-semibold">
-          {item?.data["Contact Info"]["Location"]}
+    <div>
+      <div className="relative  border hover:border-0 border-pink-500 text-pink-500 group overflow-hidden">
+        <ImageDisplay imageUrl={imageSrc} height={80} />
+        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+        <div className="absolute top-0 right-0 ">
+          <span className="text-sm font-bold text-white p-2 bg-pink-500">
+            {status}
+          </span>
         </div>
+        <div className=" absolute group-hover:transform group-hover:-translate-x-1/2 group-hover:left-[50%] flex group-hover:justify-center bottom-2 transform group-hover:flex group-hover:font-bold transition-transform duration-300">
+          <span className=" hidden group-hover:flex text-md group-hover:text-lg justify-center text-white">
+            {item?.data["Ad info"]["Title"]}
+          </span>
+        </div>
+      </div>
+      <div className="!font-semibold text-pink-500 justify-center items-center gap-2 text-xl flex py-1">
+        <span> <MapPinIcon className="h-6 w-6"/> </span>
+        {item?.data["Contact Info"]["Location"]}
       </div>
     </div>
   );
