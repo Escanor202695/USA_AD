@@ -3,7 +3,10 @@ import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Hamburger from "./svg/hamburger";
 
-const navigation = [{ name: "Home", href: "/home" }];
+const navigation = [
+  { name: "Home", href: "/home" },
+  { name: "Post New Ad", href: "/form" },
+];
 
 const ProfileNavBar = ({ items, selectedItem, onSelect, logout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -66,25 +69,25 @@ const ProfileNavBar = ({ items, selectedItem, onSelect, logout }) => {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className=" lg:flex lg:gap-x-12 items-center mr-16">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-md font-semibold leading-6 text-white hover:text-[#F04D99]"
-                  >
-                    {item.name}
-                  </a>
-                ))}
+              <div className="-my-6 divide-y divide-gray-500/10">
+                <div className="space-y-2 py-2">
+                  {navigation.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="-mx-3 block rounded-lg px-3  text-base font-semibold leading-7 text-white hover:text-[#F04D99]"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-2 py-6">
+              <div className=" hidden space-y-2 py-6">
                 {items.map((item) => (
                   <button
                     key={item.name}
                     className={`-mx-3 flex items-center  rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#F04D99] ${
-                      item.name === selectedItem
-                        ? "bg-[#bd7ee5]"
-                        : "bg-[#F04D99]"
+                      item.name === selectedItem ? "bg-[#F04D99]" : "bg-[]"
                     }`}
                     onClick={() =>
                       item.name === "Log out" ? logout() : onSelect(item.name)

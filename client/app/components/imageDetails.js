@@ -104,11 +104,6 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
           ))}
         </div>
         <p className="text-pink-500 mt-4">
-          <span className="text-lg text-white  underline">Disclaimer:</span>{" "}
-          <br />
-          {adInfo?.Disclaimer}
-        </p>
-        <p className="text-pink-500 mt-4">
           <span className="text-lg text-white underline">Details:</span> <br />
           {adInfo?.Details}
         </p>

@@ -9,7 +9,6 @@ import Hamburger from "./svg/hamburger";
 import { toast } from "react-toastify";
 import axios from "../../utils/axios";
 
-const navigation = [{ name: "Home", href: "/home" }];
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,6 +22,19 @@ const NavBar = () => {
     toast.success("LogOut Successful!");
     router.push("/");
   };
+  const navigation = token
+  ? [
+      { name: "Home", href: "/home" },
+      { name: "Post New Ad", href: "/form" },
+      { name: "Profile", href: "/profile" },
+      { name: "Logout", onClick: handleLogout },
+    ]
+  : [
+      { name: "Home", href: "/home" },
+      { name: "Post New Ad", href: "/form" },
+      { name: "Register", href: "/user/signup" },
+      { name: "Login", href: "/login" },
+    ];
 
   const renderAuthButton = (label, icon, onClick) => (
     <button
@@ -68,7 +80,7 @@ const NavBar = () => {
           ))}
         </div>
         <div className="hidden  lg:flex items-center">
-          <div className=" flex">
+          <div className=" flex hidden">
             {token ? (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>
@@ -132,7 +144,7 @@ const NavBar = () => {
               </div>
             </div>
           </div>
-          <div className="lg:hidden flex-col">
+          <div className="hidden flex-col">
             {token ? (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>

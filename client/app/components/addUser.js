@@ -3,7 +3,6 @@
 import { useState } from "react";
 import axios from "../../utils/axios.ts";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 export default function AddUser() {
   const [name, setName] = useState("");
@@ -12,7 +11,6 @@ export default function AddUser() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
-  const router = useRouter();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -24,16 +22,21 @@ export default function AddUser() {
         setError("Passwords do not match");
         return;
       }
-      console.log(role)
+      console.log(role);
       const response = await axios.post("/auth/local/addnewuser", {
         name,
         email,
         password,
-        role
+        role,
       });
-      toast.success("Signup Successful!");
-      router.push("/login");
+      toast.success("New User Added");
       setError(null);
+      // Reset form fields
+      setName("");
+      setEmail("");
+      setRole(initialRoleValue);
+      setPassword("");
+      setConfirmPassword("");
     } catch (error) {
       // Handle signup error
       console.error("Signup failed:", error);
@@ -46,10 +49,10 @@ export default function AddUser() {
       <div className="flex min-h-full bg-[#101827] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
-           Add New User
+            Add New User
           </h2>
         </div>
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
             <div>
               <label
@@ -86,6 +89,9 @@ export default function AddUser() {
                   onChange={(e) => setRole(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
+                  <option value="" disabled>
+                    Select role
+                  </option>
                   <option value="user">User</option>
                   <option value="admin">Admin</option>
                 </select>
@@ -159,7 +165,7 @@ export default function AddUser() {
                 onClick={handleSignup}
                 className="flex w-full justify-center rounded-md bg-[#F04D99]  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#bd7ee5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign Up
+                Create New User
               </button>
             </div>
           </form>
@@ -167,16 +173,6 @@ export default function AddUser() {
           {error && (
             <p className="mt-2 text-center text-sm text-red-600">{error}</p>
           )}
-
-          <p className="mt-10 text-center text-sm text-white">
-            Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-semibold leading-6 text-[#F04D99]   hover:text-indigo-500"
-            >
-              Login
-            </a>
-          </p>
         </div>
       </div>
     </>

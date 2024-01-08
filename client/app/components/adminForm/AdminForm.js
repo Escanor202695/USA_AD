@@ -46,6 +46,43 @@ const AdminForm = ({ onFormSubmit }) => {
   const [form] = Form.useForm();
   const [formFields, setFormFields] = useState([
     {
+      section: "Ad info",
+      fields: [
+        {
+          name: "Title",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+        },
+        {
+          name: "Details",
+          type: "text",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+        },
+        {
+          name: "Listing Category",
+          type: "select",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+          data: [
+            { _id: "1", name: "Premium" },
+            { _id: "2", name: "Standard" },
+          ],
+        },
+        {
+          name: "Upload images",
+          type: "image",
+          isRequired: true,
+          errorMessage: "Please add the title",
+          isEditable: false,
+        },
+      ],
+    },
+    {
       section: "Contact Info",
       fields: [
         {
@@ -88,50 +125,6 @@ const AdminForm = ({ onFormSubmit }) => {
           type: "text",
           isRequired: true,
           errorMessage: "Please enter your loaction",
-          isEditable: false,
-        },
-      ],
-    },
-    {
-      section: "Ad info",
-      fields: [
-        {
-          name: "Title",
-          type: "text",
-          isRequired: true,
-          errorMessage: "Please add the title",
-          isEditable: false,
-        },
-        {
-          name: "Details",
-          type: "text",
-          isRequired: true,
-          errorMessage: "Please add the title",
-          isEditable: false,
-        },
-        {
-          name: "Disclaimer",
-          type: "text",
-          isRequired: true,
-          errorMessage: "Please add the title",
-          isEditable: false,
-        },
-        {
-          name: "Listing Category",
-          type: "select",
-          isRequired: true,
-          errorMessage: "Please add the title",
-          isEditable: false,
-          data: [
-            { _id: "1", name: "Premium" },
-            { _id: "2", name: "Standard" },
-          ],
-        },
-        {
-          name: "Upload images",
-          type: "image",
-          isRequired: true,
-          errorMessage: "Please add the title",
           isEditable: false,
         },
       ],
@@ -270,14 +263,16 @@ const AdminForm = ({ onFormSubmit }) => {
                     Section: {section?.section}
                   </div>
                   <div className="flex">
-                    <button
-                      onClick={handleEditFieldClick}
-                      className="flex bg-[#F04D99] items-center text-white rounded-md py-2 px-4 my-2"
-                    >
-                      Add new field
-                      <NormalPlus />
-                    </button>
-                    {sectionIndex != 0 && (
+                    {section?.section != "Ad info" && (
+                      <button
+                        onClick={handleEditFieldClick}
+                        className="flex bg-[#F04D99] items-center text-white rounded-md py-2 px-4 my-2"
+                      >
+                        Add new field
+                        <NormalPlus />
+                      </button>
+                    )}
+                    {sectionIndex > 1 && (
                       <button
                         disabled={sectionIndex == 0}
                         onClick={(e) => {

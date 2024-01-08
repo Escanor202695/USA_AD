@@ -66,6 +66,8 @@ export default function Users() {
             <table className="max-w-full lg:w-[800px] text-left mx-auto mt-[20px] bg-white border border-gray-300 rounded-md">
               <thead>
                 <tr>
+                <th className="py-2 px-4 border-b">Sl</th>
+
                   <th className="py-2 px-4 border-b">Name</th>
                   <th className="py-2 px-4 border-b">Email</th>
                   <th className="py-2 px-4 border-b">Role</th>
@@ -73,8 +75,10 @@ export default function Users() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
+                {users.map((user,index) => (
                   <tr key={user.id}>
+                  <td className="py-2 px-4 border-b">{index+1}</td>
+
                     <td className="py-2 px-4 border-b">{user.name}</td>
                     <td className="py-2 px-4 border-b">{user.email}</td>
                     <td className="py-2 px-4 border-b">{user.role}</td>
