@@ -6,6 +6,7 @@ import NavBar from "../../components/navbar";
 import CardImage from "../../components/cardImage";
 import Link from "next/link";
 import Loader from "../../components/svg/loader";
+import Empty from "../../components/empty";
 
 const YourPage = ({ params }) => {
   const cityName = params.id;
@@ -43,7 +44,7 @@ const YourPage = ({ params }) => {
       )}
       {!loading && formData.length > 0 && (
         <div className="bg-black p-4 pt-[100px] min-h-[100vh] h-auto">
-          <h1 className="text-white">{cityName}</h1>
+          <h1 className="text-white capitalize">{cityName}</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {formData?.map((item, index) => {
               return (
@@ -61,14 +62,13 @@ const YourPage = ({ params }) => {
           </div>
         </div>
       )}
-      {formData?.length === 0 && (
-        <div className="h-full bg-black flex justify-center items-center">
-          <h1 className="text-white text-lg md:text-xl lg:text-3xl">
-            There is no listing available in this city
-          </h1>
-          <img src="/nodata-1.png" className=" h-60 md:h-80 lg:h-120" />
-        </div>
-      )}
+      {formData?.length === 0 && 
+        
+        (
+          <div className="bg-black h-full">
+          <Empty />
+          </div>
+          )}
     </>
   );
 };

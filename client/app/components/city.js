@@ -12,7 +12,7 @@ const City = ({
   stateName,
   countryUpdateFlag,
   setCountryUpdateFlag,
-  fetch
+  fetch,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCity, setSelectedCity] = useState(null);
@@ -89,7 +89,7 @@ const City = ({
       );
 
       if (index !== -1) {
-        setFilteredCities((prevStates) => {
+        setFilteredCities((prevCities) => {
           const newCities = [...prevCities];
           newCities[index] = response.data?.data;
           return newCities;
@@ -142,12 +142,12 @@ const City = ({
       console.log("Response:", response.data);
       // Handle the response as needed
     } catch (error) {
-      toast.error(error?.response?.data?.message);
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-      // Handle errors as needed
+      const errorMessage = Array.isArray(error?.response?.data?.message)
+        ? error.response.data.message[0]
+        : error.response.data.message; // Default message if the structure is unexpected
+
+      toast.error(errorMessage);
+      console.log(errorMessage);
     }
   };
 

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import CardImage from "../components/cardImage";
 import Link from "next/link";
-
+import Empty from "../components/empty";
 const YourPage = () => {
   let email;
   let username;
@@ -36,13 +36,13 @@ const YourPage = () => {
   }, [email]);
 
   return (
-    <div className="bg-[#101827] p-4 pt-[100px] min-h-[100vh] h-auto">
-      <h1 className="text-white">{username}</h1>
+    <div className="bg-[#2a2a2b] p-10 pt-[120px] min-h-[100vh] h-auto">
+      <h1 className="text-white text-3xl font-semibold ">Your Listing</h1>
 
       {loading && <p>Loading...</p>}
 
       {!loading && formData?.length === 0 && (
-        <p className="text-white">You have no listing to see.</p>
+        <Empty title="No Listing Available" />
       )}
 
       {!loading && formData && (

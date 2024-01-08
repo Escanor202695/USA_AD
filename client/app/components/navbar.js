@@ -80,7 +80,7 @@ const NavBar = () => {
           ))}
         </div>
         <div className="hidden  lg:flex items-center">
-          <div className=" flex hidden">
+          <div className="  hidden">
             {token ? (
               <>
                 {renderAuthButton("Post New Ad", <Pen />, () =>

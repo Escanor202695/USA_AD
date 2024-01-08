@@ -257,10 +257,10 @@ const AdminForm = ({ onFormSubmit }) => {
         <Form form={form} onFinish={handleFormSubmit} layout="vertical">
           {formFields?.map((section, sectionIndex) => {
             return (
-              <div key={sectionIndex} className="border-2 p-3 my-2">
+              <div key={sectionIndex} className="rounded-md bg-black p-[20px] my-4">
                 <div className="flex justify-between items-center">
-                  <div className="text-white text-lg font-semibold">
-                    Section: {section?.section}
+                  <div className="text-white text-xl font-semibold">
+                    {section?.section}
                   </div>
                   <div className="flex">
                     {section?.section != "Ad info" && (

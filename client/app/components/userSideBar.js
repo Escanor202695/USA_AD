@@ -19,16 +19,7 @@ const components = {
 
 export default function UserSidebar() {
   const router = useRouter();
-  const [selectedItem, setSelectedItem] = useState(() => {
-    // Check if window is defined (client-side)
-    if (typeof window !== 'undefined') {
-      // Retrieve the last selected item from local storage
-      const storedItem = localStorage.getItem("selectedItem");
-      return storedItem || "User Info"; // Default to "User Info" if not found
-    }
-
-    return "User Info"; // Default value for SSR
-  });
+  const [selectedItem, setSelectedItem] = useState("User Info");
 
   const handleMenuItemClick = (itemName) => {
     setSelectedItem(itemName);
@@ -42,13 +33,13 @@ export default function UserSidebar() {
 
   useEffect(() => {
     // Save the selected item to local storage whenever it changes
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       localStorage.setItem("selectedItem", selectedItem);
     }
   }, [selectedItem]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       if (!localStorage.getItem("token")) {
         router.push("/login");
       }
@@ -59,7 +50,7 @@ export default function UserSidebar() {
     { name: "User Info", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Change Password", icon: <UserIcon className="w-4 h-4" /> },
     { name: "Post New Listing", icon: <Pen className="w-4 h-4" /> },
-    { name: "My Listing", icon: <Pen className="w-4 h-4" /> },
+    { name: "My Listing", icon: <Pen className="w-2 h-2" /> },
     { name: "Log out", icon: <ArrowLeftOnRectangleIcon className="w-5 h-5" /> },
   ];
 
@@ -73,8 +64,8 @@ export default function UserSidebar() {
         onSelect={handleMenuItemClick}
         logout={logout}
       />
-      <div className="flex min-h-screen bg-[#101827] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
-        <div className="hidden sm:flex-1 pt-[100px] lg:flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 min-h-[100vh] w-1/5 min-w-[150px] border-r">
+      <div className="flex min-h-screen bg-[#2A2A2B] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+        <div className="hidden sm:flex-1 pt-[100px] lg:flex grow flex-col gap-y-5 overflow-y-auto  px-6 min-h-[100vh] w-1/5 min-w-[150px] bg-black">
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
@@ -91,7 +82,7 @@ export default function UserSidebar() {
                         (item.name === selectedItem
                           ? "bg-[#F04D99]     "
                           : " ") +
-                        " group flex gap-x-3 cursor-pointer rounded-md text-white p-2 text-sm leading-6 font-semibold"
+                        " group flex items-center gap-x-3 cursor-pointer rounded-md text-white p-2 text-sm leading-6 font-semibold"
                       }
                     >
                       {item.icon}
@@ -103,7 +94,7 @@ export default function UserSidebar() {
             </ul>
           </nav>
         </div>
-        <div className="w-full sm:w-4/5 min-h-screen bg-[#101827] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+        <div className="w-full sm:w-4/5 min-h-screen bg-[#2a2a2b] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
           <SelectedComponent />
         </div>
       </div>

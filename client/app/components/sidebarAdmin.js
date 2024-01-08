@@ -27,16 +27,8 @@ const components = {
 };
 
 export default function Sidebar() {
-  const [selectedItem, setSelectedItem] = useState(() => {
-    // Check if window is defined (client-side)
-    if (typeof window !== 'undefined') {
-      // Retrieve the last selected item from local storage
-      const storedItem = localStorage.getItem("selectedItem");
-      return storedItem || "User Info"; // Default to "User Info" if not found
-    }
+  const [selectedItem, setSelectedItem] = useState("User Info");
 
-    return "User Info"; // Default value for SSR
-  });
   const router = useRouter();
 
   const handleMenuItemClick = (itemName) => {
@@ -49,7 +41,7 @@ export default function Sidebar() {
     router.push("/login");
   };
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       if (!localStorage.getItem("token")) {
         router.push("/login");
       }
@@ -57,7 +49,7 @@ export default function Sidebar() {
   });
   useEffect(() => {
     // Save the selected item to local storage whenever it changes
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       localStorage.setItem("selectedItem", selectedItem);
     }
   }, [selectedItem]);
@@ -82,8 +74,8 @@ export default function Sidebar() {
         onSelect={handleMenuItemClick}
         logout={logout}
       />
-      <div className="flex min-h-screen bg-[#101827] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
-        <div className="hidden sm:flex-1 pt-[100px] lg:flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 min-h-[100vh] w-1/5 min-w-[150px] border-r">
+      <div className="flex min-h-screen bg-black overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+        <div className="hidden sm:flex-1 pt-[100px] bg-black lg:flex grow flex-col gap-y-5 overflow-y-auto  px-6 min-h-[100vh] w-1/5 min-w-[150px] ">
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
@@ -112,7 +104,7 @@ export default function Sidebar() {
             </ul>
           </nav>
         </div>
-        <div className="w-full sm:w-4/5 min-h-screen bg-[#101827] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
+        <div className="w-full sm:w-4/5 min-h-screen bg-[#2a2a2b] overflow-y-hidden scrollbar-thin scrollbar-thumb-gray-600">
           <SelectedComponent />
         </div>
       </div>

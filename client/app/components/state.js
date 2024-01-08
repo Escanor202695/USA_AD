@@ -166,15 +166,13 @@ const State = ({
 
       setFilteredStates([...filteredStates, response.data?.data]);
       fetch();
-
-      // Handle the response as needed
     } catch (error) {
-      toast.error(error?.response?.data?.message);
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-      // Handle errors as needed
+      const errorMessage = Array.isArray(error?.response?.data?.message)
+        ? error.response.data.message[0]
+        : error.response.data.message; // Default message if the structure is unexpected
+
+      toast.error(errorMessage);
+      console.log(errorMessage);
     }
   };
 

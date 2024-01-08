@@ -122,7 +122,7 @@ const ClientForm = ({ preview, formValues }) => {
       >
         {formValues?.map((section, sectionIndex) => {
           return (
-            <div key={sectionIndex}>
+            <div key={sectionIndex} className="">
               <div>{section?.section}</div>
               {section?.fields?.map((field, index) => {
                 if (field?.type === "text")

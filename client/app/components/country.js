@@ -19,12 +19,11 @@ const Country = ({ countries, fetch }) => {
   const [filteredCountries, setFilteredCountries] = useState(countries);
   const [countryUpdateFlag, setCountryUpdateFlag] = useState(false);
   const [updatedCountries, setUpdatedCountries] = useState(countries);
-  const [newSelectedCountry,setNewSelectedCountry] = useState(null);
+  const [newSelectedCountry, setNewSelectedCountry] = useState(null);
 
   const handleCountryClick = async (country) => {
     setSelectedCountry(country);
     setCountryUpdateFlag(true);
-
   };
 
   useEffect(() => {
@@ -149,25 +148,24 @@ const Country = ({ countries, fetch }) => {
       });
 
       setFilteredCountries([...filteredCountries, response.data?.data]);
-
     } catch (error) {
-      toast.error(error?.response?.data?.message);
-      console.error(
-        "Error:",
-        error.response ? error.response.data : error.message
-      );
-      // Handle errors as needed
+      const errorMessage = Array.isArray(error?.response?.data?.message)
+        ? error.response.data.message[0]
+        : error.response.data.message; // Default message if the structure is unexpected
+
+      toast.error(errorMessage);
+      console.log(errorMessage);
     }
   };
 
   return (
     <>
-      <div className=" px-4 py-2 mt-2 items-center text-white hidden  lg:flex justify-end ">
+      <div className=" px-4  mt-2 items-center text-white hidden  lg:flex justify-end ">
         <button className="  flex items-center font-semibold justify-between rounded-lg">
           <input
             id="search-countries"
             type="search"
-            className=" appearance-none bg-[#F04D99] rounded w-[90%]   !text-white leading-tight"
+            className="hidden appearance-none bg-[#F04D99] rounded w-[90%]   !text-white leading-tight"
             placeholder="Search Countries.."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -175,7 +173,7 @@ const Country = ({ countries, fetch }) => {
         </button>
       </div>
 
-      <div className="container mx-auto flex flex-wrap py-6 overflow-hidden ">
+      <div className="container mx-auto flex flex-wrap overflow-hidden ">
         <section className="w-full md:w-1/3 flex flex-col px-3">
           <table
             id="countries"

@@ -10,7 +10,7 @@ const UserInfo = () => {
     role = localStorage.getItem("role");
   }
   return (
-    <div className="flex min-h-full bg-[#101827] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full bg-[#2A2A2B] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-[#F04D99]  ">
           User Profile
