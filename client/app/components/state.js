@@ -14,7 +14,7 @@ const State = ({
   countryUpdateFlag,
   setCountryUpdateFlag,
   countries,
-  fetch
+  fetch,
 }) => {
   const [selectedState, setSelectedState] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,14 +28,23 @@ const State = ({
     setSelectedState(null);
   }, [countryUpdateFlag]);
 
-  const handleStateClick = (state) => {
-    setSelectedState(state);
-  }
+  const handleStateClick = async (state) => {
+    const response = await axios.get("/dynamicform/country-state-city");
+    // Flatten the array of states from all countries
+    const allStates = response.data.countries.flatMap(
+      (country) => country.states
+    );
+    // Find the state with the provided state._id
+    const newState = allStates.find((d) => d._id === state._id);
+    // Now, newState contains the state object that matches the provided state ID
+    setSelectedState(newState);
+  };
 
   useEffect(() => {
-    const filtered = states?.filter((state) =>
-      state.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )||[];
+    const filtered =
+      states?.filter((state) =>
+        state.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) || [];
     setFilteredStates(filtered);
   }, [states]);
 
@@ -120,9 +129,7 @@ const State = ({
     }
   };
 
-  const updateContent = async ()=>{
-    
-  }
+  const updateContent = async () => {};
 
   const handleDelete = async (country) => {
     Modal.confirm({

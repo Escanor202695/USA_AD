@@ -54,11 +54,11 @@ const Location = () => {
   };
 
   return (
-    <div className="pt-[100px] flex-1 pb-[50px] w-[90%] md:w-[90%] mx-auto">
+    <div>
       {loading ? (
         <Loader />
       ) : (
-        <>
+        <div className="pt-[100px] flex-1 pb-[50px] w-[90%] md:w-[90%] mx-auto">
           <div className="flex justify-center py-10">
             <h1 className="text-[#f04d99]  text-2xl   border-2 border-[#f04d99] hover:text-[#bd7ee5]  p-2 rounded-md">
               Select Location Below
@@ -103,7 +103,7 @@ const Location = () => {
               </div>
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );
