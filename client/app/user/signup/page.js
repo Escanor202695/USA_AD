@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "../../../utils/axios.ts";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import NavBar from "../../components/navbar.js";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -42,6 +43,7 @@ export default function Signup() {
 
   return (
     <>
+      <NavBar />
       <div className="flex min-h-full bg-[#101827] flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">

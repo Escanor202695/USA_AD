@@ -9,7 +9,7 @@ import Loader from "../../components/svg/loader";
 import Empty from "../../components/empty";
 
 const YourPage = ({ params }) => {
-  const cityName = params.id;
+  const cityName = decodeURIComponent(params.id);
 
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,7 +66,7 @@ const YourPage = ({ params }) => {
         
         (
           <div className="bg-black h-full">
-          <Empty />
+          <Empty title="No listing Available"/>
           </div>
           )}
     </>
