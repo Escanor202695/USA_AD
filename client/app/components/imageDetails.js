@@ -110,7 +110,7 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
       </div>
       <div className="w-1/3">
         <div className="text-pink-500 mb-4">
-          <h2>Contact Info</h2>
+          <h2 className="text-2xl underline">Contact Info</h2>
           {contactInfo && (
             <ul>
               {Object.entries(contactInfo).map(([field, value]) => (
@@ -123,7 +123,7 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
           )}
         </div>
         <div className="text-pink-500">
-          <h2>Basic Info</h2>
+          <h2 className="text-2xl underline">Basic Info</h2>
           {adInfo && (
             <ul>
               {Object.entries(adInfo).map(([field, value]) => {
