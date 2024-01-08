@@ -49,12 +49,14 @@ export default function ChangePassword() {
               id="password"
               label="Password"
               value={password}
+              autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
             />
 
             <PasswordField
               id="newpassword"
               label="New Password"
+              autoComplete="off"
               value={newpassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -62,6 +64,7 @@ export default function ChangePassword() {
             <PasswordField
               id="confirmPassword"
               label="Confirm New Password"
+              autoComplete="off"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
@@ -108,6 +111,7 @@ function PasswordField({ id, label, value, onChange }) {
           name={id}
           type={showPassword ? "text" : "password"}
           required
+          autoComplete="off"
           value={value}
           onChange={onChange}
           className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

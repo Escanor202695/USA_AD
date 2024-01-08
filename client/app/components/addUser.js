@@ -129,7 +129,7 @@ export default function AddUser() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="off"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -150,7 +150,7 @@ export default function AddUser() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  autoComplete="new-password"
+                  autoComplete="off"
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
