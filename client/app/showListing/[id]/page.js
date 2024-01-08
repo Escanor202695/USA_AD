@@ -44,7 +44,7 @@ const YourPage = ({ params }) => {
       )}
       <div>
         {!loading && formData.length > 0 && (
-          <div className="bg-black p-4 pt-[100px] h-auto max-w-[1140px] m-auto">
+          <div className="bg-black p-4 pt-[100px] min-h-[100vh] h-auto max-w-[1440px] px-[40px] m-auto">
             <div className="mb-4">
               <h1 className="text-3xl font-bold mb-6 text-white capitalize">
                 Premium Listings
@@ -59,6 +59,7 @@ const YourPage = ({ params }) => {
                     <div key={index} className="cursor-pointer">
                       <Link href={`/listingDetails/${item._id}`}>
                         <CardImage
+                        item={item}
                           imageSrc={
                             item.data["Ad info"]["Upload images"][0].url
                           }
@@ -84,7 +85,7 @@ const YourPage = ({ params }) => {
                   .map((item, index) => (
                     <div key={index} className="cursor-pointer">
                       <Link href={`/listingDetails/${item._id}`}>
-                        <CardImage
+                        <CardImage item={item}
                           imageSrc={
                             item.data["Ad info"]["Upload images"][0].url
                           }

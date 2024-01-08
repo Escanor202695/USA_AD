@@ -43,6 +43,7 @@ export default function EditForm({
         }
         onOk(sectionIndex, values);
         form.resetFields();
+        setOptions([]);
         setIsRequired(false);
       })
       .catch((info) => {

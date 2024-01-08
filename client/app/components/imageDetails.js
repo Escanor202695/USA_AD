@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ImageDisplayBig from "./ImageDisplayBig";
-import ImageDisplay from "../formdata/ImageDisplay";
+import ImageDisplaySmall from "./ImageDisplaySmall";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -20,7 +20,7 @@ function SampleNextArrow(props) {
         display: "block",
         position: "absolute",
         top: "50%",
-        right: "10px", // Adjust right position as needed
+        right: "32px", // Adjust right position as needed
         transform: "translateY(-50%)",
         zIndex: 1,
       }}
@@ -84,7 +84,7 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
             </div>
           ))}
         </Slider>
-        <div className="flex m-2">
+        <div className="flex m-2 justify-center gap-2 max-w-5xl overflow-x-auto">
           {images?.map((image, index) => (
             <div
               key={index}
@@ -94,11 +94,11 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
               }}
             >
               <div
-                className={`cursor-pointer ${
-                  index === activeIndex ? "border-2 border-white" : ""
+                className={`cursor-pointer border-2 border-transparent   ${
+                  index === activeIndex ? " !border-pink-500" : ""
                 }`}
               >
-                <ImageDisplay imageUrl={image?.url} />
+                <ImageDisplaySmall imageUrl={image?.url} />
               </div>
             </div>
           ))}
@@ -110,7 +110,7 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
       </div>
       <div className="w-1/3">
         <div className="text-pink-500 mb-4">
-          <h2 className="text-2xl underline">Contact Info</h2>
+          <h2 className="text-2xl underline font-bold mb-2">Contact Info</h2>
           {contactInfo && (
             <ul>
               {Object.entries(contactInfo).map(([field, value]) => (
@@ -123,7 +123,7 @@ const ImageDetails = ({ images, contactInfo, adInfo }) => {
           )}
         </div>
         <div className="text-pink-500">
-          <h2 className="text-2xl underline">Basic Info</h2>
+          <h2 className="text-2xl underline font-bold mb-2">Basic Info</h2>
           {adInfo && (
             <ul>
               {Object.entries(adInfo).map(([field, value]) => {

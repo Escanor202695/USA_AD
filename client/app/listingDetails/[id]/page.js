@@ -6,6 +6,7 @@ import NavBar from "../../components/navbar";
 import Loader from "../../components/svg/loader";
 import Link from "next/link";
 import CardImage from "../../components/cardImage";
+import Footer from "../../components/footer";
 const YourPage = ({ params }) => {
   const formdataId = params.id;
   const [formData, setFormData] = useState(null);
@@ -58,51 +59,50 @@ const YourPage = ({ params }) => {
     }
   }, [cityName]);
   return (
-    <div className="bg-black">
-      <NavBar />
-      {loading && (
-        <div className="bg-black h-full">
-          <Loader />
-        </div>
-      )}
-      {!loading && (
-        <div className="pt-[100px]">
-          {formData && (
-            <ImageDetails
-              images={formData?.data["Ad info"]["Upload images"]}
-              contactInfo={formData?.data["Contact Info"]}
-              adInfo={formData?.data["Ad info"]}
-            />
-          )}
-          <p className="text-pink-500 mt-4 ml-4">
-            <span className="text-lg text-white  underline">Disclaimer:</span>{" "}
-            <br />
-            Hello, we are a good company
-          </p>
-        </div>
-      )}
-      // Modify the mapping of cityData
-      {!loading && cityData?.length > 0 && (
-        <div className="bg-black p-4 h-auto">
-          <h1 className="text-white text-3xl pb-3 capitalize">Related Listings</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {cityData
-              ?.filter((item) => item._id !== formdataId) // Filter out the current listing
-              .map((item, index) => (
-                <div key={index} className="cursor-pointer">
-                  <Link href={`/listingDetails/${item._id}`}>
-                    <CardImage
-                      imageSrc={item.data["Ad info"]["Upload images"][0].url}
-                      cityName={cityName}
-                      status={item.data["Ad info"]["Listing Category"]}
-                    />
-                  </Link>
-                </div>
-              ))}
+    <>
+      <div className="bg-[#101827] px-10">
+        <NavBar />
+        {loading && (
+          <div className="bg-black h-full">
+            <Loader />
           </div>
-        </div>
-      )}
-    </div>
+        )}
+        {!loading && (
+          <div className="pt-[100px]">
+            {formData && (
+              <ImageDetails
+                images={formData?.data["Ad info"]["Upload images"]}
+                contactInfo={formData?.data["Contact Info"]}
+                adInfo={formData?.data["Ad info"]}
+              />
+            )}
+          </div>
+        )}
+        {!loading && cityData?.length > 0 && (
+          <div className=" p-4 h-auto">
+            <h1 className="text-white text-2xl pb-3 text-center capitalize">
+              Related Listings
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              {cityData
+                ?.filter((item) => item._id !== formdataId) // Filter out the current listing
+                .map((item, index) => (
+                  <div key={index} className="cursor-pointer">
+                    <Link href={`/listingDetails/${item._id}`}>
+                      <CardImage
+                        imageSrc={item.data["Ad info"]["Upload images"][0].url}
+                        cityName={cityName}
+                        status={item.data["Ad info"]["Listing Category"]}
+                      />
+                    </Link>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 };
 

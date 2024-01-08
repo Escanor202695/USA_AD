@@ -321,7 +321,7 @@ const AdminForm = ({ onFormSubmit }) => {
                           <div className="">
                             <div className=" pt-2 ml-2">
                               <button
-                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
+                                className="p-2 hidden mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -435,7 +435,7 @@ const AdminForm = ({ onFormSubmit }) => {
                           <div className="">
                             <div className=" pt-2 ml-2">
                               <button
-                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
+                                className="p-2 hidden mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -481,7 +481,7 @@ const AdminForm = ({ onFormSubmit }) => {
                           <div className="">
                             <div className=" pt-2 ml-2">
                               <button
-                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
+                                className="p-2 hidden mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);
@@ -526,7 +526,7 @@ const AdminForm = ({ onFormSubmit }) => {
                           <div className="">
                             <div className=" pt-2 ml-2">
                               <button
-                                className="p-2 mr-2 bg-[#F04D99] text-white rounded-md"
+                                className="p-2 hidden mr-2 bg-[#F04D99] text-white rounded-md"
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onFormFieldEdit(field);

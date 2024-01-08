@@ -16,7 +16,10 @@ body {
   height: 100vh;
 }
 
-
+.slick-prev:before, .slick-next:before
+{
+  font-size: 40px !important;
+}
 .bdr{
   border:2px solid red;
 }
